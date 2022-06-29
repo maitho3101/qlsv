@@ -1,29 +1,16 @@
-import React, { useState } from "react";
-import "./App.css";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Signup from "./components/signup";
 
-function App() {
-const [customerName, setCustomerName] = useState("");
-const [customerPassword, setCustomerPassword] = useState("");
-
-return (
-	<div className="App">
-	<div className="App__form">
-		<input
-		type="text"
-		placeholder="Name"
-		value={customerName}
-		onChange={(e) => setCustomerName(e.target.value)}
-		/>
-		<input
-		type="text"
-		placeholder="Password"
-		value={customerPassword}
-		onChange={(e) => setCustomerPassword(e.target.value)}
-		/>
-		<button>Submit</button>
-	</div>
-	</div>
-);
+function App(){
+	return(
+		<BrowserRouter>
+			<Routes>
+				<Route path="/signup" element={<Signup/>}/>
+			</Routes>
+		</BrowserRouter>
+	)
 }
+
 
 export default App;
