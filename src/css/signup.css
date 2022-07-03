@@ -30,7 +30,7 @@
     outline: none;
 }
     
-.signup-in__form button {
+.submit-button {
     display: inline-block;
     margin: 20px auto;
     padding: 7px 12px;

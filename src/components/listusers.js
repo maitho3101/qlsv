@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
-import "../css/user.css"
+import Header from "./header";
+import "../css/listusers.css";
 import db from "../firebase";
 import { collection, query, where, onSnapshot, getDocs, addDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
-function Users(){
+
+function ListUsers(){
 
     const [displayChangeMSV, setDisplayChangeMSV] = useState("none");
 
@@ -11,7 +13,6 @@ function Users(){
     const usersCollection = collection(db,"users");
 
     async function getUsers() {
-        //console.log(1);
         const data = await getDocs(usersCollection); 
         var newUser = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
         setUsers(newUser);
@@ -38,33 +39,35 @@ function Users(){
    
     return (
         <div>
-            <table id="admin">
+            <Header/>
+            <h1>List Users</h1>
+            <div className="listusers-display">
+                <table id="admin">
                     <tr>
                         <th >STT</th>
-                        <th >Username</th>
-                        <th >msv</th>
-                        <th >email</th>
-                        <th >action</th>
-                    </tr>
-            </table>
-            {users.map((user, index)=>{
-                return(
-                    <table id="admin">
-                    
-                    <tr id ="admin">
-                        <td >{index + 1}</td>
-                        <td > {user.name}</td>
-                        <td >{user.msv}</td>
-                        <td >{user.email}</td>
-                        <td >
-                            <button onClick={()=>changeMSVhandle(user.id)}>edit</button>
-                            <button onClick={()=>deleteUser(user.id)}>del</button>
-                        </td>
-
+                        <th >Tên</th>
+                        <th >MSV</th>
+                        <th >Email</th>
+                        <th >Action</th>
                     </tr>
                 </table>
-                )
-            })}
+                {users.map((user, index)=>{
+                    return(
+                        <table id="admin">
+                            <tr id ="admin">
+                                <td >{index + 1}</td>
+                                <td > {user.name}</td>
+                                <td >{user.msv}</td>
+                                <td >{user.email}</td>
+                                <td >
+                                    <button onClick={()=>changeMSVhandle(user.id)}>edit</button>
+                                    <button onClick={()=>deleteUser(user.id)}>del</button>
+                                </td>
+                            </tr>
+                        </table>
+                        )
+                })}
+            </div>
             <form   style={{display:displayChangeMSV}}>
                 <label>
                     New msv:
@@ -75,4 +78,4 @@ function Users(){
         </div>
     );
 }
-export default Users;
+export default ListUsers;

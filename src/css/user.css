@@ -1,32 +1,6 @@
-#admin {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 26px;
-    
-  }
-  #admin tr:nth-child(odd){background-color: #f2f2f2;}
-  #admin td, #admin th {
-    border: 1px solid #a1a0a0;
-    padding: 8px;
-  }
-  #admin tr:hover {background-color: #c7c6c6;}
-  
-  
-  #admin td:first-child{
-      width: 5%;
-  }
-  #admin th:first-child{
-      width: 5%;
-  }
-  #admin td:nth-child(2){
-      width: 40%;
-  }
-  #admin th:nth-child(2){
-      width: 40%;
-  }
-  #admin td:nth-child(3){
-      width: 40%;
-  }
-  #admin th:nth-child(3){
-      width: 40%;
-  }
+.pic_profile{
+    width: 150px;
+    height: 150px;
+    background-color: black;
+    color: white;
+}
