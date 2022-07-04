@@ -47,3 +47,6 @@
   #admin th:nth-child(5){
       width: 15%;
   }
+  .fa-magnifying-glass{
+    color: black;
+  }

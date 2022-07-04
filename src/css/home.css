@@ -1,5 +1,5 @@
 .container-fluid{
-    background-color: red;
+    background-color: #4e5d94;
     position: relative;
     top: 0px;
     width: 100%;
@@ -33,4 +33,13 @@
     color: white;
     padding: 16px;
     text-decoration: none;
+}
+.user-displayname a{
+    display: inline;
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+}
+.user-displayname a:hover{
+    color: #811636;
 }

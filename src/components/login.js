@@ -1,5 +1,5 @@
 import React, { useState , useEffect} from "react";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import db from "../firebase";
 import { collection, getDocs,  } from "firebase/firestore";
 
@@ -38,7 +38,7 @@ async function checkLogin() {
     }
     return "0";
 }
- 
+
 const submit = async (e) => {
     e.preventDefault();
     if(email ===""){
@@ -61,8 +61,9 @@ const submit = async (e) => {
             localStorage.setItem("loginBox", "none");
             onClickimg();
             // console.log(localStorage.getItem("displayUsername"));
-            window.location.href = '/';
-        //    <Navigate to ='/users' replace={true}/>
+            // window.location.href = '/';
+            
+        //    <Navigate to ='/' replace={true}/>
             
         }
     }
@@ -80,7 +81,8 @@ return (
                 <input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <p class="notify-p">{notify}</p>
-                <input type="submit" value="Login"  />
+                <input type="submit" value="Login" className="submit-button" />
+                
             </div>
         </form>
     </div>

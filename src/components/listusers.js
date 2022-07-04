@@ -7,8 +7,8 @@ import { collection, query, where, onSnapshot, getDocs, addDoc, doc, updateDoc, 
 function ListUsers(){
 
     const [displayChangeMSV, setDisplayChangeMSV] = useState("none");
-
     const [users, setUsers]=useState([]);
+    const [searchUser, setSearchUser]=useState("")
     
     const usersCollection = collection(db,"users");
 
@@ -22,15 +22,8 @@ function ListUsers(){
         await getUsers();
     },[]);
 
-    async function changeMSV (id, msv, event){
-        const userDoc = doc(db, "users", id); 
-        console.log(userDoc)
-        const newField ={msv: event.target.old_msv.value} 
-        await updateDoc(userDoc, newField)
-        
-    }
-    function changeMSVhandle(){
-        setDisplayChangeMSV("flex");
+    const searchSubmit = async()=>{
+        console.log("search");
     }
     const deleteUser = async (id)=>{
         const userDoc = doc(db, "users", id); 
@@ -41,6 +34,10 @@ function ListUsers(){
         <div>
             <Header/>
             <h1>List Users</h1>
+            <div className="search_user">
+                <input onChange={(e) => setSearchUser(e.target.value)} type="text" placeholder="Search" />
+                <i onClick={searchSubmit} class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
+            </div>
             <div className="listusers-display">
                 <table id="admin">
                     <tr>
@@ -60,21 +57,13 @@ function ListUsers(){
                                 <td >{user.msv}</td>
                                 <td >{user.email}</td>
                                 <td >
-                                    <button onClick={()=>changeMSVhandle(user.id)}>edit</button>
-                                    <button onClick={()=>deleteUser(user.id)}>del</button>
+                                    <button onClick={()=>deleteUser(user.id)}><i class="fa-solid fa-trash-can"></i></button>
                                 </td>
                             </tr>
                         </table>
                         )
                 })}
             </div>
-            <form   style={{display:displayChangeMSV}}>
-                <label>
-                    New msv:
-                </label>
-                <input type="text" name="old_msv" />
-                <button onClick={changeMSV}>change</button>
-            </form>
         </div>
     );
 }
