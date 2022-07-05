@@ -14,7 +14,7 @@ function Header() {
 				<div className="header_menu ">
 					<ul className="nav navbar-nav ml-auto">
 						<li class="nav__item"><a href="/" class="nav__link active">Home</a></li>
-						<li class="nav__item"><a href="/listusers" class="nav__link">List</a></li>
+						<li class="nav__item"><a href="#" class="nav__link">List</a></li>
 						<li class="nav__item"><a href="#" class="nav__link">Home</a></li>
 						<li class="nav__item"><a href="#" class="nav__link">Home</a></li>
 					</ul>
