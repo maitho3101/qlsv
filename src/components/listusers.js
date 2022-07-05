@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { confirm } from "react-confirm-box";
 import Header from "./header";
 import "../css/listusers.css";
 import db from "../firebase";
@@ -27,9 +28,14 @@ function ListUsers(){
     }
     const deleteUser = async (id)=>{
         const userDoc = doc(db, "users", id); 
+        var result = await confirm("Want to delete?");
+        if (result) {
         await deleteDoc(userDoc);
-    }
-   
+        return;
+        }else{
+            console.log("no")
+        }
+}
     return (
         <div>
             <Header/>
@@ -57,6 +63,7 @@ function ListUsers(){
                                 <td >{user.msv}</td>
                                 <td >{user.email}</td>
                                 <td >
+                                    <button >edit</button>
                                     <button onClick={()=>deleteUser(user.id)}><i class="fa-solid fa-trash-can"></i></button>
                                 </td>
                             </tr>

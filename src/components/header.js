@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 
+import React, { useState, useEffect } from 'react';
+import Cookies from "js-cookie";
 function Header() {
     const [displayUsernameBox, setDisplayUsernameBox] = useState(localStorage.getItem("userNameBox"));
     const [displayLoginBox, setDisplayLoginBox] = useState(localStorage.getItem("loginBox"));
@@ -21,6 +22,7 @@ function Header() {
 				<div class="user-info" style={{display:displayUsernameBox}}>
 					<div class="user-displayname">
 						<a href='/user'>{localStorage.getItem("displayUsername")}</a>
+						{/* <a href='/user'>{Cookies.get("displayUsername")}</a> */}
 					</div>
             	</div>
 

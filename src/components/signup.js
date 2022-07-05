@@ -30,8 +30,8 @@ async function checkIfUserExist() {
     // console.log(userName)
     await getUsers();
     for(var i=0; i< users.length; i++){
-        // console.log(users[i].email)
-        if (email === users[i].email){
+        // console.log(users[i].msv)
+        if (email === users[i].email ){
             return 1; 
         }
     }
@@ -40,16 +40,17 @@ async function checkIfUserExist() {
  
 const submit = async (e) => {
     e.preventDefault();
-    if(email ===""){
+    if(!email ){
         setNotify("Please fill in email!")
+        console.log("gd")
     }
-    else if (userName ===""){
+    else if (!userName ){
         setNotify("Please fill in userName!")
     }
-    else if (msv ===""){
+    else if (!msv ){
         setNotify("Please fill in msv!")
     }
-    else if (password ===""){
+    else if (!password ){
         setNotify("Please fill in password!")
     }
     else if (password !== confPassword) {
@@ -66,10 +67,10 @@ const submit = async (e) => {
                 password: password,
             })
             setNotify("success");
-            window.location.href = '/login';
+            // window.location.href = '/login';
         } 
         else {
-            setNotify("Email is already in use. Please choose another one!");
+            setNotify("Account already exist. Please choose another one!");
         }
     }
     // setUserName("");
@@ -86,7 +87,7 @@ return (
         </div>
         <div className="signup-in__form ">
             <input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
-            <input type="text" placeholder="Name"  value={userName} onChange={(e) => setUserName(e.target.value)}/>
+            <input type="text" placeholder="Name"  value={userName} onChange={(e) => setUserName(e.target.value)} required/>
             <input type="text" placeholder="MSV"  value={msv} onChange={(e) => setMsv(e.target.value)}/>
             <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
             <input type="password" placeholder="Confirm Password"  value={confPassword} onChange={(e) => setConfPassword(e.target.value)}/>

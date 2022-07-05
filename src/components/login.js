@@ -1,7 +1,9 @@
 import React, { useState , useEffect} from "react";
-import {Navigate, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+import Cookies from 'js-cookie';
 import db from "../firebase";
 import { collection, getDocs,  } from "firebase/firestore";
+
 
 function Login() {
 const [email, setEmail] = useState("");
@@ -11,6 +13,8 @@ const [users, setUsers]=useState([]);
 
 const [displayUsernameBox, setDisplayUsernameBox] = useState(localStorage.getItem("userNameBox"));
 const [displayLoginBox, setDisplayLoginBox] = useState(localStorage.getItem("loginBox"));
+
+// const[cookies, setCookie] = useCookies(['displayUsername']);
 
 const onClickimg = () => {
     setDisplayUsernameBox("flex");
@@ -39,6 +43,7 @@ async function checkLogin() {
     return "0";
 }
 
+let navigate = useNavigate();
 const submit = async (e) => {
     e.preventDefault();
     if(email ===""){
@@ -55,13 +60,14 @@ const submit = async (e) => {
         } 
         else {
             console.log("login");
-            
+            // Cookies.set("displayUsername",cur,{ path: '/' });
             localStorage.setItem("displayUsername",cur);
             localStorage.setItem("userNameBox", "flex");
             localStorage.setItem("loginBox", "none");
             onClickimg();
             // console.log(localStorage.getItem("displayUsername"));
             // window.location.href = '/';
+            navigate('/', {replace: true});
             
         //    <Navigate to ='/' replace={true}/>
             
@@ -70,6 +76,7 @@ const submit = async (e) => {
     // setEmail("");
     // setPassword("");
 }
+
 
 return (
 	<div>
@@ -80,7 +87,7 @@ return (
             <div className="signup-in__form ">
                 <input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <p class="notify-p">{notify}</p>
+                <p className="notify-p">{notify}</p>
                 <input type="submit" value="Login" className="submit-button" />
                 
             </div>
