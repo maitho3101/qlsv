@@ -1,5 +1,5 @@
 .container-fluid{
-    background-color: #4e5d94;
+    
     position: relative;
     top: 0px;
     width: 100%;
@@ -7,6 +7,9 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+.header{
+    background-color: #773f85c4;
 }
 .header_name{
     font-size: 32px;
@@ -41,12 +44,16 @@
     text-decoration: none;
 }
 .user-displayname a:hover{
-    color: #811636;
+    color: black;
 }
 .liststudents-display{
     display: flex;
     flex-direction: column;
-    margin: 10px 20px;
+    /* background-color: red; */
+}
+.listusers-table{
+    margin: 0 200px;
+    padding: 0 50px;
 }
 #admin {
     border-collapse: collapse;
@@ -68,35 +75,52 @@
       width: 5%;
   }
   #admin td:nth-child(2){
-      width: 30%;
-  }
-  #admin th:nth-child(2){
-      width: 30%;
-  }
-  #admin td:nth-child(3){
-      width: 20%;
-  }
-  #admin th:nth-child(3){
-      width: 20%;
-  }
-  #admin td:nth-child(4){
-      width: 30%;
-  }
-  #admin th:nth-child(4){
-      width: 30%;
-  }
-  #admin td:nth-child(5){
       width: 15%;
   }
+  #admin th:nth-child(2){
+      width: 15%;
+  }
+  #admin td:nth-child(3){
+      width: 30%;
+  }
+  #admin th:nth-child(3){
+      width: 30%;
+  }
+  #admin td:nth-child(4){
+      width: 10%;
+  }
+  #admin th:nth-child(4){
+      width: 10%;
+  }
+  #admin td:nth-child(5){
+      width: 25%;
+  }
   #admin th:nth-child(5){
+      width: 25%;
+  }
+  #admin td:nth-child(6){
+      width: 15%;
+  }
+  #admin th:nth-child(6){
       width: 15%;
   }
   .fa-magnifying-glass{
     color: black;
   }
   .add-form{
+    position: fixed;
+    width: 700px; 
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #99999928 ;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    margin-top: -225px; /* Negative half of height. */
+    margin-left: -350px;
+    background-color: #504f4f;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
   .add__form{
     display: flex;
@@ -116,5 +140,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .profile-display{
+    position: fixed;
+    width: 700px; 
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #a73f9028 ;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    margin-top: -225px; /* Negative half of height. */
+    margin-left: -350px;
+    background-color: #a163949a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .stu_avatar{
+    width: 115px;
+    height: 150px;
+    background-color: red;
   }
   

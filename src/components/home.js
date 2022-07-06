@@ -21,14 +21,12 @@ function Home(){
 	const [newKhoa, setNewKhoa] = useState("");
 	const [newGrade, setNewGrade] = useState("");
     const [users, setUsers]=useState([]);
-    const [newUserName, setNewUserName]=useState([]);
-    const [newPassword, setNewPassword]=useState([]);
 	const [notify, setNotify] = useState("");
 	const [dataIdToBeUpdated, setDataIdToBeUpdated]= useState("");
     const [searchStudent, setSearchStudent]=useState("");
     const [students, setStudents]=useState([]);
 
-	const [viewProfileState, setViewAddProfileBox]=useState("none");
+	const [viewProfileState, setViewProfileBox]=useState("none");
 	const [addProfileState, setAddProfileBox]=useState("none");
 	const [editProfileState, setEditProfileBox]=useState("none");
 	const [infoState, setInfoBox] = useState("none");
@@ -59,7 +57,8 @@ function Home(){
 		
 		setEditProfileBox("none");
 		setAddProfileBox("none");
-		setViewAddProfileBox("none");
+		setViewProfileBox("none");
+		getStudents();
 	}
 	async function edithandle(item){
 		setEditProfileBox("flex");
@@ -75,7 +74,13 @@ function Home(){
 		setAddProfileBox("flex");
 	}
 	async function viewhandle(item){
-		setViewAddProfileBox("flex");
+		setViewProfileBox("flex");
+		setGender(item.gender);
+		setMsv(item.msv);
+		setStuName(item.name);
+		setEmail(item.email);
+		setKhoa(item.khoa);
+		setGrade(item.grade);
 	}
 	async function showInfoHandle(item){
 		setInfoBox("flex");
@@ -120,6 +125,7 @@ function Home(){
 					khoa: khoa,
 				})
 				console.log("success");
+				closeOnClick();
 				// window.location.href = '/login';
 			} 
 			else {
@@ -134,6 +140,7 @@ function Home(){
 		}
 		else{
 			const stuDoc = doc(db, "students", dataIdToBeUpdated); 
+			console.log(stuDoc);
 			await updateDoc(stuDoc,{
 				name: newStuName,
 				msv: newMsv,
@@ -143,24 +150,27 @@ function Home(){
 				grade:newGrade,
 				khoa: newKhoa,
 			})
-		console.log("password updated")
+		console.log(" updated")
+		closeOnClick();
 		}
 		setDataIdToBeUpdated("");
+		// getStudents();
 	}
     const deleteStudent = async (id)=>{
         const studentDoc = doc(db, "students", id); 
         var result = await confirm("Want to delete?");
         if (result) {
         await deleteDoc(studentDoc);
+		getStudents();
         }else{
             console.log("no")
         }
 }
     return (
-        <div>
+        <div >
             <Header/>
             
-            <div className="liststudents-display">
+            <div className="liststudents-display container-fluid">
 				<h1>List Students</h1>
 				<div className="search_student">
 					<input onChange={(e) => setSearchStudent(e.target.value)} type="text" placeholder="Search" />
@@ -170,13 +180,14 @@ function Home(){
 					<button onClick={addhandle}><i class="fa-solid fa-plus"></i></button>
 					
 				</div>
-				<div className="listusers-table">
+				<div className="listusers-table container-fluid">
 					<table id="admin">
 						<tr>
 							<th >STT</th>
 							<th >MSV</th>
 							<th >Tên</th>
-							<th >Email</th>
+							<th >Giới tính</th>
+							<th >Khoa</th>
 							<th >Action</th>
 						</tr>
 					{students.map((student, index)=>{
@@ -185,7 +196,8 @@ function Home(){
 									<td >{index + 1}</td>
 									<td >{student.msv}</td>
 									<td >{student.name}</td>
-									<td >{student.email}</td>
+									<td >{student.gender}</td>
+									<td >{student.khoa}</td>
 									<td >
 										
 										<button onClick = {() => {viewhandle(student); setDataIdToBeUpdated(student.id)}} ><i class="fa-solid fa-eye"></i></button>
@@ -244,7 +256,19 @@ function Home(){
 				</form>
 			</div>
 			<div className="profile-display" style={{"display":viewProfileState}}>
-						ha
+				<p> profile</p>
+				<button class="close-button" onClick={closeOnClick} >X</button>
+						<div className="stu_avatar" >
+							<img src="#"/>
+						</div>
+						<div className="profile_details">
+							<p>Mã sinh viên: {msv} </p>
+							<p>Họ tên: {stuName} </p>
+							<p>Giới tính: {gender}</p>
+							<p>Email: {email} </p>
+							<p>Khoa: {khoa} </p>
+							<p>Lớp: {grade} </p>
+						</div>
 			</div>
         </div>
     );

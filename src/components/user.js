@@ -15,11 +15,13 @@ function User() {
     return (
         <div>
             <Header/>
-            <h1>User Profile</h1>
-            <div className='pic_profile'>
-                avatar
+            <div className='user-profile container'>
+                <h1>User Profile</h1>
+                <div className='pic_profile'>
+                    avatar
+                </div>
+                <button className='btn btn_signout' onClick={signoutOnclick}>signout</button>
             </div>
-            <button onClick={signoutOnclick}>signout</button>
         </div>
     );
 }

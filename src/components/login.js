@@ -88,9 +88,9 @@ return (
                 <input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <p className="notify-p">{notify}</p>
-                <input type="submit" value="Login" className="submit-button" />
                 
             </div>
+                <input type="submit" value="Login" className="btn " />
         </form>
     </div>
 );

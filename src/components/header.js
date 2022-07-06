@@ -7,7 +7,7 @@ function Header() {
     return (
         <div>
 			{/* header */}
-			<div className="container-fluid">
+			<div className="container-fluid header">
 				<div className="header_name">
 					<p>QLSV</p>
 				</div>

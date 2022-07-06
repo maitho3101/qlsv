@@ -1,6 +1,17 @@
+.user-profile{
+    /* background-color: red; */
+}
 .pic_profile{
     width: 150px;
     height: 150px;
     background-color: black;
     color: white;
+}
+.btn{
+    background-color: #773f85c4;
+    border: none;
+    color: white;
+}
+.btn:hover{
+    background-color: #773f85c4;
 }
