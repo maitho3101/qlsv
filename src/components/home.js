@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
+import { useNavigate} from "react-router-dom";
 import { confirm } from "react-confirm-box";
 import Header from "./header";
 import "../css/home.css";
 import db from "../firebase";
-import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
 
 function Home(){
     const [pic, setPic] = useState("");
@@ -23,7 +24,7 @@ function Home(){
     const [users, setUsers]=useState([]);
 	const [notify, setNotify] = useState("");
 	const [dataIdToBeUpdated, setDataIdToBeUpdated]= useState("");
-    const [searchStudent, setSearchStudent]=useState("");
+    const [search, setSearch]=useState("");
     const [students, setStudents]=useState([]);
 
 	const [viewProfileState, setViewProfileBox]=useState("none");
@@ -50,8 +51,10 @@ function Home(){
 		await getStudents();
     },[]);
 
-    const searchSubmit = async()=>{
-        console.log("search");
+	let navigate = useNavigate();
+    const searchSubmit = async(e)=>{
+		e.preventDefault();
+        
     }
 	async function closeOnClick(){
 		
@@ -70,9 +73,6 @@ function Home(){
 		setNewPic(item.pic);
 		setNewStuName(item.name);
 	}
-	async function addhandle(item){
-		setAddProfileBox("flex");
-	}
 	async function viewhandle(item){
 		setViewProfileBox("flex");
 		setGender(item.gender);
@@ -82,9 +82,7 @@ function Home(){
 		setKhoa(item.khoa);
 		setGrade(item.grade);
 	}
-	async function showInfoHandle(item){
-		setInfoBox("flex");
-	}
+	
 	async function checkIfStuExist() {
 		await getStudents();
 		for(var i=0; i< students.length; i++){
@@ -172,14 +170,16 @@ function Home(){
             
             <div className="liststudents-display container-fluid">
 				<h1>List Students</h1>
-				<div className="search_student">
-					<input onChange={(e) => setSearchStudent(e.target.value)} type="text" placeholder="Search" />
-					<i onClick={searchSubmit} class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
-				</div>
+				<form onSubmit={searchSubmit}>
+					<input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder="Search" />
+					{/* <i onClick={searchSubmit} class="fa-solid fa-magnifying-glass" type="submit" value="search"></i> */}
+				</form>
 				<div className="add-student">
-					<button onClick={addhandle}><i class="fa-solid fa-plus"></i></button>
-					
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+						Add
+					</button>
 				</div>
+				
 				<div className="listusers-table container-fluid">
 					<table id="admin">
 						<tr>
@@ -199,9 +199,9 @@ function Home(){
 									<td >{student.gender}</td>
 									<td >{student.khoa}</td>
 									<td >
-										
-										<button onClick = {() => {viewhandle(student); setDataIdToBeUpdated(student.id)}} ><i class="fa-solid fa-eye"></i></button>
-										<button onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id)}} ><i class="fa-solid fa-pen-to-square"></i></button>
+									
+										<button onClick = {() => {viewhandle(student); setDataIdToBeUpdated(student.id)}} data-bs-toggle="modal" data-bs-target="#viewModal" ><i class="fa-solid fa-eye"></i></button>
+										<button onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id)}} type="button"  data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-solid fa-pen-to-square"></i></button>
 										<button onClick={()=>deleteStudent(student.id)}><i class="fa-solid fa-trash-can"></i></button>
 										
 									</td>
@@ -211,64 +211,97 @@ function Home(){
 						</table>
 				</div>
 			</div>
-			<div className="add-form" style={{"display":addProfileState}}>
-				<div>
-				<p>Add Student</p>
-				<button class="close-button" onClick={closeOnClick}  >X</button>
+			<div className="add-form" >
+				<div class="modal fade" id="addModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Add Student</h4>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+							</div>
+							<div class="modal-body">
+								<form onSubmit={addData} >
+									<div className="add__form ">
+										<input type="text" placeholder="URLpic"  value={pic} onChange={(e) => setPic(e.target.value)}/>
+										<input type="text" placeholder="Student Name"  value={stuName} onChange={(e) => setStuName(e.target.value)}/>
+										<select id="numberToSelect" name="gender_type" onchange="selectNum()">
+														<option value="">Gender</option>
+														<option value="Female">Female</option>
+														<option value="Male">Male</option>
+										</select>
+										<input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
+										<input type="text" placeholder="MSV"  value={msv} onChange={(e) => setMsv(e.target.value)}/>
+										<input type="text" placeholder="Khoa"  value={khoa} onChange={(e) => setKhoa(e.target.value)}/>
+										<input type="text" placeholder="Grade"  value={grade} onChange={(e) => setGrade(e.target.value)}/>
+										<p class="notify-p">{notify}</p>
+									</div>
+									<input type="submit" value="Add" class="btn btn-danger" data-bs-dismiss="modal" />
+									<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
-				<form onSubmit={addData} >
-					<div className="add__form ">
-						<input type="text" placeholder="URLpic"  value={pic} onChange={(e) => setPic(e.target.value)}/>
-						<input type="text" placeholder="Student Name"  value={stuName} onChange={(e) => setStuName(e.target.value)} required/>
-						<select id="numberToSelect" name="gender_type" onchange="selectNum()">
-                                        <option value="">Gender</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Male">Male</option>
-                        </select>
-						<input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
-						<input type="text" placeholder="MSV"  value={msv} onChange={(e) => setMsv(e.target.value)}/>
-						<input type="text" placeholder="Khoa"  value={khoa} onChange={(e) => setKhoa(e.target.value)}/>
-						<input type="text" placeholder="Grade"  value={grade} onChange={(e) => setGrade(e.target.value)}/>
-						<p class="notify-p">{notify}</p>
-						<input type="submit" value="Add" />
-					</div>
-				</form>
 			</div>
-			<div className="edit-form" style={{"display":editProfileState}}>
-				<p>Edit profile</p>
-				<button class="close-button" onClick={closeOnClick} >X</button>
-				<form onSubmit={updateData} >
-					<div className="add__form ">
-						<input type="text" placeholder="URLpic"  value={newPic} onChange={(e) => setNewPic(e.target.value)}/>
-						<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
-						<select id="numberToSelect" name="newgender_type" onchange="selectNum()">
-                                        <option value="">Gender</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Male">Male</option>
-                        </select>
-						<input type="email" placeholder="Email"  value={newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
-						<input type="text" placeholder="MSV"  value={newMsv} onChange={(e) => setNewMsv(e.target.value)}/>
-						<input type="text" placeholder="Khoa"  value={newKhoa} onChange={(e) => setNewKhoa(e.target.value)}/>
-						<input type="text" placeholder="Grade"  value={newGrade} onChange={(e) => setNewGrade(e.target.value)}/>
-						<p class="notify-p">{notify}</p>
-						<input type="submit" value="Edit" />
+			<div className="edit-form" >
+				<div class="modal fade" id="editModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Edit</h4>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+							</div>
+							<div class="modal-body">
+								<form onSubmit={updateData} >
+									<div className="add__form ">
+										<input type="text" placeholder="URLpic"  value={newPic} onChange={(e) => setNewPic(e.target.value)}/>
+										<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
+										<select id="numberToSelect" name="newgender_type" onchange="selectNum()">
+														<option value="">Gender</option>
+														<option value="Female">Female</option>
+														<option value="Male">Male</option>
+										</select>
+										<input type="email" placeholder="Email"  value={newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
+										<input type="text" placeholder="MSV"  value={newMsv} onChange={(e) => setNewMsv(e.target.value)}/>
+										<input type="text" placeholder="Khoa"  value={newKhoa} onChange={(e) => setNewKhoa(e.target.value)}/>
+										<input type="text" placeholder="Grade"  value={newGrade} onChange={(e) => setNewGrade(e.target.value)}/>
+										<p class="notify-p">{notify}</p>
+									</div>
+										<input type="submit" value="Edit" class="btn btn-danger" data-bs-dismiss="modal" />
+										<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+								</form>
+							</div>
+						</div>
 					</div>
-				</form>
+				</div>
+				
 			</div>
-			<div className="profile-display" style={{"display":viewProfileState}}>
-				<p> profile</p>
-				<button class="close-button" onClick={closeOnClick} >X</button>
-						<div className="stu_avatar" >
-							<img src="#"/>
+			<div className="profile-display" >
+				<div class="modal fade" id="viewModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Profile</h4>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 						</div>
-						<div className="profile_details">
-							<p>Mã sinh viên: {msv} </p>
-							<p>Họ tên: {stuName} </p>
-							<p>Giới tính: {gender}</p>
-							<p>Email: {email} </p>
-							<p>Khoa: {khoa} </p>
-							<p>Lớp: {grade} </p>
+						<div class="modal-body">
+							<div className="stu_avatar" >
+								<img src="#"/>
+							</div>
+							<div className="profile_details">
+								<p>Mã sinh viên: {msv} </p>
+								<p>Họ tên: {stuName} </p>
+								<p>Giới tính: {gender}</p>
+								<p>Email: {email} </p>
+								<p>Khoa: {khoa} </p>
+								<p>Lớp: {grade} </p>
+							</div>
 						</div>
+
+					</div>
+				</div>
+			</div>
+
 			</div>
         </div>
     );

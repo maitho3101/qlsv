@@ -16,7 +16,6 @@ function App(){
 				<Route path="/login" element={<Login/>}/>
 				{/* <Route exact path="/" element ={<PrivateRoute/>}>
 				</Route> */}
-				
 				<Route path="/user" element={<User/>}/>
 			</Routes>
 		</BrowserRouter>
