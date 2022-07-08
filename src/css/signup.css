@@ -1,4 +1,20 @@
+.signup-display{
+    /* background-color: red; */
+    width: 60%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    border: 1px solid gray;
+}
 .signup-in {
+    position: relative;
     text-align: center;
     height: 100vh;
     display: flex;
@@ -10,15 +26,16 @@
 .signup-in__title h1{
     /* background-color: black; */
     font-size: 50px;
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 .signup-in__form {
     display: flex;
     flex-direction: column;
+    font-size: 120%;
     /* background-color: green; */
-    width: 40%;
-    top: 50%;
+    width: 60%;
+    top: 30%;
 }
     
 .signup-in__form   input {
@@ -29,7 +46,9 @@
     margin: 10px;
     outline: none;
 }
-
+.btn-signup{
+    margin: 20px 0;
+}
 .notify-p{
     color: red;
 }

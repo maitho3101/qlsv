@@ -76,17 +76,19 @@ const submit = async (e) => {
 
 return (
 	<form onSubmit={submit} className="signup-in">
-        <div className="signup-in__title">
-            <h1>Sign up</h1>
+        <div className="signup-display">
+            <div className="signup-in__title">
+                <h1>Sign up</h1>
+            </div>
+            <div className="signup-in__form ">
+                <input type="email" placeholder="Email"  value={email}  onChange={(e) => setEmail(e.target.value)}/>
+                <input type="text" placeholder="Name"  value={userName} onChange={(e) => setUserName(e.target.value)} />
+                <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <input type="password" placeholder="Confirm Password"  value={confPassword} onChange={(e) => setConfPassword(e.target.value)}/>
+                <p class="notify-p">{notify}</p>
+            </div>
+            <input type="submit" value="Sign up" className="btn btn-signup" />
         </div>
-        <div className="signup-in__form ">
-            <input type="email" placeholder="Email"  value={email}  onChange={(e) => setEmail(e.target.value)}/>
-            <input type="text" placeholder="Name"  value={userName} onChange={(e) => setUserName(e.target.value)} />
-            <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
-            <input type="password" placeholder="Confirm Password"  value={confPassword} onChange={(e) => setConfPassword(e.target.value)}/>
-            <p class="notify-p">{notify}</p>
-        </div>
-            <input type="submit" value="Sign up" className="btn" />
 	</form>
 );
 }

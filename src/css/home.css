@@ -107,17 +107,26 @@
   .fa-magnifying-glass{
     color: black;
   }
+.add-form{
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    z-index: 1055;
+    width: 500px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+    background-color: #c7c6c6;
+}
 
   .add__form{
     display: flex;
     flex-direction: column;
   }
  
-  .stu_avatar{
-    width: 115px;
-    height: 150px;
-    background-color: red;
-  }
+  
   .modal{
     position: fixed;
     top: 20%;

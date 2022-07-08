@@ -4,7 +4,7 @@ import { confirm } from "react-confirm-box";
 import Header from "./header";
 import "../css/home.css";
 import db from "../firebase";
-import { collection, getDocs, doc, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
+import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
 
 function Home(){
     const [pic, setPic] = useState("");
@@ -24,13 +24,13 @@ function Home(){
     const [users, setUsers]=useState([]);
 	const [notify, setNotify] = useState("");
 	const [dataIdToBeUpdated, setDataIdToBeUpdated]= useState("");
-    const [search, setSearch]=useState("");
     const [students, setStudents]=useState([]);
+    const [search, setSearch]=useState("");
+    const [filter, setFilter]=useState("");
 
-	const [viewProfileState, setViewProfileBox]=useState("none");
-	const [addProfileState, setAddProfileBox]=useState("none");
-	const [editProfileState, setEditProfileBox]=useState("none");
-	const [infoState, setInfoBox] = useState("none");
+	const [addBoxState, setAddBoxState] = useState("none");
+	const [editBoxState, setEditBoxState] = useState("none");
+	const [bgopacity, setBackGroundOpacity] = useState("1");
 
     const usersCollection = collection(db,"users");
     const studentsCollection = collection(db,"students");
@@ -43,7 +43,7 @@ function Home(){
     async function getStudents() {
         const data = await getDocs(studentsCollection); 
         var newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
-        setStudents(newStudent);
+        setStudents( newStudent);
     }
 
     useEffect(() => async function() {
@@ -51,20 +51,38 @@ function Home(){
 		await getStudents();
     },[]);
 
-	let navigate = useNavigate();
+	const filterSubmit = async(e)=>{
+		// e.preventDefault();
+		console.log("lala")
+		// const config={
+		// 	grade: e.target.grade_filter.value
+		// }
+		 
+		console.log(filter);
+	// 	const data = await getDocs(studentsCollection);
+	// 	const filterData= onSnapshot(data,(snapshot)=>
+    //   setStudents(snapshot.filter(person => person.grade = `${filter}`).map(doc=>({...doc.data(),id:doc.id})))
+	//   );
+	//   console.log(`${filter}`)
+	//   return (filterData);
+	}
     const searchSubmit = async(e)=>{
 		e.preventDefault();
-        
+		await getStudents();
+		const seachName=students.filter(function(st){ return st.name.startsWith(search); })
+		setStudents(seachName);
+		
+
     }
 	async function closeOnClick(){
-		
-		setEditProfileBox("none");
-		setAddProfileBox("none");
-		setViewProfileBox("none");
-		getStudents();
+		setAddBoxState("none");
+		setEditBoxState("none");
+		setBackGroundOpacity("1");
+		getStudents("");
 	}
 	async function edithandle(item){
-		setEditProfileBox("flex");
+		setEditBoxState("flex");
+		setBackGroundOpacity("0.4")
 		setNewEmail(item.email);
 		setNewGender(item.gender);
 		setNewGrade(item.grade);
@@ -74,7 +92,7 @@ function Home(){
 		setNewStuName(item.name);
 	}
 	async function viewhandle(item){
-		setViewProfileBox("flex");
+		setPic(item.pic);
 		setGender(item.gender);
 		setMsv(item.msv);
 		setStuName(item.name);
@@ -86,16 +104,36 @@ function Home(){
 	async function checkIfStuExist() {
 		await getStudents();
 		for(var i=0; i< students.length; i++){
+			console.log(students[i].email)
 			if (email === students[i].email ){
 				return 1; 
 			}
 		}
 		return 0;
 	}
+	async function checkIfMsvExist() {
+		await getStudents();
+		for(var i=0; i< students.length; i++){
+			console.log(students[i].msv)
+			if (msv === students[i].msv ){
+				return 1; 
+			}
+		}
+		return 0;
+	}
+	const addOnClick =()=>{
+		setAddBoxState("flex");
+		setBackGroundOpacity("0.4");
+	}
 	const addData = async(e)=>{
 		e.preventDefault();
+		const cur2= await checkIfMsvExist();
 		if(!email ){
 			setNotify("Please fill in email!")
+		}
+		else if(cur2){
+			setNotify("MSV already exist ")
+
 		}
 		// else if (!userName ){
 		// 	setNotify("Please fill in userName!")
@@ -123,6 +161,7 @@ function Home(){
 					khoa: khoa,
 				})
 				console.log("success");
+				getStudents();
 				closeOnClick();
 				// window.location.href = '/login';
 			} 
@@ -133,7 +172,7 @@ function Home(){
 	}
 	const updateData =async (e)=>{
 		e.preventDefault();
-		if(email=== "a@gmail.com"){
+		if(email=== newEmail){
 			console.log("fff")
 		}
 		else{
@@ -149,6 +188,7 @@ function Home(){
 				khoa: newKhoa,
 			})
 		console.log(" updated")
+		getStudents();
 		closeOnClick();
 		}
 		setDataIdToBeUpdated("");
@@ -168,14 +208,26 @@ function Home(){
         <div >
             <Header/>
             
-            <div className="liststudents-display container-fluid">
+            <div className="liststudents-display container-fluid" style={{"opacity":bgopacity}}>
 				<h1>List Students</h1>
-				<form onSubmit={searchSubmit}>
-					<input onChange={(e) => setSearch(e.target.value)} value={search} type="text" placeholder="Search" />
-					{/* <i onClick={searchSubmit} class="fa-solid fa-magnifying-glass" type="submit" value="search"></i> */}
+				<form  >
+
+					<select name="grade_filter" onChange={(e)=>setFilter(e.target.value)} value={filter}>
+						
+						<option >Select Grade</option>
+						{students.map(student=>(
+							<option value={student.value} >{student.grade}</option>
+							))}
+					</select>
 				</form>
+				
+				<form onSubmit={searchSubmit}>
+					<input onChange={(e) => setSearch(e.target.value)}  value={search} type="text" placeholder="Search" />
+					<i onClick={searchSubmit} class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
+				</form>
+			
 				<div className="add-student">
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+					<button type="button" class="btn btn-primary" onClick={addOnClick}>
 						Add
 					</button>
 				</div>
@@ -187,37 +239,40 @@ function Home(){
 							<th >MSV</th>
 							<th >Tên</th>
 							<th >Giới tính</th>
-							<th >Khoa</th>
+							<th >Lớp</th>
 							<th >Action</th>
 						</tr>
-					{students.map((student, index)=>{
+					{students && (<>
+						{students.map((student, index)=>{
 						return(
 								<tr >
 									<td >{index + 1}</td>
 									<td >{student.msv}</td>
 									<td >{student.name}</td>
 									<td >{student.gender}</td>
-									<td >{student.khoa}</td>
+									<td >{student.grade}</td>
 									<td >
 									
 										<button onClick = {() => {viewhandle(student); setDataIdToBeUpdated(student.id)}} data-bs-toggle="modal" data-bs-target="#viewModal" ><i class="fa-solid fa-eye"></i></button>
-										<button onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id)}} type="button"  data-bs-toggle="modal" data-bs-target="#editModal" ><i class="fa-solid fa-pen-to-square"></i></button>
+										<button onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id);}} type="button"  ><i class="fa-solid fa-pen-to-square"></i></button>
 										<button onClick={()=>deleteStudent(student.id)}><i class="fa-solid fa-trash-can"></i></button>
 										
 									</td>
 								</tr>
 							)
 						})}
+					</>)}
+					
 						</table>
 				</div>
 			</div>
-			<div className="add-form" >
-				<div class="modal fade" id="addModal">
-					<div class="modal-dialog">
+			<div className="add-form" style={{"display":addBoxState}} >
+				
+					<div class="modal-dialog addModal ">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h4 class="modal-title">Add Student</h4>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+								<button type="button" class="btn-close" onClick={closeOnClick}></button>
 							</div>
 							<div class="modal-body">
 								<form onSubmit={addData} >
@@ -235,21 +290,21 @@ function Home(){
 										<input type="text" placeholder="Grade"  value={grade} onChange={(e) => setGrade(e.target.value)}/>
 										<p class="notify-p">{notify}</p>
 									</div>
-									<input type="submit" value="Add" class="btn btn-danger" data-bs-dismiss="modal" />
-									<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+									<input type="submit" value="Add"   />
+									<button type="button" class="btn btn-danger" onClick={closeOnClick}>Cancel</button>
 								</form>
 							</div>
 						</div>
 					</div>
-				</div>
+				
 			</div>
-			<div className="edit-form" >
-				<div class="modal fade" id="editModal">
+			<div className="add-form" style={{"display":editBoxState}} >
+				
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h4 class="modal-title">Edit</h4>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+								<button type="button" class="btn-close" onClick={closeOnClick}></button>
 							</div>
 							<div class="modal-body">
 								<form onSubmit={updateData} >
@@ -267,13 +322,13 @@ function Home(){
 										<input type="text" placeholder="Grade"  value={newGrade} onChange={(e) => setNewGrade(e.target.value)}/>
 										<p class="notify-p">{notify}</p>
 									</div>
-										<input type="submit" value="Edit" class="btn btn-danger" data-bs-dismiss="modal" />
-										<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+										<input type="submit" value="Edit"   />
+										<button type="button" class="btn btn-danger" onClick={closeOnClick}>Cancel</button>
 								</form>
 							</div>
 						</div>
 					</div>
-				</div>
+				
 				
 			</div>
 			<div className="profile-display" >
@@ -286,7 +341,7 @@ function Home(){
 						</div>
 						<div class="modal-body">
 							<div className="stu_avatar" >
-								<img src="#"/>
+								<img style={{"height":"180px", "width":"180px"}} src={pic}></img>
 							</div>
 							<div className="profile_details">
 								<p>Mã sinh viên: {msv} </p>

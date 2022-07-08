@@ -1,0 +1,45 @@
+p{
+    margin:0;
+}
+.title{
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.liststudents-gridview{
+
+    background-color: white;
+    padding: 40px 70px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.profile-content{
+    margin: 10px 20px;
+    background-color: rgb(226, 215, 215);
+    font-size: 85%;
+    display:grid;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.stu_avatar{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.stu-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.stu-info .stu-name{
+    font-weight: bold;
+    font-size: 120%;
+    padding-bottom: 10px;
+}
