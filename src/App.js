@@ -5,7 +5,9 @@ import Signup from "./components/signup";
 import Login from "./components/login";
 import Home from "./components/home";
 import User from "./components/user";
-import Gridview from "./components/gridview";
+import Students from "./components/students";
+import DetailStudent from "./components/detailStudent";
+
 import Cookies from "js-cookie";
 
 function App(){
@@ -18,7 +20,8 @@ function App(){
 				{/* <Route exact path="/" element ={<PrivateRoute/>}>
 				</Route> */}
 				<Route path="/user" element={<User/>}/>
-				<Route path="/gridview" element={<Gridview/>}/>
+				<Route path="/students" element={<Students/>}/>
+				<Route path="/student/:id" element={<DetailStudent/>}/>
 			</Routes>
 		</BrowserRouter>
 	)

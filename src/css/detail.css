@@ -1,0 +1,69 @@
+.student-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    border: 1px solid gray;
+    border-radius: 10px;
+    width: 90%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #9f9aa054;
+}
+.student-profile_title{
+    /* background-color: red; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+.student-profile_title h1{
+    font-size: 300%;
+
+}
+.student-profile_body{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px;
+    
+}
+.stu-avatar_detail{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.stu_detail{
+    width: 60%;
+    font-size: 120%;
+}
+.stu_detail h3{
+    display: flex;
+    justify-content: center;
+}
+.stu_detail p{
+    padding-left: 20px;
+
+}
+hr{
+    border: 1px solid gray;
+    margin: 10px 0;
+    width: 90%;
+}
+.stu_bio{
+    width: 100%;
+}
+.stu_bio p{
+    font-size: 120%;
+    margin-bottom: 10px;
+    margin-left: 200px;
+}
+.bio_detail{
+    /* background-color: red; */
+    margin-left: 300px;
+    width: 70%;
+    height: 200px;
+    margin-bottom: 30px;
+    border: 1px solid gray;
+    border-radius: 10px;
+}

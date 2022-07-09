@@ -23,7 +23,7 @@
     /* background-color: red; */
     }
 
-.signup-in__title h1{
+.signup_title h1{
     /* background-color: black; */
     font-size: 50px;
     margin: 20px 0;
@@ -51,5 +51,9 @@
 }
 .notify-p{
     color: red;
+}
+.footer{
+    position: fixed;
+    bottom: 10%;
 }
     

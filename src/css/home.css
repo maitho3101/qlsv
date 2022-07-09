@@ -9,10 +9,11 @@
     align-items: center;
 }
 .header{
-    background-color: #773f85c4;
+    background-color: #33273594;
 }
 .header_name{
-    font-size: 32px;
+    font-size: 300%;
+    color: white;
 }
 .header_menu{
     height: 100%;
@@ -28,7 +29,10 @@
 
 .navbar-nav li {
     display: inline;
-    font-size: 20px;
+    font-size: 200%;
+}
+.navbar-nav li a:hover {
+    color: black;
 }
 
 .navbar-nav li a {
@@ -41,6 +45,7 @@
     display: inline;
     color: white;
     padding: 16px;
+    font-size: 200%;
     text-decoration: none;
 }
 .user-displayname a:hover{

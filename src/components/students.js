@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "./header";
-import "../css/gridview.css";
+import "../css/students.css";
 import "../css/home.css";
 import db from "../firebase";
 import { collection, getDocs, doc, docs } from "firebase/firestore";
 
-function Gridview(props) {
+function Students(props) {
     const [students, setStudents]=useState([]);
-    
+    const [dataIdToBePicked, setDataIdToBePicked] = useState("");
     const studentsCollection = collection(db,"students");
 
     async function getStudents() {
@@ -20,7 +20,11 @@ function Gridview(props) {
         
 		await getStudents();
     },[]);
-
+    let navigate = useNavigate();
+    async function handleViewDetailStudent(student){
+        console.log("jfgd", student);
+        navigate(`/student/${student.id}`)
+    }
     const CardProfile = ()=>{
         return(
             students.map((student, index)=>
@@ -35,7 +39,7 @@ function Gridview(props) {
                                 <p>{student.gender}</p>
                                 <p>{student.msv}</p>
                                 <p>{student.grade}</p>
-                                <a href="#">View Details</a>
+                                <button onClick = {() => handleViewDetailStudent(student)} >View Details</button>
                             </div>
                         </div>
                     </div>
@@ -55,4 +59,4 @@ function Gridview(props) {
     );
 }
 
-export default Gridview;
+export default Students;

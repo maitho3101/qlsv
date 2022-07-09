@@ -69,8 +69,9 @@ function Home(){
     const searchSubmit = async(e)=>{
 		e.preventDefault();
 		await getStudents();
-		const seachName=students.filter(function(st){ return st.name.startsWith(search); })
-		setStudents(seachName);
+		const searchName=students.filter(function(st){ return st.name.startsWith(search); })
+		console.log(searchName);
+		setStudents(searchName);
 		
 
     }
