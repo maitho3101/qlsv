@@ -7,19 +7,20 @@ import Home from "./components/home";
 import User from "./components/user";
 import Students from "./components/students";
 import DetailStudent from "./components/detailStudent";
-
+import Welcome from "./components/welcome";
 import Cookies from "js-cookie";
 
 function App(){
 	return(
 		<BrowserRouter>
 			<Routes>
+				<Route path="/" element={<Welcome/>}/>
 				<Route path="/signup" element={<Signup/>}/>
-				<Route  path='/' element={<Home/>}/>
+				<Route  path='/home' element={<Home/>}/>
 				<Route path="/login" element={<Login/>}/>
 				{/* <Route exact path="/" element ={<PrivateRoute/>}>
 				</Route> */}
-				<Route path="/user" element={<User/>}/>
+				<Route path="/user/:id" element={<User/>}/>
 				<Route path="/students" element={<Students/>}/>
 				<Route path="/student/:id" element={<DetailStudent/>}/>
 			</Routes>

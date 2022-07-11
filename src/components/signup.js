@@ -1,6 +1,7 @@
 import React, { useState , useEffect} from "react";
 import "../css/signup.css";
 import db from "../firebase";
+import Cookies from 'js-cookie';
 import { collection, getDocs,  } from "firebase/firestore";
 
 function Signup() {
@@ -47,23 +48,52 @@ async function checkIfUserExist() {
     }
     return 0;
 }
-
+async function nextPage(){
+    if(page===0){
+        if(!email ){
+            setNotify("Please fill in email!")
+        }
+        else if (!password ){
+            setNotify("Please fill in password!")
+        }
+        else if (password !== confPassword) {
+            setNotify("Password doesn't match!")
+        }
+        else{
+            setPage(1);
+            setNotify("");
+        }
+    }
+    else if(page ===1){
+        if(!userName ){
+            setNotify("Please fill in name!")
+        }
+        else if (!age ){
+            setNotify("Please fill in age!")
+        }
+        else if (!bio) {
+            setNotify("Please fill in bio!")
+        }
+        else{
+            setPage(2);
+            setNotify("");
+        }
+    }
+    
+}
 const submit = async (e) => {
     e.preventDefault();
-    if(!email ){
-        setNotify("Please fill in email!")
+    if(!phone ){
+        setNotify("Please fill in phone!")
     }
-    else if (!password ){
-        setNotify("Please fill in password!")
-    }
-    else if (password !== confPassword) {
-        setNotify("Password doesn't match!")
+    else if (!address ){
+        setNotify("Please fill in address!")
     }
     else{
         if(page === FormTitles.length-1){
             const cur = await checkIfUserExist(); 
             if(!cur) {
-                await db.collection("users").add({
+                 const check = await db.collection("users").add({
                     name: userName,
                     email: email,
                     password: password,
@@ -72,16 +102,14 @@ const submit = async (e) => {
                     phone:phone,
                     address:address,
                 })
-                setNotify("success");
+                setNotify("success");;
                 window.location.href = '/login';
+                
+
             } 
             else {
                 setNotify("Account already exist. Please choose another one!");
             }
-        }
-        else{
-            setPage((currentPage)=> currentPage +1)
-            setNotify("");
         }
     
     }
@@ -132,11 +160,14 @@ return (
                 {PageDisplay()}
             <div className="footer">
                 <button disabled={page === 0} onClick={()=>{setPage((currentPage)=> currentPage -1)}} >Prev</button>
-                <button 
+                {/* <button 
                     onClick={submit}
                 >
                         {page === FormTitles.length -1?"Submit":"Next"}
-                </button>
+                </button> */}
+                {page ===FormTitles.length-1?<button onClick={submit} >Sign Up</button>:<button onClick={nextPage}>Next</button>}
+                
+                
                 
             </div>
         </div>

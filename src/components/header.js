@@ -1,9 +1,24 @@
 
 import React, { useState, useEffect } from 'react';
 import Cookies from "js-cookie";
+import { useNavigate, useParams } from "react-router-dom";
 function Header() {
     const [displayUsernameBox, setDisplayUsernameBox] = useState(localStorage.getItem("userNameBox"));
     const [displayLoginBox, setDisplayLoginBox] = useState(localStorage.getItem("loginBox"));
+	let navigate = useNavigate();
+	const [homelink, setHomelink] = useState("#");
+	const [listlink, setListlink] = useState("#");
+
+    useEffect( () => {
+        if (localStorage.getItem("displayUsername") =="") {
+            setHomelink("/login");
+            setListlink("/login");
+        }
+        else {
+            setHomelink("/home");
+            setListlink("/students");
+        }
+    },[]);
     return (
         <div>
 			{/* header */}
@@ -13,15 +28,15 @@ function Header() {
 				</div>
 				<div className="header_menu ">
 					<ul className="nav navbar-nav ml-auto">
-						<li class="nav__item"><a href="/" class="nav__link active">Home</a></li>
-						<li class="nav__item"><a href="/students" class="nav__link">List</a></li>
+						<li class="nav__item"><a href={homelink} class="nav__link active">Home</a></li>
+						<li class="nav__item"><a href={listlink} class="nav__link">List</a></li>
 						<li class="nav__item"><a href="#" class="nav__link">Home</a></li>
 						<li class="nav__item"><a href="#" class="nav__link">Home</a></li>
 					</ul>
 				</div>
 				<div class="user-info" style={{display:displayUsernameBox}}>
 					<div class="user-displayname">
-						<a href='/user'>{localStorage.getItem("displayUsername")}</a>
+						<a href="#" onClick={()=>navigate(`/user/${Cookies.get("idLogin")}`)}>{localStorage.getItem("displayUsername")}</a>
 						{/* <a href='/user'>{Cookies.get("displayUsername")}</a> */}
 					</div>
             	</div>

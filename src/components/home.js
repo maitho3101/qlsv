@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import { confirm } from "react-confirm-box";
+import { serverTimestamp, Timestamp } from "firebase/firestore";
 import Header from "./header";
 import "../css/home.css";
 import db from "../firebase";
@@ -41,7 +42,8 @@ function Home(){
         setUsers(newUser);
     }
     async function getStudents() {
-        const data = await getDocs(studentsCollection); 
+        const dataquery =  query(studentsCollection, orderBy("created", "asc"));
+		const data =await getDocs(dataquery);
         var newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
         setStudents( newStudent);
     }
@@ -52,26 +54,35 @@ function Home(){
     },[]);
 
 	const filterSubmit = async(e)=>{
-		// e.preventDefault();
-		console.log("lala")
-		// const config={
-		// 	grade: e.target.grade_filter.value
-		// }
-		 
-		console.log(filter);
-	// 	const data = await getDocs(studentsCollection);
-	// 	const filterData= onSnapshot(data,(snapshot)=>
-    //   setStudents(snapshot.filter(person => person.grade = `${filter}`).map(doc=>({...doc.data(),id:doc.id})))
-	//   );
-	//   console.log(`${filter}`)
-	//   return (filterData);
+		e.preventDefault();
+		await getStudents();
+		if(filter===""){
+			getStudents();
+		}
+		else{
+
+			const data = query(studentsCollection, where("grade","==",`${filter}`));
+			const filterData = onSnapshot(data,(snapshot)=> setStudents(snapshot.docs.map(doc=>({...doc.data(), id:doc.id}))));
+			return(filterData);
+			// setFilter("");
+		}
+
+		// students.orderByValue("grade").equalTo(filter)
+        // .then(snapshot => setStudents(snapshot.data()))
+
 	}
     const searchSubmit = async(e)=>{
 		e.preventDefault();
 		await getStudents();
-		const searchName=students.filter(function(st){ return st.name.startsWith(search); })
-		console.log(searchName);
-		setStudents(searchName);
+		if(search===""){
+			getStudents();
+		}
+		else{
+
+			const searchName=students.filter(function(st){ return st.name.includes(search); })
+			console.log(searchName);
+			setStudents(searchName);
+		}
 		
 
     }
@@ -160,11 +171,11 @@ function Home(){
 					gender: e.target.gender_type.value,
 					grade:grade,
 					khoa: khoa,
+					created: serverTimestamp(),
 				})
 				console.log("success");
 				getStudents();
 				closeOnClick();
-				// window.location.href = '/login';
 			} 
 			else {
 				console.log("Account already exist. Please choose another one!");
@@ -178,7 +189,6 @@ function Home(){
 		}
 		else{
 			const stuDoc = doc(db, "students", dataIdToBeUpdated); 
-			console.log(stuDoc);
 			await updateDoc(stuDoc,{
 				name: newStuName,
 				msv: newMsv,
@@ -210,27 +220,31 @@ function Home(){
             <Header/>
             
             <div className="liststudents-display container-fluid" style={{"opacity":bgopacity}}>
-				<h1>List Students</h1>
-				<form  >
-
-					<select name="grade_filter" onChange={(e)=>setFilter(e.target.value)} value={filter}>
-						
-						<option >Select Grade</option>
-						{students.map(student=>(
-							<option value={student.value} >{student.grade}</option>
-							))}
-					</select>
-				</form>
-				
-				<form onSubmit={searchSubmit}>
-					<input onChange={(e) => setSearch(e.target.value)}  value={search} type="text" placeholder="Search" />
-					<i onClick={searchSubmit} class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
-				</form>
-			
-				<div className="add-student">
-					<button type="button" class="btn btn-primary" onClick={addOnClick}>
-						Add
-					</button>
+				<div className="liststudents-title">
+					<h1>List Students</h1>
+				</div>
+				<div className="action">
+					<div className="add-student">
+						<button type="button" class="btn btn-primary" onClick={addOnClick}>
+							Add
+						</button>
+					</div>
+					<form onClick={filterSubmit} className="filter-student" >
+						<select className="btn" name="grade_filter" onChange={(e)=>setFilter(e.target.value)} value={filter} >
+							<option value="" >Select Grade</option>
+							<option value="KHMT">KHMT</option>
+							<option value="CNTT">CNTT</option>
+							<option value="QTKD">QTKD</option>
+						</select>
+					</form>
+					
+					<div className="search-student">
+						<form onSubmit={searchSubmit} >
+							<input onChange={(e) => setSearch(e.target.value)}  value={search} type="text" placeholder="Search" />
+							<i onClick={searchSubmit} class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
+							<hr/>
+						</form>
+					</div>
 				</div>
 				
 				<div className="listusers-table container-fluid">
@@ -279,20 +293,30 @@ function Home(){
 								<form onSubmit={addData} >
 									<div className="add__form ">
 										<input type="text" placeholder="URLpic"  value={pic} onChange={(e) => setPic(e.target.value)}/>
+										<hr/>
 										<input type="text" placeholder="Student Name"  value={stuName} onChange={(e) => setStuName(e.target.value)}/>
-										<select id="numberToSelect" name="gender_type" onchange="selectNum()">
-														<option value="">Gender</option>
-														<option value="Female">Female</option>
-														<option value="Male">Male</option>
+										<hr/>
+										<select id="numberToSelect" name="gender_type"  >
+											<option value="">Gender</option>
+											<option value="Female">Female</option>
+											<option value="Male">Male</option>
 										</select>
+										<hr/>
 										<input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
+										<hr/>
 										<input type="text" placeholder="MSV"  value={msv} onChange={(e) => setMsv(e.target.value)}/>
+										<hr/>
 										<input type="text" placeholder="Khoa"  value={khoa} onChange={(e) => setKhoa(e.target.value)}/>
+										<hr/>
 										<input type="text" placeholder="Grade"  value={grade} onChange={(e) => setGrade(e.target.value)}/>
+										<hr/>
 										<p class="notify-p">{notify}</p>
 									</div>
-									<input type="submit" value="Add"   />
-									<button type="button" class="btn btn-danger" onClick={closeOnClick}>Cancel</button>
+									<div className="action-add">
+
+									<input type="submit" value="Add" className="button-add"/>
+									{/* <button type="button" class="btn btn-danger" onClick={closeOnClick}>Cancel</button> */}
+									</div>
 								</form>
 							</div>
 						</div>
@@ -311,20 +335,30 @@ function Home(){
 								<form onSubmit={updateData} >
 									<div className="add__form ">
 										<input type="text" placeholder="URLpic"  value={newPic} onChange={(e) => setNewPic(e.target.value)}/>
+										<hr/>
 										<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
-										<select id="numberToSelect" name="newgender_type" onchange="selectNum()">
+										<hr/>
+										<select id="numberToSelect" name="newgender_type" >
 														<option value="">Gender</option>
 														<option value="Female">Female</option>
 														<option value="Male">Male</option>
 										</select>
+										<hr/>
 										<input type="email" placeholder="Email"  value={newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
+										<hr/>
 										<input type="text" placeholder="MSV"  value={newMsv} onChange={(e) => setNewMsv(e.target.value)}/>
+										<hr/>
 										<input type="text" placeholder="Khoa"  value={newKhoa} onChange={(e) => setNewKhoa(e.target.value)}/>
+										<hr/>
 										<input type="text" placeholder="Grade"  value={newGrade} onChange={(e) => setNewGrade(e.target.value)}/>
+										<hr/>
 										<p class="notify-p">{notify}</p>
 									</div>
-										<input type="submit" value="Edit"   />
-										<button type="button" class="btn btn-danger" onClick={closeOnClick}>Cancel</button>
+									<div className="action-add">
+
+										<input type="submit" value="Edit" className="button-add"  />
+									</div>
+										{/* <button type="button" class="btn btn-danger" onClick={closeOnClick}>Cancel</button> */}
 								</form>
 							</div>
 						</div>

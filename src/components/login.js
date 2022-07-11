@@ -1,8 +1,10 @@
 import React, { useState , useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
+import { useCookies } from "react-cookie";
 import db from "../firebase";
 import { collection, getDocs,  } from "firebase/firestore";
+import { async } from "@firebase/util";
 
 
 function Login() {
@@ -10,11 +12,11 @@ const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [notify, setNotify] = useState("");
 const [users, setUsers]=useState([]);
+const [userDetail, setUserDetail]= useState("");
 
 const [displayUsernameBox, setDisplayUsernameBox] = useState(localStorage.getItem("userNameBox"));
 const [displayLoginBox, setDisplayLoginBox] = useState(localStorage.getItem("loginBox"));
 
-// const[cookies, setCookie] = useCookies(['displayUsername']);
 
 const onClickimg = () => {
     setDisplayUsernameBox("flex");
@@ -42,6 +44,17 @@ async function checkLogin() {
     }
     return "0";
 }
+async function checkLogin2() {
+    await getUsers();
+    for(var i=0; i< users.length; i++){
+        if (email === users[i].email && password === users[i].password){
+            return users[i].id; 
+        }
+        // console.log(users[i].name)
+    }
+    return "0";
+}
+
 
 let navigate = useNavigate();
 const submit = async (e) => {
@@ -59,17 +72,17 @@ const submit = async (e) => {
             setNotify("Username or password is invalid. Please try again");
         } 
         else {
-            console.log("login");
-            // Cookies.set("displayUsername",cur,{ path: '/' });
+            // Cookies.set("displayUsern",users,{ path: '/' });
+            
             localStorage.setItem("displayUsername",cur);
+           
             localStorage.setItem("userNameBox", "flex");
             localStorage.setItem("loginBox", "none");
+            const idLogin ="";
+            const cur2 = await checkLogin2(idLogin);
+            Cookies.set("idLogin", cur2);
             onClickimg();
-            // console.log(localStorage.getItem("displayUsername"));
-            // window.location.href = '/';
             navigate('/', {replace: true});
-            
-        //    <Navigate to ='/' replace={true}/>
             
         }
     }
@@ -81,16 +94,19 @@ const submit = async (e) => {
 return (
 	<div>
         <form onSubmit={submit} className="signup-in" >
-            <div className="signup-in__title">
-                <h1>Login</h1>
-            </div>
-            <div className="signup-in__form ">
-                <input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
-                <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <p className="notify-p">{notify}</p>
-                
-            </div>
+            <div className="signup-display">
+
+                <div className="signup-in__title">
+                    <h1>Login</h1>
+                </div>
+                <div className="signup-in__form ">
+                    <input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <p className="notify-p">{notify}</p>
+                    
+                </div>
                 <input type="submit" value="Login" className="btn " />
+            </div>
         </form>
     </div>
 );

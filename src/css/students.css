@@ -14,6 +14,7 @@ p{
     height: auto;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 .profile-content{
@@ -25,6 +26,8 @@ p{
     align-items: center;
     padding: 10px;
     border-radius: 5px;
+    width: 200px;
+    height: 280px;
 }
 .stu_avatar{
     display: flex;
@@ -40,6 +43,6 @@ p{
 }
 .stu-info .stu-name{
     font-weight: bold;
-    font-size: 120%;
+    font-size: 100%;
     padding-bottom: 10px;
 }

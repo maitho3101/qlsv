@@ -22,14 +22,13 @@ function Students(props) {
     },[]);
     let navigate = useNavigate();
     async function handleViewDetailStudent(student){
-        console.log("jfgd", student);
         navigate(`/student/${student.id}`)
     }
     const CardProfile = ()=>{
         return(
             students.map((student, index)=>
                 (
-                    <div className="col-3 profile-display">
+                    <div className=" profile-display">
                         <div className="profile-content">
                             <div className="stu_avatar " >
                                     <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>
