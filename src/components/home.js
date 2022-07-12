@@ -140,27 +140,22 @@ function Home(){
 	const addData = async(e)=>{
 		e.preventDefault();
 		const cur2= await checkIfMsvExist();
-		if(!email ){
+		if(!stuName ){
+			setNotify("Please fill in student name!")
+		}
+		else if(!email ){
 			setNotify("Please fill in email!")
 		}
 		else if(cur2){
 			setNotify("MSV already exist ")
-
 		}
-		// else if (!userName ){
-		// 	setNotify("Please fill in userName!")
-		// }
-		// else if (!msv ){
-		// 	setNotify("Please fill in msv!")
-		// }
-		// else if (!password ){
-		// 	setNotify("Please fill in password!")
-		// }
-		// else if (password !== confPassword) {
-		// 	setNotify("Password doesn't match!")
-		// }
+		else if(!khoa ){
+			setNotify("Please fill in khoa!")
+		}
+		else if(!grade ){
+			setNotify("Please fill in grade!")
+		}
 		else{
-
 			const cur = await checkIfStuExist(); 
 			if(!cur) {
 				await db.collection("students").add({
@@ -178,14 +173,15 @@ function Home(){
 				closeOnClick();
 			} 
 			else {
-				console.log("Account already exist. Please choose another one!");
+				setNotify("Account already exist. Please choose another one!");
 			}
 		}
+		setNotify("")
 	}
 	const updateData =async (e)=>{
 		e.preventDefault();
 		if(email=== newEmail){
-			console.log("fff")
+			setNotify("Email already exist. Please choose another one!")
 		}
 		else{
 			const stuDoc = doc(db, "students", dataIdToBeUpdated); 

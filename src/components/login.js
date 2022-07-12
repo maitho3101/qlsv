@@ -22,6 +22,12 @@ const onClickimg = () => {
     setDisplayUsernameBox("flex");
     setDisplayLoginBox("none");
 }
+function setCookie(cname, cvalue, expdays){
+    const d = new Date();
+    d.setTime(d.getTime() + expdays*24*60*60*1000);
+    let expires ="expires=" +d.toUTCString();
+    document.cookie = cname + "=" + cvalue +";" +expires + ";path=/";
+}
 const usersCollection = collection(db,"users");
 
 async function getUsers() {
@@ -62,9 +68,10 @@ const submit = async (e) => {
     if(email ===""){
         setNotify("Please fill in email!")
     }
-    else if (password ===""){
+    else if (password ==="" ){
         setNotify("Please fill in password!")
     }
+    
     else{
         const displayName ="";
         const cur = await checkLogin(displayName);
@@ -80,9 +87,9 @@ const submit = async (e) => {
             localStorage.setItem("loginBox", "none");
             const idLogin ="";
             const cur2 = await checkLogin2(idLogin);
-            Cookies.set("idLogin", cur2);
+            setCookie("user", cur2, 5);
             onClickimg();
-            navigate('/', {replace: true});
+            navigate('/home', {replace: true});
             
         }
     }
@@ -105,7 +112,11 @@ return (
                     <p className="notify-p">{notify}</p>
                     
                 </div>
-                <input type="submit" value="Login" className="btn " />
+                <input type="submit" value="Login" className="btn btn-login " />
+                <div className="member">
+                    <span>Not a member?</span>
+                    <a href="/signup">Sign Up</a>
+                </div>
             </div>
         </form>
     </div>

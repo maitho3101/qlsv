@@ -36,7 +36,7 @@ function Header() {
 				</div>
 				<div class="user-info" style={{display:displayUsernameBox}}>
 					<div class="user-displayname">
-						<a href="#" onClick={()=>navigate(`/user/${Cookies.get("idLogin")}`)}>{localStorage.getItem("displayUsername")}</a>
+						<a href="#" onClick={()=>navigate(`/user/${Cookies.get("user")}`)}>{localStorage.getItem("displayUsername")}</a>
 						{/* <a href='/user'>{Cookies.get("displayUsername")}</a> */}
 					</div>
             	</div>

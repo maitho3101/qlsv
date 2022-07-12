@@ -56,6 +56,9 @@ async function nextPage(){
         else if (!password ){
             setNotify("Please fill in password!")
         }
+        else if (password.length <8 ){
+            setNotify("Password needs to be at least 8 characters")
+        }
         else if (password !== confPassword) {
             setNotify("Password doesn't match!")
         }
@@ -86,6 +89,10 @@ const submit = async (e) => {
     if(!phone ){
         setNotify("Please fill in phone!")
     }
+    else if(/((09|03|07|08|05)+([0-9]{8})\b)/g.test(phone)== false){
+        setNotify("Phone number must contain 10 characters and start with 09,03,08")
+    }
+    
     else if (!address ){
         setNotify("Please fill in address!")
     }
@@ -128,6 +135,7 @@ const PageDisplay=()=>{
                 <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <input type="password" placeholder="Confirm Password"  value={confPassword} onChange={(e) => setConfPassword(e.target.value)}/>
                 <p class="notify-p">{notify}</p>
+                
             </div>
         );
     }
@@ -169,6 +177,10 @@ return (
                 
                 
                 
+            </div>
+            <div className="member">
+                <span>Already a member?</span>
+                <a href="/login">Login</a>
             </div>
         </div>
     </div>

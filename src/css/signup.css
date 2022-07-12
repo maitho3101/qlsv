@@ -12,6 +12,7 @@
     transform: translate(-50%, -50%);
     border-radius: 15px;
     border: 1px solid gray;
+    box-shadow: 10px 10px 5px rgba(125, 123, 123, 0.158) ;
 }
 .signup-in {
     position: relative;
@@ -21,6 +22,7 @@
     flex-direction: column;
     place-items: center;
     /* background-color: red; */
+    
     }
 
 .signup_title h1{
@@ -48,6 +50,13 @@
 }
 .btn-signup{
     margin: 20px 0;
+}
+.btn-login{
+    margin: 25px 0;
+    font-size: 20px;
+}
+.member{
+    padding-top: 10px;
 }
 .notify-p{
     color: red;
