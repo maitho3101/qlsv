@@ -1,5 +1,11 @@
 .user-profile{
     /* background-color: red; */
+    margin-top: 10px;
+}
+.user-profile_name{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
 }
 .pic_profile{
     width: 150px;
@@ -14,4 +20,38 @@
 }
 .btn:hover{
     background-color: #773f85c4;
+}
+.header-signin span a{
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+}
+.btn-or{
+    font-size: 22px;
+}
+.btn-signin{
+    background-color: white;
+}
+.profile-body{
+    display: flex;
+    margin-top: 20px;
+}
+.user-profile_name h1{
+    font-size: 46px;
+
+}
+.profile-body_img{
+    margin-right: 40px;
+    width: 40%;
+}
+.profile-body_text{
+    margin-right: 40px;
+    width: 60%;
+    font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.profile-body_text p{
+    font-size: 30px;
 }

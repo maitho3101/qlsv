@@ -2,12 +2,16 @@ import React, {useState, useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import { confirm } from "react-confirm-box";
 import { serverTimestamp, Timestamp } from "firebase/firestore";
+import {ref, uploadBytes, listAll , getDownloadURL, list} from "firebase/storage";
+import { storage } from '../firebase';
+import { v4 } from 'uuid';
 import Header from "./header";
 import "../css/home.css";
 import db from "../firebase";
 import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
 
 function Home(){
+	const [imageUpload, setImageUpload] = useState(null);
     const [pic, setPic] = useState("");
 	const [stuName, setStuName] = useState("");
 	const [gender, setGender] = useState("");
@@ -176,7 +180,8 @@ function Home(){
 				setNotify("Account already exist. Please choose another one!");
 			}
 		}
-		setNotify("")
+		setNotify("");
+		setEmail("");
 	}
 	const updateData =async (e)=>{
 		e.preventDefault();
@@ -362,25 +367,31 @@ function Home(){
 				
 				
 			</div>
-			<div className="profile-display" >
-				<div class="modal fade" id="viewModal">
+			<div className="profile-display " >
+				<div class="modal fade " id="viewModal">
 					<div class="modal-dialog">
-						<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title">Profile</h4>
+						<div class="modal-content profile-modal">
+						<div class="modal-header header-profile">
+							<h4 class="modal-title ">Profile</h4>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 						</div>
 						<div class="modal-body">
 							<div className="stu_avatar" >
-								<img style={{"height":"180px", "width":"180px"}} src={pic}></img>
+								<img style={{"height":"170px", "width":"170px"}} src={pic}></img>
 							</div>
 							<div className="profile_details">
 								<p>Mã sinh viên: {msv} </p>
+								<hr/>
 								<p>Họ tên: {stuName} </p>
+								<hr/>
 								<p>Giới tính: {gender}</p>
+								<hr/>
 								<p>Email: {email} </p>
+								<hr/>
 								<p>Khoa: {khoa} </p>
+								<hr/>
 								<p>Lớp: {grade} </p>
+								<hr/>
 							</div>
 						</div>
 

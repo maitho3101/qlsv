@@ -14,12 +14,15 @@ function User() {
     const [displayLoginBox, setDisplayLoginBox] = useState(localStorage.getItem("loginBox"));
     const [user, setUser]= useState("");
     const [userCookie, setUserCookie] = useCookies(["user"]);
+   
+
     const usersCollection = collection(db,"users");
     
     let navigate = useNavigate();
     const { id } = useParams();
     const studentsCollection = collection(db,"students");
 
+    
     async function getUserData(){
         db.collection('users').doc(id).get()
         .then(snapshot => setUser(snapshot.data()))
@@ -28,45 +31,29 @@ function User() {
         
         await getUserData();
     },[]);
-    const signoutOnclick = () => {
-        setDisplayUsernameBox("none");
-        setDisplayLoginBox("block");
-        localStorage.setItem("userNameBox", "none");
-        localStorage.setItem("loginBox", "block");
-        localStorage.setItem("displayUsername", "");
-        localStorage.removeItem("user");
-        navigate('/', {replace: true});
-    }
+   
     return (
         <div>
             <Header/>
             <div className='user-profile container'>
-            <div>
-                                <p>Họ Tên: {user.name}</p>
-                                <p>Tuổi: {user.age}</p>
-                                <p>Email: {user.email}</p>
-                                <p>Sdt: {user.phone}</p>
-                                <p>Địa chỉ: {user.address}</p>
-                                <p>Tiểu sử: {user.bio}</p>
-                            </div>
-            {/* {users && (<>
-						{users.map((user)=>{
-						return(
-							<div>
-                                <p>Họ Tên: {user.name}</p>
-                                <p>Tuổi: {user.age}</p>
-                                <p>Email: {user.email}</p>
-                                <p>Sdt: {user.phone}</p>
-                                <p>Địa chỉ: {user.address}</p>
-                                <p>Tiểu sử: {user.bio}</p>
-                            </div>
-                            
-							)
-						})}
-					</>)} */}
-               
-                <button className='btn btn_signout' onClick={signoutOnclick}>signout</button>
+                <div className='user-profile_name'>
+                    <h1>Profile</h1>
+                </div>
+                <div className='profile-body'>
+                    <div className='profile-body_img'>
+                        <img style={{"height":"400px", "width":"300px"}} src="#"/>
+                    </div>
+                    <div className='profile-body_text'>
+                        <p>Họ tên: {user.name}</p>
+                        <p>Tuổi: {user.age}</p>
+                        <p>Email: {user.email}</p>
+                        <p>Sdt: {user.phone}</p>
+                        <p>Địa chỉ: {user.address}</p>
+                        <p>Tiểu sử: {user.bio}</p>
+                    </div>
+                </div>
             </div>
+            
         </div>
     );
 }

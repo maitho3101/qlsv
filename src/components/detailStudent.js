@@ -36,7 +36,7 @@ function DetailStudent(props) {
             <Header/>
             <div className='student-profile container-fluid'>
                 <div className='student-profile_title'>
-                    <h1>Profile</h1>
+                    <h1>Student Profile</h1>
                 </div>
                 <div className='student-profile_body'>
                     <div className="stu-avatar_detail" >
