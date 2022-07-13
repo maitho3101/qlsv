@@ -72,7 +72,7 @@ function ManageStudents (){
 		else{
 
 			const data = query(studentsCollection, where("grade","==",`${filter}`));
-			const filterData = onSnapshot(data,(snapshot)=> setStudents(snapshot.docs.map(doc=>({...doc.data(), id:doc.id}))));
+			const filterData = onSnapshot(data,(snapshot)=> setStudentsDisplay(snapshot.docs.map(doc=>({...doc.data(), id:doc.id}))));
 			return(filterData);
 			// setFilter("");
 		}
