@@ -89,7 +89,7 @@ const submit = async (e) => {
             const cur2 = await checkLogin2(idLogin);
             setCookie("user", cur2, 5);
             onClickimg();
-            navigate('/home', {replace: true});
+            navigate('/', {replace: true});
             
         }
     }

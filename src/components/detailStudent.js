@@ -57,7 +57,7 @@ function DetailStudent(props) {
                         
                     </div>
                 </div>
-                <div className='stu_bio'>
+                <div className='stu_bio container'>
                     <p>Tiểu sử: </p>
                     <div className='bio_detail'>
                         {stuDetail.bio}

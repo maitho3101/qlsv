@@ -51,19 +51,26 @@ hr{
     width: 90%;
 }
 .stu_bio{
-    width: 100%;
+    width: 90%;
+    /* background-color: red; */
+    display: flex;
+    padding-top: 20px;
 }
 .stu_bio p{
     font-size: 120%;
-    margin-bottom: 10px;
-    margin-left: 200px;
+    width: 20%;
+    padding-left: 60px;
 }
 .bio_detail{
     /* background-color: red; */
-    margin-left: 300px;
-    width: 70%;
+    
+    width: 80%;
     height: 200px;
     margin-bottom: 30px;
     border: 1px solid gray;
     border-radius: 10px;
+    padding: 20px;
+}
+.modal-detail_bio{
+    padding-top: 10px;
 }

@@ -8,7 +8,7 @@ function Header() {
     const [displayUsernameBox, setDisplayUsernameBox] = useState(localStorage.getItem("userNameBox"));
     const [displayLoginBox, setDisplayLoginBox] = useState(localStorage.getItem("loginBox"));
 	let navigate = useNavigate();
-	const [homelink, setHomelink] = useState("#");
+	const [managelink, setManagelink] = useState("#");
 	const [listlink, setListlink] = useState("#");
 
 
@@ -25,11 +25,11 @@ function Header() {
 
     useEffect( () => {
         if (localStorage.getItem("displayUsername") =="") {
-            setHomelink("/login");
+            setManagelink("/login");
             setListlink("/login");
         }
         else {
-            setHomelink("/home");
+            setManagelink("/manage");
             setListlink("/students");
         }
     },[]);
@@ -43,9 +43,9 @@ function Header() {
 				</div>
 				<div className="header_menu ">
 					<ul className="nav navbar-nav ml-auto">
-						<li class="nav__item"><a href={homelink} class="nav__link active">Home</a></li>
+						<li class="nav__item"><a href="/" class="nav__link">Home</a></li>
+						<li class="nav__item"><a href={managelink} class="nav__link active">Manage</a></li>
 						<li class="nav__item"><a href={listlink} class="nav__link">List</a></li>
-						<li class="nav__item"><a href="#" class="nav__link">Detail</a></li>
 						<li class="nav__item"><a href="#" class="nav__link">About</a></li>
 					</ul>
 				</div>

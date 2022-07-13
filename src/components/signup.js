@@ -12,6 +12,7 @@ const [signupButton, setSignupButton] = useState("none");
 const FormTitles = ["Sign Up", "Personal Info", "Other"];
 
 const [userName, setUserName] = useState("");
+const [fullName, setFullName] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [confPassword, setConfPassword] = useState("");
@@ -71,11 +72,11 @@ async function nextPage(){
         if(!userName ){
             setNotify("Please fill in name!")
         }
+        else if (!fullName) {
+            setNotify("Please fill in fullname!")
+        }
         else if (!age ){
             setNotify("Please fill in age!")
-        }
-        else if (!bio) {
-            setNotify("Please fill in bio!")
         }
         else{
             setPage(2);
@@ -102,10 +103,10 @@ const submit = async (e) => {
             if(!cur) {
                  const check = await db.collection("users").add({
                     name: userName,
+                    fullname: fullName,
                     email: email,
                     password: password,
                     age:age,
-                    bio: bio,
                     phone:phone,
                     address:address,
                 })
@@ -142,9 +143,9 @@ const PageDisplay=()=>{
     else if(page ===1){
         return (
             <div className="signup-in__form">
-                <input type="text" placeholder="Name"  value={userName} onChange={(e) => setUserName(e.target.value)}/>
+                <input type="text" placeholder="Username"  value={userName} onChange={(e) => setUserName(e.target.value)}/>
+                <input type="text" placeholder="Fullname"  value={fullName} onChange={(e) => setFullName(e.target.value)}/>
                 <input type="number" placeholder="Tuoi"  value={age} onChange={(e) => setAge(e.target.value)}/>
-                <input type="text" placeholder="Tieu su"  value={bio} onChange={(e) => setBio(e.target.value)}/>
                 <p class="notify-p">{notify}</p>
             </div>
         )

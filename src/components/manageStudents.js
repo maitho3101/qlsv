@@ -10,8 +10,8 @@ import "../css/home.css";
 import db from "../firebase";
 import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
 
-function Home(){
-	const [imageUpload, setImageUpload] = useState(null);
+function ManageStudents (){
+	const [imageUpload, eImageUpload] = useState(null);
     const [pic, setPic] = useState("");
 	const [stuName, setStuName] = useState("");
 	const [gender, setGender] = useState("");
@@ -19,6 +19,7 @@ function Home(){
 	const [msv, setMsv] = useState("");
 	const [khoa, setKhoa] = useState("");
 	const [grade, setGrade] = useState("");
+	const [bio, setBio] = useState("");
     const [newPic, setNewPic] = useState("");
 	const [newStuName, setNewStuName] = useState("");
 	const [newGender, setNewGender] = useState("");
@@ -26,10 +27,13 @@ function Home(){
 	const [newMsv, setNewMsv] = useState("");
 	const [newKhoa, setNewKhoa] = useState("");
 	const [newGrade, setNewGrade] = useState("");
+	const [newBio, setNewBio] = useState("");
     const [users, setUsers]=useState([]);
 	const [notify, setNotify] = useState("");
 	const [dataIdToBeUpdated, setDataIdToBeUpdated]= useState("");
     const [students, setStudents]=useState([]);
+    const [studentsDisplay, setStudentsDisplay]=useState([]);
+
     const [search, setSearch]=useState("");
     const [filter, setFilter]=useState("");
 
@@ -46,10 +50,12 @@ function Home(){
         setUsers(newUser);
     }
     async function getStudents() {
+		//console.log("got data");
         const dataquery =  query(studentsCollection, orderBy("created", "asc"));
 		const data =await getDocs(dataquery);
         var newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
         setStudents( newStudent);
+		setStudentsDisplay(newStudent);
     }
 
     useEffect(() => async function() {
@@ -75,21 +81,22 @@ function Home(){
         // .then(snapshot => setStudents(snapshot.data()))
 
 	}
-    const searchSubmit = async(e)=>{
-		e.preventDefault();
+    async function updateListStudent(nameSearch) {
+		console.log(nameSearch);
 		await getStudents();
-		if(search===""){
-			getStudents();
-		}
-		else{
-
-			const searchName=students.filter(function(st){ return st.name.includes(search); })
-			console.log(searchName);
-			setStudents(searchName);
-		}
-		
-
+		console.log(students);
+		const searchName= await students.filter(function(st){ return st.name.includes(nameSearch); })
+		//console.log(searchName);
+		setStudentsDisplay(searchName);
     }
+	
+	async function updateSearchInput(e) {
+		var searchValue = e.target.value;
+		//console.log(searchValue);
+		setSearch(searchValue);
+		await updateListStudent(searchValue);
+	}
+
 	async function closeOnClick(){
 		setAddBoxState("none");
 		setEditBoxState("none");
@@ -106,6 +113,7 @@ function Home(){
 		setNewMsv(item.msv);
 		setNewPic(item.pic);
 		setNewStuName(item.name);
+		setNewBio(item.bio);
 	}
 	async function viewhandle(item){
 		setPic(item.pic);
@@ -115,6 +123,7 @@ function Home(){
 		setEmail(item.email);
 		setKhoa(item.khoa);
 		setGrade(item.grade);
+		setBio(item.bio);
 	}
 	
 	async function checkIfStuExist() {
@@ -130,7 +139,6 @@ function Home(){
 	async function checkIfMsvExist() {
 		await getStudents();
 		for(var i=0; i< students.length; i++){
-			console.log(students[i].msv)
 			if (msv === students[i].msv ){
 				return 1; 
 			}
@@ -141,6 +149,9 @@ function Home(){
 		setAddBoxState("flex");
 		setBackGroundOpacity("0.4");
 	}
+
+
+
 	const addData = async(e)=>{
 		e.preventDefault();
 		const cur2= await checkIfMsvExist();
@@ -158,6 +169,9 @@ function Home(){
 		}
 		else if(!grade ){
 			setNotify("Please fill in grade!")
+		}
+		else if(!bio ){
+			setNotify("Please fill in bio!")
 		}
 		else{
 			const cur = await checkIfStuExist(); 
@@ -180,8 +194,8 @@ function Home(){
 				setNotify("Account already exist. Please choose another one!");
 			}
 		}
-		setNotify("");
-		setEmail("");
+		// setNotify("");
+		// setEmail("");
 	}
 	const updateData =async (e)=>{
 		e.preventDefault();
@@ -198,6 +212,7 @@ function Home(){
 				gender: e.target.newgender_type.value,
 				grade:newGrade,
 				khoa: newKhoa,
+				bio:bio,
 			})
 		console.log(" updated")
 		getStudents();
@@ -240,9 +255,9 @@ function Home(){
 					</form>
 					
 					<div className="search-student">
-						<form onSubmit={searchSubmit} >
-							<input onChange={(e) => setSearch(e.target.value)}  value={search} type="text" placeholder="Search" />
-							<i onClick={searchSubmit} class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
+						<form>
+							<input onChange={(e) => updateSearchInput(e)}  value={search} type="text" placeholder="Search" />
+							<i class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
 							<hr/>
 						</form>
 					</div>
@@ -258,8 +273,8 @@ function Home(){
 							<th >Lớp</th>
 							<th >Action</th>
 						</tr>
-					{students && (<>
-						{students.map((student, index)=>{
+					{studentsDisplay && (<>
+						{studentsDisplay.map((student, index)=>{
 						return(
 								<tr >
 									<td >{index + 1}</td>
@@ -311,6 +326,8 @@ function Home(){
 										<hr/>
 										<input type="text" placeholder="Grade"  value={grade} onChange={(e) => setGrade(e.target.value)}/>
 										<hr/>
+										<input type="text" placeholder="Bio"  value={bio} onChange={(e) => setBio(e.target.value)}/>
+										<hr/>
 										<p class="notify-p">{notify}</p>
 									</div>
 									<div className="action-add">
@@ -353,6 +370,8 @@ function Home(){
 										<hr/>
 										<input type="text" placeholder="Grade"  value={newGrade} onChange={(e) => setNewGrade(e.target.value)}/>
 										<hr/>
+										<input type="text" placeholder="Bio"  value={newBio} onChange={(e) => setNewBio(e.target.value)}/>
+										<hr/>
 										<p class="notify-p">{notify}</p>
 									</div>
 									<div className="action-add">
@@ -380,19 +399,18 @@ function Home(){
 								<img style={{"height":"170px", "width":"170px"}} src={pic}></img>
 							</div>
 							<div className="profile_details">
-								<p>Mã sinh viên: {msv} </p>
-								<hr/>
-								<p>Họ tên: {stuName} </p>
-								<hr/>
-								<p>Giới tính: {gender}</p>
-								<hr/>
-								<p>Email: {email} </p>
-								<hr/>
-								<p>Khoa: {khoa} </p>
-								<hr/>
-								<p>Lớp: {grade} </p>
-								<hr/>
+								<div>
+									<p>Mã sinh viên: {msv} </p>
+									<p>Họ tên: {stuName} </p>
+									<p>Email: {email} </p>
+								</div>
+								<div>
+									<p>Giới tính: {gender}</p>
+									<p>Khoa: {khoa} </p>
+									<p>Lớp: {grade} </p>
+								</div>
 							</div>
+								<p className="modal-detail_bio"> Tiểu sử: {bio} </p>
 						</div>
 
 					</div>
@@ -403,4 +421,4 @@ function Home(){
         </div>
     );
 }
-export default Home;
+export default ManageStudents ;
