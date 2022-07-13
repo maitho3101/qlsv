@@ -87,7 +87,8 @@ const submit = async (e) => {
             localStorage.setItem("loginBox", "none");
             const idLogin ="";
             const cur2 = await checkLogin2(idLogin);
-            setCookie("user", cur2, 5);
+            // setCookie("user", cur2, 5);
+            localStorage.setItem("user",cur2);
             onClickimg();
             navigate('/', {replace: true});
             
