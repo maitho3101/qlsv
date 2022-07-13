@@ -55,8 +55,7 @@ function Header() {
 							{localStorage.getItem("displayUsername")}
 						</button>
 						<ul class="dropdown-menu">
-							{/* <li><a class="dropdown-item" href="#" onClick={()=>navigate(`/user/${Cookies.get("user")}`)}>View Profile</a></li> */}
-							<li><a class="dropdown-item" href="#" onClick={()=>navigate(`/user/${localStorage.getItem("user")}`)}>View Profile</a></li>
+							<li><a class="dropdown-item" href="#" onClick={()=>navigate(`/user/${Cookies.get("user")}`)}>View Profile</a></li>
 							<li><a class="dropdown-item" href="#" onClick={()=>navigate(`/changepassword/${Cookies.get("user")}`)}>Change Password</a></li>
 							<li><a class="dropdown-item" href="#" onClick={signoutOnclick}>Signout</a></li>
 						</ul>
