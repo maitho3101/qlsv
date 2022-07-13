@@ -155,8 +155,6 @@ function ManageStudents (){
 		setBackGroundOpacity("0.4");
 	}
 
-
-
 	const addData = async(e)=>{
 		e.preventDefault();
 		const cur2= await checkIfMsvExist();

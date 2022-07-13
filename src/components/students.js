@@ -17,7 +17,7 @@ function Students(props) {
         setStudents(newStudent);
     }
     useEffect(() => async function() {
-        
+        console.log(students)
 		await getStudents();
     },[]);
     let navigate = useNavigate();

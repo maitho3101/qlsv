@@ -61,7 +61,6 @@ async function checkLogin2() {
     return "0";
 }
 
-
 let navigate = useNavigate();
 const submit = async (e) => {
     e.preventDefault();
@@ -94,8 +93,6 @@ const submit = async (e) => {
             
         }
     }
-    // setEmail("");
-    // setPassword("");
 }
 
 

@@ -5,7 +5,6 @@ import { v4 } from 'uuid';
 import Header from './header';
 import "../css/welcome.css";
 function Test (props) {
-    // const storage = getStorage();
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([]);
 
@@ -20,7 +19,7 @@ function Test (props) {
             });
         });
     };
-    useEffect(()=>{
+    async function listAllImage(){
         listAll(imageListRef)
         .then((res)=>{
             res.items.forEach((item)=>{
@@ -29,24 +28,21 @@ function Test (props) {
                 });
             });
         });
+    }
+    useEffect(() => async function() {
+		await listAllImage();
     },[]);
     return (
         <div >
-            <Header/>
-            {/* <div className='welcome'>
-                <h1 className='welcome-title' > WELCOME</h1>
-            </div> */}
-            {/* test upload file */}
-                <div className="App">
-                    <center>
-                        <input type="file" onChange={(e)=>{setImageUpload(e.target.files[0]);}} />
-                        <button onClick={uploadImage}>Upload</button>
-                    </center>
+            <div className="App">
+                <center>
+                    <input type="file" onChange={(e)=>{setImageUpload(e.target.files[0]);}} />
+                    <button onClick={uploadImage}>Upload</button>
+                </center>
                     {imageList.map((url)=>{
                         return <img src={url}/>
                     })}
-                </div>
-            {/* test upload file */}
+            </div>
         </div>
     );
 }
