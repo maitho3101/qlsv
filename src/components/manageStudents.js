@@ -62,29 +62,25 @@ function ManageStudents (){
         
 		await getStudents();
     },[]);
-
-	const filterSubmit = async(e)=>{
-		e.preventDefault();
-		await getStudents();
-		if(filter===""){
+	async function updateListFilter (gradeFilter){
+		// await getStudents();
+		if(gradeFilter ===""){
 			getStudents();
 		}
 		else{
-
-			const data = query(studentsCollection, where("grade","==",`${filter}`));
+			const data = query(studentsCollection, where("grade","==",`${gradeFilter}`));
 			const filterData = onSnapshot(data,(snapshot)=> setStudentsDisplay(snapshot.docs.map(doc=>({...doc.data(), id:doc.id}))));
 			return(filterData);
-			// setFilter("");
 		}
-
-		// students.orderByValue("grade").equalTo(filter)
-        // .then(snapshot => setStudents(snapshot.data()))
-
+	}
+	async function updateFilterInput(e){
+		var filterValue = e.target.value;
+		setFilter(filterValue);
+		await updateListFilter(filterValue);
 	}
     async function updateListStudent(nameSearch) {
-		console.log(nameSearch);
 		await getStudents();
-		console.log(students);
+		// console.log(students);
 		const searchName= await students.filter(function(st){ return st.name.includes(nameSearch); })
 		//console.log(searchName);
 		setStudentsDisplay(searchName);
@@ -102,6 +98,15 @@ function ManageStudents (){
 		setEditBoxState("none");
 		setBackGroundOpacity("1");
 		getStudents("");
+		setNotify("");
+		setEmail("");
+		setPic("");
+		setStuName("");
+		setGender("");
+		setMsv("");
+		setKhoa("");
+		setGrade("");
+		setBio("");
 	}
 	async function edithandle(item){
 		setEditBoxState("flex");
@@ -181,7 +186,7 @@ function ManageStudents (){
 					msv: msv,
 					email: email,
 					pic: pic,
-					gender: e.target.gender_type.value,
+					gender: gender,
 					grade:grade,
 					khoa: khoa,
 					created: serverTimestamp(),
@@ -209,7 +214,7 @@ function ManageStudents (){
 				msv: newMsv,
 				email: newEmail,
 				pic: newPic,
-				gender: e.target.newgender_type.value,
+				gender: newGender,
 				grade:newGrade,
 				khoa: newKhoa,
 				bio:bio,
@@ -245,8 +250,8 @@ function ManageStudents (){
 							Add
 						</button>
 					</div>
-					<form onClick={filterSubmit} className="filter-student" >
-						<select className="btn" name="grade_filter" onChange={(e)=>setFilter(e.target.value)} value={filter} >
+					<form className="filter-student" >
+						<select className="btn" defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
 							<option value="" >Select Grade</option>
 							<option value="KHMT">KHMT</option>
 							<option value="CNTT">CNTT</option>
@@ -312,7 +317,7 @@ function ManageStudents (){
 										<hr/>
 										<input type="text" placeholder="Student Name"  value={stuName} onChange={(e) => setStuName(e.target.value)}/>
 										<hr/>
-										<select id="numberToSelect" name="gender_type"  >
+										<select id="numberToSelect" name="gender_type" defaultValue="Gender" onChange={(e)=>setGender(e.target.value)} value={gender}>
 											<option value="">Gender</option>
 											<option value="Female">Female</option>
 											<option value="Male">Male</option>
@@ -356,7 +361,7 @@ function ManageStudents (){
 										<hr/>
 										<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
 										<hr/>
-										<select id="numberToSelect" name="newgender_type" >
+										<select id="numberToSelect" name="newgender_type" defaultValue="Gender" onChange={(e)=>setNewGender(e.target.value)} value={newGender}>
 														<option value="">Gender</option>
 														<option value="Female">Female</option>
 														<option value="Male">Male</option>
