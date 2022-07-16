@@ -1,17 +1,29 @@
+
+.header_name{
+    font-size: 300%;
+    color: white;
+}
 .user-displayname{
     font-size: 22px;
 }
 .btn-user{
-    background-color: #89828A;
+    /* background-color: #89828A; */
     border: none;
     color: white;
+    margin-right: 30px;
+    font-size: 32px;
 }
 .btn-user:hover{
     background-color: #89828A;
 }
 .dropdown-menu{
-    background-color: #89828A;
+    background-color: #414446;
+    min-width: 9rem;
 }
 .dropdown-menu li a{
-    font-size: 16px;
+    font-size: 12px;
+    color: white;
+}
+.navbar-nav .nav-link {
+    font-size: 30px;
 }

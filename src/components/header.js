@@ -12,7 +12,6 @@ function Header() {
 	const [listlink, setListlink] = useState("#");
 
 
-
 	const signoutOnclick = () => {
         setDisplayUsernameBox("none");
         setDisplayLoginBox("block");
@@ -20,7 +19,7 @@ function Header() {
         localStorage.setItem("loginBox", "block");
         localStorage.setItem("displayUsername", "");
         localStorage.removeItem("user");
-        navigate('/', {replace: true});
+        navigate('/login', {replace: true});
     }
 
     useEffect( () => {
@@ -33,45 +32,37 @@ function Header() {
             setListlink("/students");
         }
     },[]);
-
     return (
-        <div>
-			{/* header */}
-			<div className="container-fluid header">
-				<div className="header_name">
-					<p>QLSV</p>
-				</div>
-				<div className="header_menu ">
-					<ul className="nav navbar-nav ml-auto">
-						<li class="nav__item"><a href="/" class="nav__link">Home</a></li>
-						<li class="nav__item"><a href={managelink} class="nav__link active">Manage</a></li>
-						<li class="nav__item"><a href={listlink} class="nav__link">List</a></li>
-						<li class="nav__item"><a href="#" class="nav__link">About</a></li>
-					</ul>
-				</div>
-				<div class="user-info" style={{display:displayUsernameBox}}>
-					<div class="dropdown user-displayname">
-						<button type="button" class=" btn-user  dropdown-toggle" data-bs-toggle="dropdown">
-							{localStorage.getItem("displayUsername")}
-						</button>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#" onClick={()=>navigate(`/user/${Cookies.get("user")}`)}>View Profile</a></li>
-							<li><a class="dropdown-item" href="#" onClick={()=>navigate(`/changepassword/${Cookies.get("user")}`)}>Change Password</a></li>
-							<li><a class="dropdown-item" href="#" onClick={signoutOnclick}>Signout</a></li>
-						</ul>
-					</div>
-            	</div>
-
-            {/* signin signup */}
-				<div class="header-signin" style={{display:displayLoginBox}}>
-					<span class="btn btn-signin"><a href="/login">Login </a></span>
-					<span class="btn-or"> / </span>
-					<span class="btn btn-signin"><a href="/signup">Sign up</a></span>
-				</div>
+		<nav class="navbar navbar-dark bg-dark navbar-expand-md container-fluid header">
+			<a href="#" class="navbar-brand header_name">QLSV</a>
+			<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="navbar-collapse collapse justify-content-center" id="navbar">
+				<ul class="navbar-nav header_menu " >
+					<li class="nav-item "><a href="/" class="nav-link " >Home</a></li>
+					<li class="nav-item"><a href={managelink} class="nav-link">ListView</a></li>
+					<li class="nav-item"><a href={listlink} class="nav-link">GridView</a></li>
+				</ul>
 			</div>
-			
-			
-		</div>
+				<div class="user-info" style={{display:displayUsernameBox}}>
+			 		<div class="dropdown user-displayname ">
+			 			<button type="button" class=" btn-user bg-dark  dropdown-toggle" data-bs-toggle="dropdown">
+			 				{localStorage.getItem("displayUsername")}
+			 			</button>
+			 			<ul class="dropdown-menu">
+			 				<li><a class="dropdown-item" href="#" onClick={()=>navigate(`/user/${Cookies.get("user")}`)}>View Profile</a></li>
+			 				<li><a class="dropdown-item" href="#" onClick={()=>navigate(`/changepassword/${Cookies.get("user")}`)}>Change Password</a></li>
+			 				<li><a class="dropdown-item" href="#" onClick={signoutOnclick}>Signout</a></li>
+			 			</ul>
+			 		</div>
+             	</div> 
+			 	<div class="header-signin" style={{display:displayLoginBox}}>
+			 		<span class="btn btn-signin"><a href="/login">Login </a></span>
+			 		<span class="btn-or"> / </span>
+			 		<span class="btn btn-signin"><a href="/signup">Sign up</a></span>
+			 	</div>
+		</nav>	
     );
 }
 

@@ -44,11 +44,11 @@ function User() {
                         <img style={{"height":"400px", "width":"300px"}} src="https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dmVydGljYWx8ZW58MHx8MHx8&w=1000&q=80"/>
                     </div>
                     <div className='profile-body_text'>
-                        <p>Họ tên: {user.fullname}</p>
-                        <p>Tuổi: {user.age}</p>
+                        <p>Full Name: {user.fullname}</p>
+                        <p>Age: {user.age}</p>
                         <p>Email: {user.email}</p>
-                        <p>Sdt: {user.phone}</p>
-                        <p>Địa chỉ: {user.address}</p>
+                        <p>Phone Number: {user.phone}</p>
+                        <p>Address: {user.address}</p>
                     </div>
                 </div>
             </div>

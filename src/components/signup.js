@@ -11,7 +11,7 @@ const [signupButton, setSignupButton] = useState("none");
 
 const FormTitles = ["Sign Up", "Personal Info", "Other"];
 
-const [userName, setUserName] = useState("");
+const [displayName, setDisplayName] = useState("");
 const [fullName, setFullName] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
@@ -51,8 +51,12 @@ async function checkIfUserExist() {
 }
 async function nextPage(){
     if(page===0){
+        const cur = await checkIfUserExist();
         if(!email ){
             setNotify("Please fill in email!")
+        }
+        else if(cur){
+            setNotify("Email is already exist. Please choose another one")
         }
         else if (!password ){
             setNotify("Please fill in password!")
@@ -69,8 +73,8 @@ async function nextPage(){
         }
     }
     else if(page ===1){
-        if(!userName ){
-            setNotify("Please fill in name!")
+        if(!displayName ){
+            setNotify("Please fill in display name!")
         }
         else if (!fullName) {
             setNotify("Please fill in fullname!")
@@ -99,10 +103,9 @@ const submit = async (e) => {
     }
     else{
         if(page === FormTitles.length-1){
-            const cur = await checkIfUserExist(); 
-            if(!cur) {
-                 const check = await db.collection("users").add({
-                    name: userName,
+             
+                await db.collection("users").add({
+                    name: displayName,
                     fullname: fullName,
                     email: email,
                     password: password,
@@ -112,12 +115,7 @@ const submit = async (e) => {
                 })
                 setNotify("success");;
                 window.location.href = '/login';
-                
-
-            } 
-            else {
-                setNotify("Account already exist. Please choose another one!");
-            }
+            
         }
     
     }
@@ -143,7 +141,7 @@ const PageDisplay=()=>{
     else if(page ===1){
         return (
             <div className="signup-in__form">
-                <input type="text" placeholder="Username"  value={userName} onChange={(e) => setUserName(e.target.value)}/>
+                <input type="text" placeholder="Displayname"  value={displayName} onChange={(e) => setDisplayName(e.target.value)}/>
                 <input type="text" placeholder="Fullname"  value={fullName} onChange={(e) => setFullName(e.target.value)}/>
                 <input type="number" placeholder="Tuoi"  value={age} onChange={(e) => setAge(e.target.value)}/>
                 <p class="notify-p">{notify}</p>

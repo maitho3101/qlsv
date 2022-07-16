@@ -6,7 +6,7 @@ function Welcome(props) {
     return (
         <div >
             <Header/>
-            <div className='welcome'>
+            <div className='welcome container-fluid'>
                 <h1 className='welcome-title' > WELCOME</h1>
             </div>
             

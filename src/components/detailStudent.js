@@ -12,20 +12,7 @@ function DetailStudent(props) {
     async function getStudentData(){
         db.collection('students').doc(id).get()
         .then(snapshot => setStuDetail(snapshot.data()))
-       
-        // const studentDoc = doc(db, "students", id); 
-        // try {
-        //     const docSnap = await getDoc(studentDoc);
-        //     if(docSnap.exists()) {
-        //         console.log(docSnap.data());
-                
-        //     } else {
-        //         console.log("Document does not exist")
-        //     }
-        
-        // } catch(error) {
-        //     console.log(error)
-        // }
+     
     }
     useEffect(() => async function() {
         
@@ -34,6 +21,7 @@ function DetailStudent(props) {
     return (
         <div>
             <Header/>
+            <span><a href='/manage'>Back</a></span>
             <div className='student-profile container-fluid'>
                 <div className='student-profile_title'>
                     <h1>Student Profile</h1>
@@ -43,22 +31,22 @@ function DetailStudent(props) {
 						<img style={{"height":"220px", "width":"220px"}} src={stuDetail.pic}></img>
 					</div>
                     <div className='stu_detail'>
-                        <h3 className='stu_name'>Họ tên: {stuDetail.name}</h3>
-                        <p>Mã sinh viên: {stuDetail.msv}</p>
+                        <h3 className='stu_name'>Student Name: {stuDetail.name}</h3>
+                        <p>Student ID: {stuDetail.stuId}</p>
                         <hr/>
-                        <p>Giới tính: {stuDetail.gender}</p>
+                        <p>Gender: {stuDetail.gender}</p>
                         <hr/>
                         <p>Email: {stuDetail.email}</p>
                         <hr/>
-                        <p>Khóa: {stuDetail.khoa}</p>
+                        <p>Department: {stuDetail.department}</p>
                         <hr/>
-                        <p>Lớp: {stuDetail.grade}</p>
+                        <p>Grade: {stuDetail.grade}</p>
                         <hr/>
                         
                     </div>
                 </div>
                 <div className='stu_bio container'>
-                    <p>Tiểu sử: </p>
+                    <p>Biography: </p>
                     <div className='bio_detail'>
                         {stuDetail.bio}
                     </div>

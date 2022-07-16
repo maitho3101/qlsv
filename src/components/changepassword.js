@@ -36,7 +36,7 @@ function ChangePassword() {
     const saveSubmit =async(e)=>{
         e.preventDefault();
         if(user.password !== oldPassword){
-            setNotify("old password is incorrect");
+            setNotify("Old password is incorrect");
             console.log(user.password, oldPassword)
         }
         else if(newPassword.length<8){

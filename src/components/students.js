@@ -17,7 +17,6 @@ function Students(props) {
         setStudents(newStudent);
     }
     useEffect(() => async function() {
-        console.log(students)
 		await getStudents();
     },[]);
     let navigate = useNavigate();
@@ -36,7 +35,7 @@ function Students(props) {
                             <div className="stu-info ">
                                 <p className="stu-name">{student.name}</p>
                                 <p>{student.gender}</p>
-                                <p>{student.msv}</p>
+                                <p>{student.stuId}</p>
                                 <p>{student.grade}</p>
                                 <button onClick = {() => handleViewDetailStudent(student)} >View Details</button>
                             </div>

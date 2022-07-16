@@ -1,58 +1,16 @@
-.container-fluid{
-    
-    position: relative;
-    top: 0px;
-    width: 100%;
+
+.liststudents-title {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-.header{
-    background-color: #33273594;
-}
-.header_name{
-    font-size: 300%;
-    color: white;
-}
-.header_menu{
-    height: 100%;
-    width: 50%;
     justify-content: center;
-    align-items: center;
-}
-.navbar-nav {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-}
-
-.navbar-nav li {
-    display: inline;
-    font-size: 200%;
-}
-.navbar-nav li a:hover {
-    color: black;
-}
-
-.navbar-nav li a {
-    display: inline;
-    color: white;
-    padding: 16px;
-    text-decoration: none;
-}
-
-
-.liststudents-title{
     margin: 30px 0 20px 0;
 }
-.action{
+.action-student{
     width: 90%;
     display: flex;
     /* background-color: red; */
     justify-content: end;
-    margin-right: 10%;
-    margin-left: 10%;
+    /* margin-right: 10%;
+    margin-left: 10%; */
     margin-bottom: 30px;
     font-size: 120%;
 }
@@ -85,8 +43,9 @@
     /* background-color: red; */
 }
 .listusers-table{
-    margin: 0 200px;
-    padding: 0 50px;
+    width: 90%;
+    /* margin: 0 20px; */
+    /* padding: 0 50px; */
 }
 #admin {
     border-collapse: collapse;

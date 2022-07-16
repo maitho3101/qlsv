@@ -9,7 +9,7 @@ import Header from "./header";
 import "../css/home.css";
 import db from "../firebase";
 import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
-
+import DetailStudent from "./detailStudent";
 function ManageStudents (){
 	const [imageUpload, eImageUpload] = useState(null);
     const [pic, setPic] = useState("");
@@ -165,10 +165,10 @@ function ManageStudents (){
 			setNotify("Please fill in email!")
 		}
 		else if(cur2){
-			setNotify("MSV already exist ")
+			setNotify("Student ID already exist ")
 		}
 		else if(!khoa ){
-			setNotify("Please fill in khoa!")
+			setNotify("Please fill in department!")
 		}
 		else if(!grade ){
 			setNotify("Please fill in grade!")
@@ -200,6 +200,10 @@ function ManageStudents (){
 		// setNotify("");
 		// setEmail("");
 	}
+	let navigate = useNavigate();
+	async function handleViewDetailStudent(student){
+        navigate(`/student/${student.id}`)
+    }
 	const updateData =async (e)=>{
 		e.preventDefault();
 		if(email=== newEmail){
@@ -239,10 +243,10 @@ function ManageStudents (){
             <Header/>
             
             <div className="liststudents-display container-fluid" style={{"opacity":bgopacity}}>
-				<div className="liststudents-title">
+				<div className="liststudents-title ">
 					<h1>List Students</h1>
 				</div>
-				<div className="action">
+				<div className="action-student container-fluid">
 					<div className="add-student">
 						<button type="button" class="btn btn-primary" onClick={addOnClick}>
 							Add
@@ -270,10 +274,10 @@ function ManageStudents (){
 					<table id="admin">
 						<tr>
 							<th >STT</th>
-							<th >MSV</th>
-							<th >Tên</th>
-							<th >Giới tính</th>
-							<th >Lớp</th>
+							<th >Student ID</th>
+							<th >Student Name</th>
+							<th >Gender</th>
+							<th >Grade</th>
 							<th >Action</th>
 						</tr>
 					{studentsDisplay && (<>
@@ -286,8 +290,7 @@ function ManageStudents (){
 									<td >{student.gender}</td>
 									<td >{student.grade}</td>
 									<td >
-									
-										<button onClick = {() => {viewhandle(student); setDataIdToBeUpdated(student.id)}} data-bs-toggle="modal" data-bs-target="#viewModal" ><i class="fa-solid fa-eye"></i></button>
+										<button onClick = {() => handleViewDetailStudent(student) }><i class="fa-solid fa-eye"></i></button>
 										<button onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id);}} type="button"  ><i class="fa-solid fa-pen-to-square"></i></button>
 										<button onClick={()=>deleteStudent(student.id)}><i class="fa-solid fa-trash-can"></i></button>
 										
@@ -323,9 +326,9 @@ function ManageStudents (){
 										<hr/>
 										<input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
 										<hr/>
-										<input type="text" placeholder="MSV"  value={msv} onChange={(e) => setMsv(e.target.value)}/>
+										<input type="text" placeholder="Student ID"  value={msv} onChange={(e) => setMsv(e.target.value)}/>
 										<hr/>
-										<input type="text" placeholder="Khoa"  value={khoa} onChange={(e) => setKhoa(e.target.value)}/>
+										<input type="text" placeholder="Department"  value={khoa} onChange={(e) => setKhoa(e.target.value)}/>
 										<hr/>
 										<input type="text" placeholder="Grade"  value={grade} onChange={(e) => setGrade(e.target.value)}/>
 										<hr/>
@@ -367,9 +370,9 @@ function ManageStudents (){
 										<hr/>
 										<input type="email" placeholder="Email"  value={newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
 										<hr/>
-										<input type="text" placeholder="MSV"  value={newMsv} onChange={(e) => setNewMsv(e.target.value)}/>
+										<input type="text" placeholder="Student Id"  value={newMsv} onChange={(e) => setNewMsv(e.target.value)}/>
 										<hr/>
-										<input type="text" placeholder="Khoa"  value={newKhoa} onChange={(e) => setNewKhoa(e.target.value)}/>
+										<input type="text" placeholder="Department"  value={newKhoa} onChange={(e) => setNewKhoa(e.target.value)}/>
 										<hr/>
 										<input type="text" placeholder="Grade"  value={newGrade} onChange={(e) => setNewGrade(e.target.value)}/>
 										<hr/>
@@ -403,17 +406,17 @@ function ManageStudents (){
 							</div>
 							<div className="profile_details">
 								<div>
-									<p>Mã sinh viên: {msv} </p>
-									<p>Họ tên: {stuName} </p>
+									<p>Student ID: {msv} </p>
+									<p>Student Name: {stuName} </p>
 									<p>Email: {email} </p>
 								</div>
 								<div>
-									<p>Giới tính: {gender}</p>
-									<p>Khoa: {khoa} </p>
-									<p>Lớp: {grade} </p>
+									<p>Gender: {gender}</p>
+									<p>Department: {khoa} </p>
+									<p>Grade: {grade} </p>
 								</div>
 							</div>
-								<p className="modal-detail_bio"> Tiểu sử: {bio} </p>
+								<p className="modal-detail_bio"> Biography : {bio} </p>
 						</div>
 
 					</div>
