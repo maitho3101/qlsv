@@ -10,6 +10,7 @@ import "../css/home.css";
 import db from "../firebase";
 import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
 import DetailStudent from "./detailStudent";
+import "../img/istockphoto-1223671392-170667a.jpg";
 function ManageStudents (){
 	const [imageUpload, eImageUpload] = useState(null);
     const [pic, setPic] = useState("");
@@ -332,7 +333,7 @@ function ManageStudents (){
 										<hr/>
 										<input type="text" placeholder="Grade"  value={grade} onChange={(e) => setGrade(e.target.value)}/>
 										<hr/>
-										<input type="text" placeholder="Bio"  value={bio} onChange={(e) => setBio(e.target.value)}/>
+										<textarea type="text" rows="5" cols="30" placeholder="Bio"  value={bio} onChange={(e) => setBio(e.target.value)}/>
 										<hr/>
 										<p class="notify-p">{notify}</p>
 									</div>
@@ -376,7 +377,7 @@ function ManageStudents (){
 										<hr/>
 										<input type="text" placeholder="Grade"  value={newGrade} onChange={(e) => setNewGrade(e.target.value)}/>
 										<hr/>
-										<input type="text" placeholder="Bio"  value={newBio} onChange={(e) => setNewBio(e.target.value)}/>
+										<textarea type="text" rows="5" cols="30" placeholder="Bio"  value={newBio} onChange={(e) => setNewBio(e.target.value)}/>
 										<hr/>
 										<p class="notify-p">{notify}</p>
 									</div>

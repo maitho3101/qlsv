@@ -39,10 +39,15 @@ p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 .stu-info .stu-name{
     font-weight: bold;
     font-size: 100%;
     padding-bottom: 10px;
+}
+.stu-action{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
 }
