@@ -9,6 +9,7 @@ import User from "./components/user";
 import Students from "./components/students";
 import DetailStudent from "./components/detailStudent";
 import Welcome from "./components/welcome";
+import Test from "./components/testUploadImg";
 import ChangePassword from "./components/changepassword";
 import Cookies from "js-cookie";
 
@@ -21,8 +22,8 @@ function App(){
 				{/* <Route  path='/home' element={<Home/>}/> */}
 				<Route  path='/manage' element={<ManageStudents/>}/>
 				<Route path="/login" element={<Login/>}/>
-				{/* <Route exact path="/" element ={<PrivateRoute/>}>
-				</Route> */}
+				<Route path="/test" element={<Test/>}/>
+				
 				<Route path="/user/:id" element={<User/>}/>
 				<Route path="/changepassword/:id" element={<ChangePassword/>}/>
 				<Route path="/students" element={<Students/>}/>

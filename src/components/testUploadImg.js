@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useRef} from 'react';
 import {ref, uploadBytes, listAll , getDownloadURL, list} from "firebase/storage";
 import { storage } from '../firebase';
 import { v4 } from 'uuid';
@@ -7,10 +7,10 @@ import "../css/welcome.css";
 function Test (props) {
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([]);
-
+    const inputRef = useRef(null);
     const imageListRef = ref(storage, "images/ ");
     const uploadImage =() =>{
-        
+        console.log(imageUpload);
         if(imageUpload == null) return;
         const imageRef = ref (storage, `images/${imageUpload.name + v4()}`);
         uploadBytes(imageRef, imageUpload).then((snapshot)=>{
@@ -18,6 +18,7 @@ function Test (props) {
                 setImageList((prev)=>[...prev, url]);
             });
         });
+        inputRef.current.value = "";
     };
     async function listAllImage(){
         listAll(imageListRef)
