@@ -29,7 +29,7 @@ function App(){
 				<Route path="/students" element={<Students/>}/>
 				<Route path="/student/:id" element={<DetailStudent/>}/>
 			</Routes>
-		{/* </BrowserRouter> */}
+		// </BrowserRouter> 
 	)
 }
 

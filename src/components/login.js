@@ -41,7 +41,7 @@ useEffect(() => async function() {
 },[]);
 
 async function checkLogin() {
-    // await getUsers();
+    await getUsers();
     for(var i=0; i< users.length; i++){
         if (email === users[i].email && password === users[i].password){
             return users[i].name; 
@@ -51,7 +51,7 @@ async function checkLogin() {
     return "0";
 }
 async function checkLogin2() {
-    // await getUsers();
+    await getUsers();
     for(var i=0; i< users.length; i++){
         if (email === users[i].email && password === users[i].password){
             return users[i].id; 
