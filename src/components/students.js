@@ -310,9 +310,9 @@ function Students(props) {
                                 
                             </div>
                             <div className="stu-action">
-                                <button onClick = {() => handleViewDetailStudent(student) }><i class="fa-solid fa-eye"></i></button>
-                                <button onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id);}} type="button"  ><i class="fa-solid fa-pen-to-square"></i></button>
-								<button onClick={()=>deleteStudent(student.id)}><i class="fa-solid fa-trash-can"></i></button>
+                                <button className="action_button" onClick = {() => handleViewDetailStudent(student) }><i class="fa-solid fa-eye"></i></button>
+                                <button className="action_button" onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id);}} type="button"  ><i class="fa-solid fa-pen-to-square"></i></button>
+								<button className="action_button" onClick={()=>deleteStudent(student.id)}><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         </div>
                     </div>

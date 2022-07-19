@@ -28,17 +28,17 @@ function DetailStudent(props) {
                 </div>
                 <div className='student-profile_body'>
                     <div className="stu-avatar_detail" >
-						<img style={{"height":"220px", "width":"220px"}} src={stuDetail.pic}></img>
+						<img  src={stuDetail.pic}></img>
 					</div>
                     <div className='stu_detail'>
-                        <h3 className='stu_name'>Student Name: {stuDetail.name}</h3>
-                        <p>Student ID: {stuDetail.stuId}</p>
+                        <h3 className='stu_name'>{stuDetail.name}</h3>
+                        <p>Student ID: {stuDetail.msv}</p>
                         <hr/>
                         <p>Gender: {stuDetail.gender}</p>
                         <hr/>
                         <p>Email: {stuDetail.email}</p>
                         <hr/>
-                        <p>Department: {stuDetail.department}</p>
+                        <p>Department: {stuDetail.khoa}</p>
                         <hr/>
                         <p>Grade: {stuDetail.grade}</p>
                         <hr/>

@@ -9,6 +9,8 @@
     margin-bottom: 30px;
     background-color: #9f9aa054;
 }
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
 .student-profile_title{
     /* background-color: red; */
     width: 100%;
@@ -32,6 +34,10 @@
     display: flex;
     justify-content: center;
     margin: 20px 0;
+}
+.stu-avatar_detail img{
+    width: 220px;
+    height: 220px;
 }
 .stu_detail{
     width: 60%;
@@ -73,4 +79,71 @@ hr{
 }
 .modal-detail_bio{
     padding-top: 10px;
+}
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px){
+    .student-profile_title{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    .student-profile_title h1{
+        font-size: 200%;
+    }
+    .student-profile_body{
+        display: flex;
+        justify-content: space-around;
+        width: 100%;  
+    }
+    .stu-avatar_detail{
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        margin: 30px 10px;
+    }
+    .stu-avatar_detail img{
+        width: 150px;
+        height: 150px;
+    }
+    .stu_detail{
+        width: 60%;
+        font-size: 90%;
+    }
+    .stu_detail h3{
+        display: flex;
+        justify-content: center;
+        font-size: 150%;
+    }
+    .stu_detail p{
+        padding-left: 20px;
+    }
+    hr{
+        border: 1px solid gray;
+        margin: 5px 0;
+        width: 90%;
+    }
+    .stu_bio{
+        width: 90%;
+        /* background-color: red; */
+        display: flex;
+        padding-top: 10px;
+    }
+    .stu_bio p{
+        font-size: 90%;
+        width: 20%;
+        /* padding-left: 10px; */
+    }
+    .bio_detail{
+        width: 80%;
+        height: 120px;
+        margin-bottom: 30px;
+        border: 1px solid gray;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    .modal-detail_bio{
+        padding-top: 10px;
+    }
 }

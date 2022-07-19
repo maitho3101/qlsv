@@ -35,13 +35,13 @@ function User() {
     return (
         <div>
             <Header/>
-            <div className='user-profile container'>
+            <div className='user-profile '>
                 <div className='user-profile_name'>
                     <h1>Profile</h1>
                 </div>
                 <div className='profile-body'>
                     <div className='profile-body_img'>
-                        <img style={{"height":"400px", "width":"300px"}} src="https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dmVydGljYWx8ZW58MHx8MHx8&w=1000&q=80"/>
+                        <img  src="https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dmVydGljYWx8ZW58MHx8MHx8&w=1000&q=80"/>
                     </div>
                     <div className='profile-body_text'>
                         <p>Full Name: {user.fullname}</p>
