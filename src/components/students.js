@@ -7,10 +7,12 @@ import db from "../firebase";
 import { confirm } from "react-confirm-box";
 import { serverTimestamp, Timestamp } from "firebase/firestore";
 import { collection, getDocs, doc, setDoc, docs, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
-import {ref, uploadBytes, listAll , getDownloadURL, list, uploadString} from "firebase/storage";
+import {ref, uploadBytes, listAll , getDownloadURL, list, uploadString, deleteObject,uploadBytesResumable} from "firebase/storage";
 import { storage } from '../firebase';
 import { v4 } from 'uuid';
 import avatar from "../img/istockphoto-1223671392-170667a.jpg";
+import Paginator from 'react-hooks-paginator';
+import Avatar from 'react-avatar';
 function Students(props) {
     const [pic, setPic] = useState("");
 	const [stuName, setStuName] = useState("");
@@ -20,7 +22,6 @@ function Students(props) {
 	const [khoa, setKhoa] = useState("");
 	const [grade, setGrade] = useState("");
 	const [bio, setBio] = useState("");
-    const [newPic, setNewPic] = useState("");
 	const [newStuName, setNewStuName] = useState("");
 	const [newGender, setNewGender] = useState("");
 	const [newEmail, setNewEmail] = useState("");
@@ -34,6 +35,12 @@ function Students(props) {
     const [students, setStudents]=useState([]);
     const [studentsDisplay, setStudentsDisplay]=useState([]);
 
+	const pageLimit = 10;
+
+  const [offset, setOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentData, setCurrentData] = useState([]);
+
     const [search, setSearch]=useState("");
     const [filter, setFilter]=useState("");
 
@@ -43,19 +50,24 @@ function Students(props) {
 
 	const [image, setImage] = useState(null);
   	const [url, setURL] = useState("");
+	  const [data,setData] = useState();
 
     const usersCollection = collection(db,"users");
     const studentsCollection = collection(db,"students");
 
     async function getStudents() {
-        const data = await getDocs(studentsCollection); 
+		const dataquery =  query(studentsCollection, orderBy("created", "desc"));
+		const data =await getDocs(dataquery);
         var newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
-        setStudents(newStudent);
-        setStudentsDisplay(newStudent);
+        setStudents( newStudent);
+		setStudentsDisplay(newStudent);
     }
     useEffect(() => async function() {
 		await getStudents();
     },[]);
+	useEffect(() => {
+		setCurrentData(studentsDisplay.slice(offset, offset + pageLimit));
+	  }, [offset, studentsDisplay]);
     let navigate = useNavigate();
     async function handleViewDetailStudent(student){
         navigate(`/student/${student.id}`)
@@ -90,31 +102,40 @@ function Students(props) {
 		setSearch(searchValue);
 		await updateListStudent(searchValue);
 	}
-	const removeImage = () => {
-        setImage(null);
-    };
+	
 	async function handleChangePic(e){
 		// e.preventDefault();
 		var picValue = e.target.files[0];
 			setImage(picValue);
-		// console.log(picValue)
-		// if(picValue === null){
-		// 	setImage(avatar);
-		// }
-		// else{
-		// 	setImage(picValue);
-		// }
 		await uploadImage(picValue)
 	}
 	async function uploadImage(namePic){
 		const imageRef = ref (storage, `images/${namePic.name + v4()}`);
-		removeImage();
-        uploadBytes(imageRef, namePic).then((snapshot)=>{
+		
+       await uploadBytes(imageRef, namePic).then((snapshot)=>{
             getDownloadURL(snapshot.ref).then((url)=>{
-                setURL((prev)=>[...prev, url]);
+                setData((prev)=>({...prev,pic:url}));
             });
         });
+		
 	}
+	// async function handleChangeNewPic(e){
+	// 	// e.preventDefault();
+	// 	var newPicValue = e.target.files[0];
+	// 		setNewImage(newPicValue);
+	// 	await uploadNewImage(newPicValue)
+	// }
+	// async function uploadNewImage(newNamePic){
+	// 	const imageRef = ref (storage, `images/${newNamePic.name + v4()}`);
+		
+    //     await uploadBytes(imageRef, newNamePic).then((snapshot)=>{
+    //         getDownloadURL(snapshot.ref).then((url)=>{
+    //             setNewData((prev)=>({...prev,pic:url}));
+    //         });
+    //     });
+
+		
+	// }
 	// async function handleUploadPic(e){
 	// 	const path = `/images/${file.name}`;
 	// 	const ref = storage.ref(path);
@@ -148,7 +169,7 @@ function Students(props) {
 		setNewGrade(item.grade);
 		setNewKhoa(item.khoa);
 		setNewMsv(item.msv);
-		setNewPic(item.pic);
+		// setNewImage(item.pic);
 		setNewStuName(item.name);
 		setNewBio(item.bio);
 	}
@@ -216,11 +237,12 @@ function Students(props) {
 					name: stuName,
 					msv: msv,
 					email: email,
-					pic: url,
 					gender: gender,
 					grade:grade,
 					khoa: khoa,
+					bio:bio,
 					created: serverTimestamp(),
+					...data,
 				})
 				console.log("success");
 				getStudents();
@@ -240,16 +262,17 @@ function Students(props) {
 		}
 		else{
 			const stuDoc = doc(db, "students", dataIdToBeUpdated); 
-			await updateDoc(stuDoc,{
-				name: newStuName,
+			const updateStu = {name: newStuName,
 				msv: newMsv,
 				email: newEmail,
-				pic: newPic,
 				gender: newGender,
 				grade:newGrade,
 				khoa: newKhoa,
-				bio:bio,
-			})
+				bio:newBio,
+				...data,
+			}
+		await updateDoc(stuDoc,updateStu);
+		console.log(updateStu);
 		console.log(" updated")
 		getStudents();
 		closeOnClick();
@@ -269,13 +292,14 @@ function Students(props) {
 }
     const CardProfile = ()=>{
         return(
-            studentsDisplay.map((student, index)=>
+            currentData.map((student, index)=>
                 (
                     <div className=" profile-display">
                         <div className="profile-content">
                             <div className="stu_avatar " >
-								{student.pic? <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>:<img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={avatar}></img>}
-                                    {/* <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>
+								{/* <Avatar className="rounded-circle" src={student.pic}/> */}
+								{student.pic? <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>:<img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={avatar}></img>} 
+                                     {/* <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>
                                     <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={avatar}></img> */}
                             </div>
                             <div className="stu-info ">
@@ -324,9 +348,19 @@ function Students(props) {
 						</form>
 					</div>
 				</div>
-            <div className="liststudents-gridview container-fluid">
-                <CardProfile></CardProfile>
-            </div>
+			<div>
+				<div className="liststudents-gridview container-fluid">
+					<CardProfile></CardProfile>
+				</div>
+				<Paginator
+					totalRecords={studentsDisplay.length}
+					pageLimit={pageLimit}
+					pageNeighbours={2}
+					setOffset={setOffset}
+					currentPage={currentPage}
+					setCurrentPage={setCurrentPage}
+				/>
+			</div>
             <div className="add-form" style={{"display":addBoxState}} >
 				
 					<div class="modal-dialog addModal ">
@@ -339,7 +373,8 @@ function Students(props) {
 								<form onSubmit={addData} >
 									<div className="add__form ">
 										<input type="file" onChange={(e)=>{handleChangePic(e)}} />
-                    {/* <button onClick={uploadImage}>Upload</button> */}
+										{/* <input type="file" onChange={(e)=>{setImage(e.target.files[0])}} /> */}
+                    
 										<hr/>
 										<input type="text" placeholder="Student Name"  value={stuName} onChange={(e) => setStuName(e.target.value)}/>
 										<hr/>
@@ -383,7 +418,7 @@ function Students(props) {
 							<div class="modal-body">
 								<form onSubmit={updateData} >
 									<div className="add__form ">
-										<input type="text" placeholder="URLpic"  value={newPic} onChange={(e) => setNewPic(e.target.value)}/>
+										<input type="file" onChange={(e)=>{handleChangePic(e)}} />
 										<hr/>
 										<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
 										<hr/>

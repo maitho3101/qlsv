@@ -2,15 +2,16 @@ import React, {useState, useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import { confirm } from "react-confirm-box";
 import { serverTimestamp, Timestamp } from "firebase/firestore";
-import {ref, uploadBytes, listAll , getDownloadURL, list} from "firebase/storage";
 import { storage } from '../firebase';
 import { v4 } from 'uuid';
 import Header from "./header";
 import "../css/home.css";
 import db from "../firebase";
+import Paginator from 'react-hooks-paginator';
 import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
-import DetailStudent from "./detailStudent";
-import "../img/istockphoto-1223671392-170667a.jpg";
+import {ref, uploadBytes, listAll , getDownloadURL, list, uploadString, deleteObject} from "firebase/storage";
+
+import avatar from "../img/istockphoto-1223671392-170667a.jpg";
 function ManageStudents (){
 	const [imageUpload, eImageUpload] = useState(null);
     const [pic, setPic] = useState("");
@@ -35,12 +36,22 @@ function ManageStudents (){
     const [students, setStudents]=useState([]);
     const [studentsDisplay, setStudentsDisplay]=useState([]);
 
+	const pageLimit = 10;
+
+	const [offset, setOffset] = useState(0);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [currentData, setCurrentData] = useState([]);
+
     const [search, setSearch]=useState("");
     const [filter, setFilter]=useState("");
 
 	const [addBoxState, setAddBoxState] = useState("none");
 	const [editBoxState, setEditBoxState] = useState("none");
 	const [bgopacity, setBackGroundOpacity] = useState("1");
+
+	const [image, setImage] = useState(null);
+  	const [url, setURL] = useState("");
+	const [data,setData] = useState();
 
     const usersCollection = collection(db,"users");
     const studentsCollection = collection(db,"students");
@@ -52,7 +63,7 @@ function ManageStudents (){
     }
     async function getStudents() {
 		//console.log("got data");
-        const dataquery =  query(studentsCollection, orderBy("created", "asc"));
+        const dataquery =  query(studentsCollection, orderBy("created", "desc"));
 		const data =await getDocs(dataquery);
         var newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
         setStudents( newStudent);
@@ -63,6 +74,9 @@ function ManageStudents (){
         
 		await getStudents();
     },[]);
+	useEffect(() => {
+		setCurrentData(studentsDisplay.slice(offset, offset + pageLimit));
+	  }, [offset, studentsDisplay]);
 	async function updateListFilter (gradeFilter){
 		// await getStudents();
 		if(gradeFilter ===""){
@@ -93,7 +107,23 @@ function ManageStudents (){
 		setSearch(searchValue);
 		await updateListStudent(searchValue);
 	}
-
+	async function handleChangePic(e){
+		// e.preventDefault();
+		var picValue = e.target.files[0];
+			setImage(picValue);
+		await uploadImage(picValue)
+	}
+	async function uploadImage(namePic){
+		const imageRef = ref (storage, `images/${namePic.name + v4()}`);
+		
+       await uploadBytes(imageRef, namePic).then((snapshot)=>{
+            getDownloadURL(snapshot.ref).then((url)=>{
+                setData((prev)=>({...prev,pic:url}));
+            });
+        });
+		
+	}
+	
 	async function closeOnClick(){
 		setAddBoxState("none");
 		setEditBoxState("none");
@@ -108,6 +138,8 @@ function ManageStudents (){
 		setKhoa("");
 		setGrade("");
 		setBio("");
+		setURL("");
+		setImage(null);
 	}
 	async function edithandle(item){
 		setEditBoxState("flex");
@@ -184,11 +216,11 @@ function ManageStudents (){
 					name: stuName,
 					msv: msv,
 					email: email,
-					pic: pic,
 					gender: gender,
 					grade:grade,
 					khoa: khoa,
 					created: serverTimestamp(),
+					...data,
 				})
 				console.log("success");
 				getStudents();
@@ -212,16 +244,16 @@ function ManageStudents (){
 		}
 		else{
 			const stuDoc = doc(db, "students", dataIdToBeUpdated); 
-			await updateDoc(stuDoc,{
-				name: newStuName,
+			const updateStu = {name: newStuName,
 				msv: newMsv,
 				email: newEmail,
-				pic: newPic,
 				gender: newGender,
 				grade:newGrade,
 				khoa: newKhoa,
-				bio:bio,
-			})
+				bio:newBio,
+				...data,
+			}
+		await updateDoc(stuDoc,updateStu);
 		console.log(" updated")
 		getStudents();
 		closeOnClick();
@@ -271,37 +303,47 @@ function ManageStudents (){
 					</div>
 				</div>
 				
-				<div className="listusers-table container-fluid">
-					<table id="admin">
-						<tr>
-							<th >STT</th>
-							<th >Student ID</th>
-							<th >Student Name</th>
-							<th >Gender</th>
-							<th >Grade</th>
-							<th >Action</th>
-						</tr>
-					{studentsDisplay && (<>
-						{studentsDisplay.map((student, index)=>{
-						return(
-								<tr >
-									<td >{index + 1}</td>
-									<td >{student.msv}</td>
-									<td >{student.name}</td>
-									<td >{student.gender}</td>
-									<td >{student.grade}</td>
-									<td >
-										<button onClick = {() => handleViewDetailStudent(student) }><i class="fa-solid fa-eye"></i></button>
-										<button onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id);}} type="button"  ><i class="fa-solid fa-pen-to-square"></i></button>
-										<button onClick={()=>deleteStudent(student.id)}><i class="fa-solid fa-trash-can"></i></button>
-										
-									</td>
-								</tr>
-							)
-						})}
-					</>)}
-					
-						</table>
+				<div>
+					<div className="listusers-table container-fluid">
+						<table id="admin">
+							<tr>
+								<th >STT</th>
+								<th >Student ID</th>
+								<th >Student Name</th>
+								<th >Gender</th>
+								<th >Grade</th>
+								<th >Action</th>
+							</tr>
+						{currentData && (<>
+							{currentData.map((student, index)=>{
+							return(
+									<tr >
+										<td >{index + 1}</td>
+										<td >{student.msv}</td>
+										<td >{student.name}</td>
+										<td >{student.gender}</td>
+										<td >{student.grade}</td>
+										<td >
+											<button onClick = {() => handleViewDetailStudent(student) }><i class="fa-solid fa-eye"></i></button>
+											<button onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id);}} type="button"  ><i class="fa-solid fa-pen-to-square"></i></button>
+											<button onClick={()=>deleteStudent(student.id)}><i class="fa-solid fa-trash-can"></i></button>
+											
+										</td>
+									</tr>
+								)
+							})}
+						</>)}
+						
+							</table>
+					</div>
+					<Paginator
+						totalRecords={studentsDisplay.length}
+						pageLimit={pageLimit}
+						pageNeighbours={2}
+						setOffset={setOffset}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+					/>
 				</div>
 			</div>
 			<div className="add-form" style={{"display":addBoxState}} >
@@ -315,7 +357,7 @@ function ManageStudents (){
 							<div class="modal-body">
 								<form onSubmit={addData} >
 									<div className="add__form ">
-										<input type="text" placeholder="URLpic"  value={pic} onChange={(e) => setPic(e.target.value)}/>
+										<input type="file" onChange={(e)=>{handleChangePic(e)}} />
 										<hr/>
 										<input type="text" placeholder="Student Name"  value={stuName} onChange={(e) => setStuName(e.target.value)}/>
 										<hr/>
@@ -359,7 +401,7 @@ function ManageStudents (){
 							<div class="modal-body">
 								<form onSubmit={updateData} >
 									<div className="add__form ">
-										<input type="text" placeholder="URLpic"  value={newPic} onChange={(e) => setNewPic(e.target.value)}/>
+										<input type="file" onChange={(e)=>{handleChangePic(e)}} />
 										<hr/>
 										<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
 										<hr/>
