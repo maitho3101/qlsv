@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 
 function App(){
 	return(
-		// <BrowserRouter>
+		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Welcome/>}/>
 				<Route path="/signup" element={<Signup/>}/>
@@ -29,7 +29,7 @@ function App(){
 				<Route path="/students" element={<Students/>}/>
 				<Route path="/student/:id" element={<DetailStudent/>}/>
 			</Routes>
-		// </BrowserRouter> 
+		 </BrowserRouter> 
 	)
 }
 
