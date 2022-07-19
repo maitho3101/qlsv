@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute"
 import Signup from "./components/signup";
 import Login from "./components/login";
@@ -15,7 +15,7 @@ import Cookies from "js-cookie";
 
 function App(){
 	return(
-		<BrowserRouter>
+		<Router>
 			<Routes>
 				<Route path="/" element={<Welcome/>}/>
 				<Route path="/signup" element={<Signup/>}/>
@@ -29,7 +29,7 @@ function App(){
 				<Route path="/students" element={<Students/>}/>
 				<Route path="/student/:id" element={<DetailStudent/>}/>
 			</Routes>
-		 </BrowserRouter> 
+		 </Router> 
 	)
 }
 
