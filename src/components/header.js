@@ -23,7 +23,7 @@ function Header() {
     }
 
     useEffect( () => {
-        if (localStorage.getItem("displayUsername") =="") {
+        if (localStorage.getItem("displayUsername") ==="") {
             setManagelink("/login");
             setListlink("/login");
         }
