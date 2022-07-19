@@ -19,6 +19,7 @@ function Header() {
         localStorage.setItem("loginBox", "block");
         localStorage.setItem("displayUsername", "");
         localStorage.removeItem("user");
+		Cookies.remove("user")
         navigate('/login', {replace: true});
     }
 

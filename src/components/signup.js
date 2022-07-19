@@ -55,6 +55,9 @@ async function nextPage(){
         if(!email ){
             setNotify("Please fill in email!")
         }
+        else if(/([a-zA-Z0-9._%+-]{3})+@[a-z0-9-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g.test(email)=== false){
+            setNotify("Email address need to be at least 3 characters before '@'. Ex: abc@gmail.com")
+        }
         else if(cur){
             setNotify("Email is already exist. Please choose another one")
         }
