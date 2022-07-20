@@ -46,7 +46,6 @@ async function checkLogin() {
         if (email === users[i].email && password === users[i].password){
             return users[i].name; 
         }
-        // console.log(users[i].name)
     }
     return "0";
 }
