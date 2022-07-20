@@ -15,6 +15,7 @@ import avatar from "../img/istockphoto-1223671392-170667a.jpg";
 function ManageStudents (){
 	const [imageUpload, eImageUpload] = useState(null);
     const [pic, setPic] = useState("");
+	const [id, setId] = useState("");
 	const [stuName, setStuName] = useState("");
 	const [gender, setGender] = useState("");
 	const [email, setEmail] = useState("");
@@ -61,26 +62,22 @@ function ManageStudents (){
         var newUser = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
         setUsers(newUser);
     }
-    // async function getStudents() {
-	// 	//console.log("got data");
-    //     const dataquery =  query(studentsCollection, orderBy("created", "desc"));
-	// 	const data =await getDocs(dataquery);
-    //     const newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
-    //     setStudents( newStudent);
-	// 	setStudentsDisplay(newStudent);
-		 
-    // }
-
-    // useEffect(() => async function() {
-        
-	// 	await getStudents();
-    // },[]);
-	useEffect(() => {
-		const dataquery =  query(studentsCollection, orderBy("created", "desc"));
+    async function getStudents() {
+		//console.log("got data");
+        const dataquery =  query(studentsCollection, orderBy("created", "desc"));
 		const data =await getDocs(dataquery);
         const newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
         setStudents( newStudent);
 		setStudentsDisplay(newStudent);
+		 console.log(newStudent)
+		 return newStudent
+    }
+
+    useEffect(() => async function() {
+        
+		await getStudents(id);
+    },[]);
+	useEffect(() => {
 		setCurrentData(studentsDisplay.slice(offset, offset + pageLimit));
 	  }, [offset, studentsDisplay]);
 	async function updateListFilter (gradeFilter){
