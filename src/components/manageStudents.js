@@ -69,14 +69,20 @@ function ManageStudents (){
         const newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
         setStudents( newStudent);
 		setStudentsDisplay(newStudent);
-		 console.log(newStudent)
 		 return newStudent
     }
 
-    useEffect(() => async function() {
+    // useEffect(() => async function() {
         
-		await getStudents(id);
-    },[]);
+	// 	await getStudents(id);
+    // },[]);
+	useEffect(() => {
+		try {
+			getStudents();
+		} catch {
+		} finally {
+		}
+	  }, []);
 	useEffect(() => {
 		setCurrentData(studentsDisplay.slice(offset, offset + pageLimit));
 	  }, [offset, studentsDisplay]);
