@@ -73,7 +73,7 @@ function Header() {
 		navigate(`/changepassword/${Cookies.get("user")}`)
 	}
     return (
-		<nav class="navbar bg-dark navbar-expand-md container-fluid header navbar-inverse">
+		<nav class="navbar navbar-dark bg-dark navbar-expand-md container-fluid header navbar-inverse">
 			<a href="#" class="navbar-brand header_name">QLSV</a>
 			<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar">
 				<span class="navbar-toggler-icon"></span>

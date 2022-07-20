@@ -1,7 +1,7 @@
 .signup-display{
-    /* background-color: red; */
-    width: 60%;
-    height: 80%;
+    background-color: white;
+    width: 50%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,7 +12,7 @@
     transform: translate(-50%, -50%);
     border-radius: 15px;
     border: 1px solid gray;
-    box-shadow: 10px 10px 5px rgba(125, 123, 123, 0.158) ;
+    box-shadow: 10px 10px 5px #9053c7 ;
 }
 .signup-in {
     position: relative;
@@ -21,7 +21,11 @@
     display: flex;
     flex-direction: column;
     place-items: center;
-    /* background-color: red; */
+    background: #9053c7;
+    /* background: -webkit-linear-gradient(-135deg,#c850c0,#4158d0); */
+    /* background: -o-linear-gradient(-135deg,#c850c0,#4158d0); */
+    /* background: -moz-linear-gradient(-135deg,#c850c0,#4158d0); */
+    background: linear-gradient(-135deg,#c850c0,#4158d0);
     
     }
 

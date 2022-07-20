@@ -219,6 +219,7 @@ function ManageStudents (){
 					gender: gender,
 					grade:grade,
 					khoa: khoa,
+					bio:bio,
 					created: serverTimestamp(),
 					...data,
 				})
