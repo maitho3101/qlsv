@@ -36,9 +36,13 @@ async function getUsers() {
     setUsers(newUser);
 }
 
-useEffect(() => async function() {
-    await getUsers();
-},[]);
+useEffect(() => {
+    try {
+        getUsers();
+    } catch {
+    } finally {
+    }
+  }, []);
 
 async function checkLogin() {
     await getUsers();

@@ -27,10 +27,13 @@ function User() {
         db.collection('users').doc(id).get()
         .then(snapshot => setUser(snapshot.data()))
     }
-    useEffect(() => async function() {
-        
-        await getUserData();
-    },[]);
+    useEffect(() => {
+		try {
+			getUserData();
+		} catch {
+		} finally {
+		}
+	  }, []);
    
     return (
         <div>

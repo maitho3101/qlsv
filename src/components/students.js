@@ -62,9 +62,13 @@ function Students(props) {
         setStudents( newStudent);
 		setStudentsDisplay(newStudent);
     }
-    useEffect(() => async function() {
-		await getStudents();
-    },[]);
+    useEffect(() => {
+		try {
+			getStudents();
+		} catch {
+		} finally {
+		}
+	  }, []);
 	useEffect(() => {
 		setCurrentData(studentsDisplay.slice(offset, offset + pageLimit));
 	  }, [offset, studentsDisplay]);
