@@ -76,9 +76,8 @@ function ManageStudents (){
         
 	// 	await getStudents(id);
     // },[]);
-	useEffect(() => async function(){
-		try {
-			await getStudents();
+	useEffect(() => {
+		try { getStudents();
 		} catch {
 		} finally {
 		}

@@ -29,10 +29,13 @@ function ChangePassword() {
         db.collection('users').doc(id).get()
         .then(snapshot => setUser(snapshot.data()))
     }
-    useEffect(() => async function() {
-        
-        await getUserData();
-    },[]);
+    useEffect(() => {
+		try {
+			getUserData();
+		} catch {
+		} finally {
+		}
+	  }, []);
     const saveSubmit =async(e)=>{
         e.preventDefault();
         if(user.password !== oldPassword){

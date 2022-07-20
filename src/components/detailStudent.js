@@ -14,10 +14,13 @@ function DetailStudent(props) {
         .then(snapshot => setStuDetail(snapshot.data()))
      
     }
-    useEffect(() => async function() {
-        
-		await getStudentData();
-    },[]);
+    useEffect(() => {
+		try {
+			getStudentData();
+		} catch {
+		} finally {
+		}
+	  }, []);
     return (
         <div>
             <Header/>
