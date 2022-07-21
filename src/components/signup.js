@@ -3,11 +3,12 @@ import "../css/signup.css";
 import db from "../firebase";
 import Cookies from 'js-cookie';
 import { collection, getDocs,  } from "firebase/firestore";
+import { func } from "prop-types";
 
 function Signup() {
 
 const [page, setPage]= useState(0);
-const [signupButton, setSignupButton] = useState("none");
+const [prevButton, setPrevButton] = useState("none");
 
 const FormTitles = ["Sign Up", "Personal Info", "Other"];
 
@@ -53,8 +54,21 @@ async function checkIfUserExist() {
     }
     return 0;
 }
+async function backToPrevPage(){
+    if(page===0){
+        setPrevButton("none");
+    }
+    else if(page ===1 ){
+        setPage(page-1);
+        setPrevButton("none");
+    }
+    else if (page ===2){
+        setPage(page-1);
+    }
+}
 async function nextPage(){
     if(page===0){
+        setPrevButton("none");
         const cur = await checkIfUserExist();
         if(!email ){
             setNotify("Please fill in email!")
@@ -77,6 +91,7 @@ async function nextPage(){
         else{
             setPage(1);
             setNotify("");
+            setPrevButton("block");
         }
     }
     else if(page ===1){
@@ -137,7 +152,7 @@ const PageDisplay=()=>{
     if(page === 0){
         return (
             <div className="signup-in__form">
-                <input type="email" placeholder="Email"  value={email}  onChange={(e) => setEmail(e.target.value)} required/>
+                <input type="email" placeholder="Email"  value={email}  onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <input type="password" placeholder="Confirm Password"  value={confPassword} onChange={(e) => setConfPassword(e.target.value)}/>
                 <p class="notify-p">{notify}</p>
@@ -173,13 +188,14 @@ return (
             </div>
                 {PageDisplay()}
             <div className="footer">
-                <button disabled={page === 0} onClick={()=>{setPage((currentPage)=> currentPage -1)}} >Prev</button>
-                {/* <button 
-                    onClick={submit}
-                >
-                        {page === FormTitles.length -1?"Submit":"Next"}
-                </button> */}
-                {page ===FormTitles.length-1?<button onClick={submit} >Sign Up</button>:<button onClick={nextPage}>Next</button>}
+                <div style={{display: prevButton}} className="footer-btn prev-btn">
+
+                    <button onClick={backToPrevPage} >Prev</button>
+                </div>
+                
+                <div className="footer-btn">
+                    {page ===FormTitles.length-1?<button onClick={submit} >Sign Up</button>:<button onClick={nextPage}>Next</button>}
+                </div>
                 
                 
                 

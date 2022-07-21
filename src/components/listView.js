@@ -394,7 +394,7 @@ function ListView (){
 				
 			</div>
 			<div className="add-form" style={{"display":editBoxState}} >
-				
+			
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -404,8 +404,13 @@ function ListView (){
 							<div class="modal-body">
 								<form onSubmit={updateData} >
 									<div className="add__form ">
-										<input type="file" onChange={(e)=>{handleChangePic(e)}} />
-										<hr/>
+										<div className="change-ava ">
+											<img className="rounded-circle ava-edit"  src={newPic}/>
+											<div className="btn_change" >
+												<i class="fa-solid fa-camera"></i>
+												<input type="file" onChange={(e)=>{handleChangePic(e)}} />
+											</div>
+										</div>
 										<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
 										<hr/>
 										<select id="numberToSelect" name="newgender_type" defaultValue="Gender" onChange={(e)=>setNewGender(e.target.value)} value={newGender}>

@@ -116,7 +116,7 @@ return (
                 <input type="submit" value="Login" className="btn btn-login " />
                 <div className="member">
                     <span>Not a member?</span>
-                    <a href="/signup">Sign Up</a>
+                    <a href="/">Sign Up</a>
                 </div>
             </div>
         </form>

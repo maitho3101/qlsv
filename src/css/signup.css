@@ -59,6 +59,13 @@
 }
 .btn-login{
     margin: 25px 0;
+    width: 90px;
+    height: 50px;
+    border: 1px double #9053c7;
+    background-color: #9053c7;
+    border-radius: 40px;
+    background: linear-gradient(-135deg,#4158d0,#c850c0);
+    color: white;
     font-size: 20px;
 }
 .member{
@@ -69,6 +76,21 @@
 }
 .footer{
     margin: 5px 0;
+    display: flex;
+    /* background-color: red; */
+}
+.prev-btn{
+    margin-right: 50px;
+}
+.footer-btn button{
+    width: 90px;
+    height: 50px;
+    border: 1px double #9053c7;
+    background-color: #9053c7;
+    border-radius: 40px;
+    background: linear-gradient(-135deg,#4158d0,#c850c0);
+    color: white;
+    font-size: 20px;
 }
 }
 @media only screen and (min-width: 600px) {
@@ -132,6 +154,13 @@
     }
     .btn-login{
         margin: 25px 0;
+        width: 90px;
+        height: 50px;
+        border: 1px double #9053c7;
+        background-color: #9053c7;
+        border-radius: 40px;
+        background: linear-gradient(-135deg,#4158d0,#c850c0);
+        color: white;
         font-size: 20px;
     }
     .member{
@@ -142,6 +171,21 @@
     }
     .footer{
         margin: 5px 0;
+        display: flex;
+        /* background-color: red; */
+    }
+    .prev-btn{
+        margin-right: 80px;
+    }
+    .footer-btn button{
+        width: 90px;
+        height: 50px;
+        border: 1px double #9053c7;
+        background-color: #9053c7;
+        border-radius: 40px;
+        background: linear-gradient(-135deg,#4158d0,#c850c0);
+        color: white;
+        font-size: 20px;
     }
 }
 @media only screen and (min-width: 992px) {
@@ -149,7 +193,7 @@
         background-color: white;
         width: 50%;
         height: fit-content;
-        padding: 20px 0;
+        padding: 50px 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -205,6 +249,13 @@
     }
     .btn-login{
         margin: 25px 0;
+        width: 90px;
+        height: 50px;
+        border: 1px double #9053c7;
+        background-color: #9053c7;
+        border-radius: 40px;
+        background: linear-gradient(-135deg,#4158d0,#c850c0);
+        color: white;
         font-size: 20px;
     }
     .member{
@@ -215,5 +266,20 @@
     }
     .footer{
         margin: 5px 0;
+        display: flex;
+        /* background-color: red; */
+    }
+    .prev-btn{
+        margin-right: 80px;
+    }
+    .footer-btn button{
+        width: 90px;
+        height: 50px;
+        border: 1px double #9053c7;
+        background-color: #9053c7;
+        border-radius: 40px;
+        background: linear-gradient(-135deg,#4158d0,#c850c0);
+        color: white;
+        font-size: 20px;
     }
 }
