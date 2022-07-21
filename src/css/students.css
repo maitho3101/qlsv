@@ -14,7 +14,7 @@ p{
 @media only screen and (max-width: 600px){
     .liststudents-gridview{
         background-color: white;
-        padding: 0 50px;
+        padding: 0 30px;
         height: auto;
         display: flex;
         flex-direction: row;
@@ -22,7 +22,7 @@ p{
         flex-wrap: wrap;
     }
     .profile-content{
-        margin: 10px 20px;
+        margin: 5px 10px;
         background-color: rgb(226, 215, 215);
         font-size: 85%;
         display:grid;
@@ -30,13 +30,13 @@ p{
         align-items: center;
         padding: 10px;
         border-radius: 5px;
-        width: 200px;
-        height: 250px;
+        width: 150px;
+        height: 220px;
     }
     .stu_avatar{
         display: flex;
         justify-content: center;
-        margin: 10px 0;
+        margin: 5px 0;
     }
     .stu-info{
         display: flex;

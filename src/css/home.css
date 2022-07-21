@@ -18,14 +18,21 @@
         width: 90%;
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 30px;
-        font-size: 110%;
+        margin-bottom: 20px;
+        font-size: 90%;
     }
     .add-student{
         margin-right: 2%;
+        font-size: 40%;
+    }
+    .add-student button{
+        font-size: 250%;
     }
     .filter-student{
         margin-right: 10%;
+    }
+    .filter-student select{
+        font-size: 100%;
     }
     .search-student {
         display: flex;
