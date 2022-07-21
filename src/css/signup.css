@@ -2,7 +2,8 @@
 .signup-display{
     background-color: white;
     width: 75%;
-    height: 45%;
+    height: fit-content;
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -67,15 +68,15 @@
     color: red;
 }
 .footer{
-    position: fixed;
-    bottom: 10%;
+    margin: 5px 0;
 }
 }
 @media only screen and (min-width: 600px) {
     .signup-display{
         background-color: white;
         width: 75%;
-        height: 45%;
+        height: fit-content;
+        padding: 20px 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -140,15 +141,15 @@
         color: red;
     }
     .footer{
-        position: fixed;
-        bottom: 10%;
+        margin: 5px 0;
     }
 }
 @media only screen and (min-width: 992px) {
     .signup-display{
         background-color: white;
         width: 50%;
-        height: 70%;
+        height: fit-content;
+        padding: 20px 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -213,7 +214,6 @@
         color: red;
     }
     .footer{
-        position: fixed;
-        bottom: 10%;
+        margin: 5px 0;
     }
 }
