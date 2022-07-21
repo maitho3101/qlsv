@@ -295,9 +295,9 @@ function ManageStudents (){
 						</button>
 					</div>
 					<form className="filter-student" >
-						<select className="btn" defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
+						<select className="btn filter_stu" defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
 							<option value="" >Select Grade</option>
-							<option value="KHMT">KHMT</option>
+							<option value="KHMT" >KHMT</option>
 							<option value="CNTT">CNTT</option>
 							<option value="QTKD">QTKD</option>
 						</select>

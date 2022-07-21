@@ -21,15 +21,19 @@ function DetailStudent(props) {
 		} finally {
 		}
 	  }, []);
+      let navigate = useNavigate();
+      async function backToPrevPage(){
+        navigate(-1);
+      }
     return (
         <div>
             <Header/>
-            <span><a href='/manage'>Back</a></span>
+            <a href='#' onClick={backToPrevPage} className="back-btn">&lt;Back</a>
             <div className='student-profile container-fluid'>
                 <div className='student-profile_title'>
                     <h1>Student Profile</h1>
                 </div>
-                <div className='student-profile_body'>
+                <div className='student-profile_body '>
                     <div className="stu-avatar_detail" >
 						<img  src={stuDetail.pic}></img>
 					</div>

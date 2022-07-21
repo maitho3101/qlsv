@@ -197,6 +197,19 @@
         margin: 1px;
         padding: 0;
     }
+    .confirm-box__content {
+        z-index: 300;
+        background-color: #fff;
+        box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+        padding: 1em;
+        border-radius: 5px;
+        width: 300px;
+        max-width: 400px;
+        position: fixed;
+        left: 45%;
+        top: 45%;
+        transform: translate(-50%, -50%);
+    }
 }
 @media only screen and (min-width: 600px) {
     .action-student{
@@ -382,6 +395,24 @@
         margin: 1px;
         padding: 0;
     }
+    .confirm-box__content {
+        z-index: 300;
+        background-color: #fff;
+        box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+        padding: 1em;
+        border-radius: 5px;
+        width: 300px;
+        max-width: 400px;
+        position: fixed;
+        left: 45%;
+        top: 45%;
+        transform: translate(-50%, -50%);
+    }
+    /* .filter_stu option{
+        color: black ;
+        font-size: 10px;
+    } */
+    
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
@@ -564,6 +595,19 @@
     .profile-modal{
         position: fixed;
         top: 10%;
+    }
+    .confirm-box__content {
+        z-index: 300;
+        background-color: #fff;
+        box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+        padding: 1em;
+        border-radius: 5px;
+        width: 300px;
+        max-width: 400px;
+        position: fixed;
+        left: 45%;
+        top: 45%;
+        transform: translate(-50%, -50%);
     }
 }
   

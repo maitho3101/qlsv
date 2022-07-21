@@ -5,7 +5,7 @@
     border: 1px solid gray;
     border-radius: 10px;
     width: 90%;
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 30px;
     background-color: #9f9aa054;
 }
@@ -23,22 +23,24 @@
     }
     .student-profile_body{
         display: flex;
-        justify-content: space-around;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         width: 100%;  
     }
     .stu-avatar_detail{
         width: 40%;
         display: flex;
         justify-content: center;
-        margin: 30px 10px;
+        margin:  10px;
     }
     .stu-avatar_detail img{
         width: 150px;
         height: 150px;
     }
     .stu_detail{
-        width: 60%;
-        font-size: 90%;
+        width: 70%;
+        font-size: 100%;
     }
     .stu_detail h3{
         display: flex;
@@ -51,7 +53,7 @@
     hr{
         border: 1px solid gray;
         margin: 5px 0;
-        width: 90%;
+        width: 100%;
     }
     .stu_bio{
         width: 90%;
@@ -66,7 +68,7 @@
     }
     .bio_detail{
         width: 80%;
-        height: 120px;
+        height: 350px;
         margin-bottom: 30px;
         border: 1px solid gray;
         border-radius: 10px;
@@ -74,6 +76,12 @@
     }
     .modal-detail_bio{
         padding-top: 10px;
+    }
+    .back-btn{
+        color: black;
+        margin-left: 10px;
+        text-decoration: none;
+        font-size: 20px;
     }
 }
 @media only screen and (min-width: 600px) {
@@ -131,7 +139,7 @@
     }
     .bio_detail{
         width: 80%;
-        height: 120px;
+        height: 200px;
         margin-bottom: 30px;
         border: 1px solid gray;
         border-radius: 10px;
@@ -139,6 +147,12 @@
     }
     .modal-detail_bio{
         padding-top: 10px;
+    }
+    .back-btn{
+        color: black;
+        margin-left: 10px;
+        text-decoration: none;
+        font-size: 20px;
     }
 }
 /* Large devices (laptops/desktops, 992px and up) */
@@ -212,4 +226,10 @@
     .modal-detail_bio{
         padding-top: 10px;
     }
+    .back-btn{
+        color: black;
+        margin-left: 10px;
+        text-decoration: none;
+        font-size: 20px;
     }
+}
