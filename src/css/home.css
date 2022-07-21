@@ -8,12 +8,12 @@
     display: flex;
     flex-direction: column;
 }
-.listusers-table{
-    width: 100%;
-}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+    .listusers-table{
+        width: 100%;
+    }
     .action-student{
         width: 90%;
         display: flex;
@@ -415,6 +415,9 @@
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+    .listusers-table{
+        width: 90%;
+    }
     .action-student{
         width: 90%;
         display: flex;

@@ -12,6 +12,8 @@ import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where
 import {ref, uploadBytes, listAll , getDownloadURL, list, uploadString, deleteObject} from "firebase/storage";
 
 import avatar from "../img/istockphoto-1223671392-170667a.jpg";
+
+import { getDataStudents } from "../services/studentsService";
 function ManageStudents (){
 	const [imageUpload, eImageUpload] = useState(null);
     const [pic, setPic] = useState("");
@@ -63,19 +65,18 @@ function ManageStudents (){
         setUsers(newUser);
     }
     async function getStudents() {
-		//console.log("got data");
-        const dataquery =  query(studentsCollection, orderBy("created", "desc"));
-		const data =await getDocs(dataquery);
-        const newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
+		const newStudent = await getDataStudents();
         setStudents( newStudent);
 		setStudentsDisplay(newStudent);
-		 return newStudent
     }
-
-    // useEffect(() => async function() {
-        
-	// 	await getStudents(id);
-    // },[]);
+    // async function getStudents() {
+	// 	//console.log("got data");
+    //     const dataquery =  query(studentsCollection, orderBy("created", "desc"));
+	// 	const data =await getDocs(dataquery);
+    //     const newStudent = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
+    //     setStudents( newStudent);
+	// 	setStudentsDisplay(newStudent);
+    // }
 	useEffect(() => {
 		try { getStudents();
 		} catch {
@@ -279,7 +280,7 @@ function ManageStudents (){
         }else{
             console.log("no")
         }
-}
+	}
     return (
         <div >
             <Header/>
@@ -295,7 +296,7 @@ function ManageStudents (){
 						</button>
 					</div>
 					<div className="filter-student" >
-						<select className="btn filter_stu" defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
+						<select className="btn filter_stu"  defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
 							<option value="" >Select Grade</option>
 							<option value="KHMT" >KHMT</option>
 							<option value="CNTT">CNTT</option>
