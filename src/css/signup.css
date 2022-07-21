@@ -1,7 +1,8 @@
+@media only screen and (max-width: 600px){
 .signup-display{
     background-color: white;
-    width: 50%;
-    height: 70%;
+    width: 75%;
+    height: 45%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,7 +41,7 @@
     flex-direction: column;
     font-size: 120%;
     /* background-color: green; */
-    width: 60%;
+    width: 80%;
     top: 30%;
 }
     
@@ -69,4 +70,150 @@
     position: fixed;
     bottom: 10%;
 }
+}
+@media only screen and (min-width: 600px) {
+    .signup-display{
+        background-color: white;
+        width: 75%;
+        height: 45%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 15px;
+        border: 1px solid gray;
+        box-shadow: 10px 10px 5px #9053c7 ;
+    }
+    .signup-in {
+        position: relative;
+        text-align: center;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        background: #9053c7;
+        /* background: -webkit-linear-gradient(-135deg,#c850c0,#4158d0); */
+        /* background: -o-linear-gradient(-135deg,#c850c0,#4158d0); */
+        /* background: -moz-linear-gradient(-135deg,#c850c0,#4158d0); */
+        background: linear-gradient(-135deg,#c850c0,#4158d0);
+        
+        }
     
+    .signup_title h1{
+        /* background-color: black; */
+        font-size: 50px;
+        margin: 20px 0;
+    }
+    
+    .signup-in__form {
+        display: flex;
+        flex-direction: column;
+        font-size: 120%;
+        /* background-color: green; */
+        width: 80%;
+        top: 30%;
+    }
+        
+    .signup-in__form   input {
+        padding: 7px 11px;
+        border-radius: 3px;
+        border: none;
+        border-bottom: 1px solid gray;
+        margin: 10px;
+        outline: none;
+    }
+    .btn-signup{
+        margin: 20px 0;
+    }
+    .btn-login{
+        margin: 25px 0;
+        font-size: 20px;
+    }
+    .member{
+        padding-top: 10px;
+    }
+    .notify-p{
+        color: red;
+    }
+    .footer{
+        position: fixed;
+        bottom: 10%;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .signup-display{
+        background-color: white;
+        width: 50%;
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 15px;
+        border: 1px solid gray;
+        box-shadow: 10px 10px 5px #9053c7 ;
+    }
+    .signup-in {
+        position: relative;
+        text-align: center;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        background: #9053c7;
+        /* background: -webkit-linear-gradient(-135deg,#c850c0,#4158d0); */
+        /* background: -o-linear-gradient(-135deg,#c850c0,#4158d0); */
+        /* background: -moz-linear-gradient(-135deg,#c850c0,#4158d0); */
+        background: linear-gradient(-135deg,#c850c0,#4158d0);
+        
+        }
+    
+    .signup_title h1{
+        /* background-color: black; */
+        font-size: 50px;
+        margin: 20px 0;
+    }
+    
+    .signup-in__form {
+        display: flex;
+        flex-direction: column;
+        font-size: 120%;
+        /* background-color: green; */
+        width: 80%;
+        top: 30%;
+    }
+        
+    .signup-in__form   input {
+        padding: 7px 11px;
+        border-radius: 3px;
+        border: none;
+        border-bottom: 1px solid gray;
+        margin: 10px;
+        outline: none;
+    }
+    .btn-signup{
+        margin: 20px 0;
+    }
+    .btn-login{
+        margin: 25px 0;
+        font-size: 20px;
+    }
+    .member{
+        padding-top: 10px;
+    }
+    .notify-p{
+        color: red;
+    }
+    .footer{
+        position: fixed;
+        bottom: 10%;
+    }
+}

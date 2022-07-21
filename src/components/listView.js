@@ -13,8 +13,8 @@ import {ref, uploadBytes, listAll , getDownloadURL, list, uploadString, deleteOb
 
 import avatar from "../img/istockphoto-1223671392-170667a.jpg";
 
-import { getDataStudents } from "../services/studentsService";
-function ManageStudents (){
+import { getDataStudents, deleteDataStudent } from "../services/studentsService";
+function ListView (){
 	const [imageUpload, eImageUpload] = useState(null);
     const [pic, setPic] = useState("");
 	const [id, setId] = useState("");
@@ -176,7 +176,6 @@ function ManageStudents (){
 	async function checkIfStuExist() {
 		await getStudents();
 		for(var i=0; i< students.length; i++){
-			console.log(students[i].email)
 			if (email === students[i].email ){
 				return 1; 
 			}
@@ -272,14 +271,8 @@ function ManageStudents (){
 		// getStudents();
 	}
     const deleteStudent = async (id)=>{
-        const studentDoc = doc(db, "students", id); 
-        var result = await confirm("Want to delete?");
-        if (result) {
-        await deleteDoc(studentDoc);
+        await deleteDataStudent(id);
 		getStudents();
-        }else{
-            console.log("no")
-        }
 	}
     return (
         <div >
@@ -480,4 +473,4 @@ function ManageStudents (){
         </div>
     );
 }
-export default ManageStudents ;
+export default ListView ;

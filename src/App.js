@@ -4,7 +4,7 @@ import PrivateRoute from "./PrivateRoute"
 import Signup from "./components/signup";
 import Login from "./components/login";
 // import Home from "./components/home";
-import ManageStudents from "./components/manageStudents";
+import ListView from "./components/listView";
 import User from "./components/user";
 import Students from "./components/students";
 import DetailStudent from "./components/detailStudent";
@@ -19,7 +19,7 @@ function App(){
 				<Route path="/" element={<Welcome/>}/>
 				<Route path="/signup" element={<Signup/>}/>
 				{/* <Route  path='/home' element={<Home/>}/> */}
-				<Route  path='/manage' element={<ManageStudents/>}/>
+				<Route  path='/listview' element={<ListView/>}/>
 				<Route path="/login" element={<Login/>}/>
 				
 				<Route path="/user/:id" element={<User/>}/>

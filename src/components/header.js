@@ -9,8 +9,8 @@ function Header() {
     const [displayUsernameBox, setDisplayUsernameBox] = useState(localStorage.getItem("userNameBox"));
     const [displayLoginBox, setDisplayLoginBox] = useState(localStorage.getItem("loginBox"));
 	let navigate = useNavigate();
-	const [managelink, setManagelink] = useState("#");
-	const [listlink, setListlink] = useState("#");
+	const [listLink, setListLink] = useState("#");
+	const [gridLink, setGridLink] = useState("#");
 	const [linkColor1, setLinkColor1]= useState("")
 	const [linkColor2, setLinkColor2]= useState("")
 	const [linkColor3, setLinkColor3]= useState("")
@@ -29,12 +29,12 @@ function Header() {
 
     useEffect( () => {
         if (localStorage.getItem("displayUsername") ==="") {
-            setManagelink("/login");
-            setListlink("/login");
+            setListLink("/login");
+            setGridLink("/login");
         }
         else {
-            setManagelink("/manage");
-            setListlink("/students");
+            setListLink("/listview");
+            setGridLink("/students");
         }
 		if (localStorage.getItem("pageIndex") == 1) {
 			setLinkColor1("red")
@@ -81,8 +81,8 @@ function Header() {
 			<div class="navbar-collapse collapse justify-content-center" id="navbar">
 				<ul class="navbar-nav nav header_menu " >
 					<li class="nav-item "><a  href='/' class="nav-link" style={{color: linkColor1}}  onClick={setPageIndex1} >Home</a></li>
-					<li class="nav-item"><a  href={managelink} class="nav-link" style={{color: linkColor2}} onClick={setPageIndex2} >ListView</a></li>
-					<li class="nav-item"><a href={listlink} class="nav-link" style={{color: linkColor3}} onClick={setPageIndex3}>GridView</a></li>
+					<li class="nav-item"><a  href={listLink} class="nav-link" style={{color: linkColor2}} onClick={setPageIndex2} >ListView</a></li>
+					<li class="nav-item"><a href={gridLink} class="nav-link" style={{color: linkColor3}} onClick={setPageIndex3}>GridView</a></li>
 				</ul>
 			</div>
 				<div class="user-info" style={{display:displayUsernameBox}}>

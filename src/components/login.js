@@ -92,7 +92,7 @@ const submit = async (e) => {
             setCookie("user", cur2, 5);
             // localStorage.setItem("user",cur2);
             onClickimg();
-            navigate('/manage', {replace: true});
+            navigate('/listview', {replace: true});
             
         }
     }
