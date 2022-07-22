@@ -25,15 +25,15 @@
         margin-right: 2%;
         font-size: 40%;
     }
-    .add-student button{
+    /* .add-student button{
         font-size: 250%;
-    }
+    } */
     .filter-student{
         margin-right: 10%;
     }
-    .filter-student select{
+    /* .filter-student select{
         font-size: 100%;
-    }
+    } */
     .search-student {
         display: flex;
         justify-content: flex-end;
