@@ -148,6 +148,7 @@ function ListView (){
 	   .then(()=>{
             getDownloadURL(imageRef).then((url)=>{
                 setURL(url);
+				setNewPic(url);
             });
         });
 		console.log(url)
@@ -168,6 +169,9 @@ function ListView (){
 		setKhoa("");
 		setGrade("");
 		setBio("");
+	}
+	function closeUploadImg(){
+		setEditAvaState("none");
 	}
 	async function edithandle(item){
 		setEditBoxState("flex");
@@ -426,7 +430,8 @@ function ListView (){
 								<form onSubmit={updateData} >
 									<div className="add__form ">
 										<div className="change-ava ">
-										{!url?<Avatar className="rounded-circle ava-edit"  src={newPic}/>:<Avatar className="rounded-circle ava-edit"  src={url}/>}
+										{/* {!url?<Avatar className="rounded-circle ava-edit"  src={newPic}/>:<Avatar className="rounded-circle ava-edit"  src={url}/>} */}
+										<Avatar className="rounded-circle ava-edit"  src={newPic}/>
 											<div className="btn_change" >
 												<i class="fa-solid fa-camera" onClick={handleEditAva}></i>
 												
@@ -469,7 +474,7 @@ function ListView (){
 						<div class="modal-content">
 							<div class="modal-header">
 								<h4 class="modal-title">Update Avatar</h4>
-								<button type="button" class="btn-close" onClick={closeOnClick}></button>
+								<button type="button" class="btn-close" onClick={closeUploadImg}></button>
 							</div>
 							<div class="modal-body">
 								<input type="file" onChange={handleImageChange}/>

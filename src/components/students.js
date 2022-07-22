@@ -122,6 +122,7 @@ function Students(props) {
 	   .then(()=>{
             getDownloadURL(imageRef).then((url)=>{
                 setURL(url);
+				
             });
         });
 		
@@ -140,6 +141,7 @@ function Students(props) {
 	   .then(()=>{
             getDownloadURL(imageRef).then((url)=>{
                 setURL(url);
+				setNewPic(url);
             });
         });
 		console.log(url)
@@ -184,6 +186,9 @@ function Students(props) {
 		setKhoa("");
 		setGrade("");
 		setBio("");
+	}
+	function closeUploadImg(){
+		setEditAvaState("none");
 	}
 	async function edithandle(item){
 		setEditBoxState("flex");
@@ -346,12 +351,12 @@ function Students(props) {
         ));
     }
     return (
-        <div>
+        <div >
             <Header/>
                 <div className="title"> 
                     <h1>Profile GridView</h1>
                 </div>
-                <div className="action-student container-fluid">
+                <div className="action-student container-fluid" style={{opacity:bgopacity}}>
 					<div className="add-student">
 						<button type="button" class="btn btn-primary" onClick={addOnClick}>
 							Add
@@ -375,7 +380,7 @@ function Students(props) {
 					</div>
 				</div>
 			<div>
-				<div className="liststudents-gridview container-fluid">
+				<div className="liststudents-gridview container-fluid" style={{opacity:bgopacity}}>
 					<CardProfile></CardProfile>
 				</div>
 				<Paginator
@@ -446,7 +451,7 @@ function Students(props) {
 									<div className="add__form ">
 										<div className="change-ava ">
 											{/* <img className="rounded-circle ava-edit"  src={newPic}/> */}
-											{!url?<Avatar className="rounded-circle ava-edit" src={newPic}/>:<Avatar className="rounded-circle ava-edit" src={url}/>}
+											<Avatar className="rounded-circle ava-edit"  src={newPic}/>
 											<div className="btn_change" >
 												<i class="fa-solid fa-camera" onClick={handleEditAva}></i>
 												{/* <input type="file" onChange={(e)=>{handleChangePic(e)}} /> */}
@@ -489,7 +494,7 @@ function Students(props) {
 						<div class="modal-content">
 							<div class="modal-header">
 								<h4 class="modal-title">Update Avatar</h4>
-								<button type="button" class="btn-close" onClick={closeOnClick}></button>
+								<button type="button" class="btn-close" onClick={closeUploadImg}></button>
 							</div>
 							<div class="modal-body">
 								<input type="file" onChange={handleImageChange}/>
