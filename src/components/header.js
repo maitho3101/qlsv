@@ -80,7 +80,7 @@ function Header() {
 			</button>
 			<div class="navbar-collapse collapse justify-content-center" id="navbar">
 				<ul class="navbar-nav nav header_menu " >
-					<li class="nav-item "><a  href='/' class="nav-link" style={{color: linkColor1}}  onClick={setPageIndex1} >Home</a></li>
+					<li class="nav-item "><a  href='#' class="nav-link" style={{color: linkColor1}}  onClick={setPageIndex1} >Home</a></li>
 					<li class="nav-item"><a  href={listLink} class="nav-link" style={{color: linkColor2}} onClick={setPageIndex2} >ListView</a></li>
 					<li class="nav-item"><a href={gridLink} class="nav-link" style={{color: linkColor3}} onClick={setPageIndex3}>GridView</a></li>
 				</ul>

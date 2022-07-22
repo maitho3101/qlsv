@@ -12,7 +12,7 @@ import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where
 import {ref, uploadBytes, listAll , getDownloadURL, list, uploadString, deleteObject} from "firebase/storage";
 
 import avatar from "../img/istockphoto-1223671392-170667a.jpg";
-
+import Avatar from 'react-avatar';
 import { getDataStudents, deleteDataStudent } from "../services/studentsService";
 function ListView (){
 	const [imageUpload, eImageUpload] = useState(null);
@@ -50,10 +50,11 @@ function ListView (){
 
 	const [addBoxState, setAddBoxState] = useState("none");
 	const [editBoxState, setEditBoxState] = useState("none");
+	const [editAvaState, setEditAvaState] = useState("none");
 	const [bgopacity, setBackGroundOpacity] = useState("1");
 
 	const [image, setImage] = useState(null);
-  	const [url, setURL] = useState("");
+  	const [url, setURL] = useState(null);
 	const [data,setData] = useState();
 
     const usersCollection = collection(db,"users");
@@ -125,13 +126,33 @@ function ListView (){
 	async function uploadImage(namePic){
 		const imageRef = ref (storage, `images/${namePic.name + v4()}`);
 		
-       await uploadBytes(imageRef, namePic).then((snapshot)=>{
-            getDownloadURL(snapshot.ref).then((url)=>{
-                setData((prev)=>({...prev,pic:url}));
-            });
-        });
+		await uploadBytes(imageRef, namePic)
+		.then(()=>{
+			 getDownloadURL(imageRef).then((url)=>{
+				 setURL(url);
+			 });
+		 });
 		
 	}
+	async function handleEditAva(){
+		setEditAvaState("block");
+	}
+	async function handleImageChange(e){
+		setImage(e.target.files[0]);
+		
+	}
+	async function submitImage(){
+		const imageRef = ref (storage, `images/${image.name+v4()}`);
+		
+       await uploadBytes(imageRef, image)
+	   .then(()=>{
+            getDownloadURL(imageRef).then((url)=>{
+                setURL(url);
+            });
+        });
+		console.log(url)
+		setEditAvaState("none");
+	};
 	
 	async function closeOnClick(){
 		setAddBoxState("none");
@@ -147,8 +168,6 @@ function ListView (){
 		setKhoa("");
 		setGrade("");
 		setBio("");
-		setURL("");
-		setImage(null);
 	}
 	async function edithandle(item){
 		setEditBoxState("flex");
@@ -229,7 +248,8 @@ function ListView (){
 					khoa: khoa,
 					bio:bio,
 					created: serverTimestamp(),
-					...data,
+					pic:url,
+					// ...data,
 				})
 				console.log("success");
 				getStudents();
@@ -260,7 +280,8 @@ function ListView (){
 				grade:newGrade,
 				khoa: newKhoa,
 				bio:newBio,
-				...data,
+				pic:url,
+				// ...data,
 			}
 		await updateDoc(stuDoc,updateStu);
 		console.log(" updated")
@@ -405,10 +426,10 @@ function ListView (){
 								<form onSubmit={updateData} >
 									<div className="add__form ">
 										<div className="change-ava ">
-											<img className="rounded-circle ava-edit"  src={newPic}/>
+										{!url?<Avatar src={newPic}/>:<Avatar src={url}/>}
 											<div className="btn_change" >
-												<i class="fa-solid fa-camera"></i>
-												<input type="file" onChange={(e)=>{handleChangePic(e)}} />
+												<i class="fa-solid fa-camera" onClick={handleEditAva}></i>
+												
 											</div>
 										</div>
 										<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
@@ -442,6 +463,20 @@ function ListView (){
 					</div>
 				
 				
+			</div>
+			<div className="editava-form" style={{"display":editAvaState}}>
+				<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Update Avatar</h4>
+								<button type="button" class="btn-close" onClick={closeOnClick}></button>
+							</div>
+							<div class="modal-body">
+								<input type="file" onChange={handleImageChange}/>
+								<button onClick={submitImage}>Update</button>
+							</div>
+						</div>
+				</div>
 			</div>
 			<div className="profile-display " >
 				<div class="modal fade " id="viewModal">

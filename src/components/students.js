@@ -22,6 +22,7 @@ function Students(props) {
 	const [khoa, setKhoa] = useState("");
 	const [grade, setGrade] = useState("");
 	const [bio, setBio] = useState("");
+	const [newPic, setNewPic] = useState("");
 	const [newStuName, setNewStuName] = useState("");
 	const [newGender, setNewGender] = useState("");
 	const [newEmail, setNewEmail] = useState("");
@@ -46,10 +47,11 @@ function Students(props) {
 
 	const [addBoxState, setAddBoxState] = useState("none");
 	const [editBoxState, setEditBoxState] = useState("none");
+	const [editAvaState, setEditAvaState] = useState("none");
 	const [bgopacity, setBackGroundOpacity] = useState("1");
 
 	const [image, setImage] = useState(null);
-  	const [url, setURL] = useState("");
+  	const [url, setURL] = useState(null);
 	  const [data,setData] = useState();
 
     const usersCollection = collection(db,"users");
@@ -113,16 +115,36 @@ function Students(props) {
 			setImage(picValue);
 		await uploadImage(picValue)
 	}
-	async function uploadImage(namePic){
-		const imageRef = ref (storage, `images/${namePic.name + v4()}`);
+	async function uploadImage(namePic,student){
+		const imageRef = ref (storage, `images/${namePic.name+v4()}`);
 		
-       await uploadBytes(imageRef, namePic).then((snapshot)=>{
-            getDownloadURL(snapshot.ref).then((url)=>{
-                setData((prev)=>({...prev,pic:url}));
+       await uploadBytes(imageRef, namePic)
+	   .then(()=>{
+            getDownloadURL(imageRef).then((url)=>{
+                setURL(url);
             });
         });
 		
 	}
+	async function handleEditAva(){
+		setEditAvaState("block");
+	}
+	async function handleImageChange(e){
+		setImage(e.target.files[0]);
+		
+	}
+	async function submitImage(){
+		const imageRef = ref (storage, `images/${image.name+v4()}`);
+		
+       await uploadBytes(imageRef, image)
+	   .then(()=>{
+            getDownloadURL(imageRef).then((url)=>{
+                setURL(url);
+            });
+        });
+		console.log(url)
+		setEditAvaState("none");
+	};
 	// async function handleChangeNewPic(e){
 	// 	// e.preventDefault();
 	// 	var newPicValue = e.target.files[0];
@@ -162,8 +184,6 @@ function Students(props) {
 		setKhoa("");
 		setGrade("");
 		setBio("");
-		setURL("");
-		setImage(null);
 	}
 	async function edithandle(item){
 		setEditBoxState("flex");
@@ -173,7 +193,7 @@ function Students(props) {
 		setNewGrade(item.grade);
 		setNewKhoa(item.khoa);
 		setNewMsv(item.msv);
-		// setNewImage(item.pic);
+		setNewPic(item.pic);
 		setNewStuName(item.name);
 		setNewBio(item.bio);
 	}
@@ -246,7 +266,8 @@ function Students(props) {
 					khoa: khoa,
 					bio:bio,
 					created: serverTimestamp(),
-					...data,
+					pic:url
+					// ...data,
 				})
 				console.log("success");
 				getStudents();
@@ -273,9 +294,10 @@ function Students(props) {
 				grade:newGrade,
 				khoa: newKhoa,
 				bio:newBio,
-				...data,
+				pic:url,
 			}
 		await updateDoc(stuDoc,updateStu);
+		// setNewPic(data().pic)
 		console.log(updateStu);
 		console.log(" updated")
 		getStudents();
@@ -422,8 +444,14 @@ function Students(props) {
 							<div class="modal-body">
 								<form onSubmit={updateData} >
 									<div className="add__form ">
-										<input type="file" onChange={(e)=>{handleChangePic(e)}} />
-										<hr/>
+										<div className="change-ava ">
+											{/* <img className="rounded-circle ava-edit"  src={newPic}/> */}
+											{!url?<Avatar src={newPic}/>:<Avatar src={url}/>}
+											<div className="btn_change" >
+												<i class="fa-solid fa-camera" onClick={handleEditAva}></i>
+												{/* <input type="file" onChange={(e)=>{handleChangePic(e)}} /> */}
+											</div>
+										</div>
 										<input type="text" placeholder="Student Name"  value={newStuName} onChange={(e) => setNewStuName(e.target.value)} required/>
 										<hr/>
 										<select id="numberToSelect" name="newgender_type" defaultValue="Gender" onChange={(e)=>setNewGender(e.target.value)} value={newGender}>
@@ -455,6 +483,20 @@ function Students(props) {
 					</div>
 				
 				
+			</div>
+			<div className="editava-form" style={{"display":editAvaState}}>
+				<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Update Avatar</h4>
+								<button type="button" class="btn-close" onClick={closeOnClick}></button>
+							</div>
+							<div class="modal-body">
+								<input type="file" onChange={handleImageChange}/>
+								<button onClick={submitImage}>Update</button>
+							</div>
+						</div>
+				</div>
 			</div>
         </div>
     );
