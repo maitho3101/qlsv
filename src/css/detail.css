@@ -16,10 +16,10 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        margin: 20px 0;
+        margin: 10px 0;
     }
     .student-profile_title h1{
-        font-size: 200%;
+        font-size: 150%;
     }
     .student-profile_body{
         display: flex;
@@ -35,8 +35,8 @@
         margin:  10px;
     }
     .stu-avatar_detail img{
-        width: 150px;
-        height: 150px;
+        width: 120px;
+        height: 120px;
     }
     .stu_detail{
         width: 70%;
@@ -48,7 +48,7 @@
         font-size: 150%;
     }
     .stu_detail p{
-        padding-left: 20px;
+        padding-left: 10px;
     }
     hr{
         border: 1px solid gray;
@@ -56,19 +56,19 @@
         width: 100%;
     }
     .stu_bio{
-        width: 90%;
+        width: 100%;
         /* background-color: red; */
         display: flex;
         padding-top: 10px;
     }
     .stu_bio p{
         font-size: 90%;
-        width: 20%;
+        width: 25%;
         /* padding-left: 10px; */
     }
     .bio_detail{
         width: 80%;
-        height: 350px;
+        height: 200px;
         margin-bottom: 30px;
         border: 1px solid gray;
         border-radius: 10px;

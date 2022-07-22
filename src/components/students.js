@@ -446,7 +446,7 @@ function Students(props) {
 									<div className="add__form ">
 										<div className="change-ava ">
 											{/* <img className="rounded-circle ava-edit"  src={newPic}/> */}
-											{!url?<Avatar src={newPic}/>:<Avatar src={url}/>}
+											{!url?<Avatar className="rounded-circle ava-edit" src={newPic}/>:<Avatar className="rounded-circle ava-edit" src={url}/>}
 											<div className="btn_change" >
 												<i class="fa-solid fa-camera" onClick={handleEditAva}></i>
 												{/* <input type="file" onChange={(e)=>{handleChangePic(e)}} /> */}

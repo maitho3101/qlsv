@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { useCookies } from 'react-cookie';
 import { collection, getDocs, doc, docs, updateDoc, deleteDoc,onSnapshot , where, query, orderBy , limit } from "firebase/firestore";
 import "../css/user.css";
+import ava from "../img/istockphoto-1223671392-170667a.jpg"
 
 import db from "../firebase";
 
@@ -44,7 +45,7 @@ function User() {
                 </div>
                 <div className='profile-body'>
                     <div className='profile-body_img'>
-                        <img  src="https://images.unsplash.com/photo-1526512340740-9217d0159da9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dmVydGljYWx8ZW58MHx8MHx8&w=1000&q=80"/>
+                        <img  src={ava}/>
                     </div>
                     <div className='profile-body_text'>
                         <p>Full Name: {user.fullname}</p>

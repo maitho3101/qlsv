@@ -296,7 +296,7 @@ function ListView (){
 		getStudents();
 	}
     return (
-        <div >
+        <div className="list-container">
             <Header/>
             
             <div className="liststudents-display container-fluid" style={{"opacity":bgopacity}}>
@@ -347,7 +347,7 @@ function ListView (){
 										<td >{student.name}</td>
 										<td >{student.gender}</td>
 										<td >{student.grade}</td>
-										<td >
+										<td  >
 											<button className="action_button" onClick = {() => handleViewDetailStudent(student) }><i class="fa-solid fa-eye"></i></button>
 											<button className="action_button" onClick = {() => {edithandle(student); setDataIdToBeUpdated(student.id);}} type="button"  ><i class="fa-solid fa-pen-to-square"></i></button>
 											<button className="action_button" onClick={()=>deleteStudent(student.id)}><i class="fa-solid fa-trash-can"></i></button>
@@ -426,7 +426,7 @@ function ListView (){
 								<form onSubmit={updateData} >
 									<div className="add__form ">
 										<div className="change-ava ">
-										{!url?<Avatar src={newPic}/>:<Avatar src={url}/>}
+										{!url?<Avatar className="rounded-circle ava-edit"  src={newPic}/>:<Avatar className="rounded-circle ava-edit"  src={url}/>}
 											<div className="btn_change" >
 												<i class="fa-solid fa-camera" onClick={handleEditAva}></i>
 												
