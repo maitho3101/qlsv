@@ -305,12 +305,12 @@ function ListView (){
 				</div>
 				<div className="action-student container-fluid">
 					<div className="add-student">
-						<button type="button" class="btn btn-primary" onClick={addOnClick}>
+						<button type="button" class="btn  btn-addStu" onClick={addOnClick}>
 							Add
 						</button>
 					</div>
 					<div className="filter-student" >
-						<select className="btn btn-primary filter_stu"  defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
+						<select className="filter_stu"  defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
 							<option value="" >Select Grade</option>
 							<option value="KHMT" >KHMT</option>
 							<option value="CNTT">CNTT</option>
@@ -319,11 +319,11 @@ function ListView (){
 					</div>
 					
 					<div className="search-student">
-						<form>
+						<form className="search-stu_form">
 							<input onChange={(e) => updateSearchInput(e)}  value={search} type="text" placeholder="Search" />
 							<i class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
-							<hr/>
 						</form>
+							<hr/>
 					</div>
 				</div>
 				

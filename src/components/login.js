@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import db from "../firebase";
 import { collection, getDocs,  } from "firebase/firestore";
 import { async } from "@firebase/util";
-
+import "../css/signup.css"
 
 function Login() {
 const [email, setEmail] = useState("");
@@ -113,7 +113,7 @@ return (
                     <p className="notify-p">{notify}</p>
                     
                 </div>
-                <input type="submit" value="Login" className="btn btn-login " />
+                <input type="submit" value="Login" className=" btn-login " />
                 <div className="member">
                     <span>Not a member?</span>
                     <a href="/">Sign Up</a>

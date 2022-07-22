@@ -358,7 +358,7 @@ function Students(props) {
 						</button>
 					</div>
 					<form className="filter-student" >
-						<select className="btn" defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
+						<select className="filter_stu" defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
 							<option value="" >Select Grade</option>
 							<option value="KHMT">KHMT</option>
 							<option value="CNTT">CNTT</option>
@@ -367,11 +367,11 @@ function Students(props) {
 					</form>
 					
 					<div className="search-student">
-						<form>
+						<form className="search-stu_form">
 							<input onChange={(e) => updateSearchInput(e)}  value={search} type="text" placeholder="Search" />
 							<i class="fa-solid fa-magnifying-glass" type="submit" value="search"></i>
-							<hr/>
 						</form>
+							<hr/>
 					</div>
 				</div>
 			<div>

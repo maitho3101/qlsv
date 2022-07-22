@@ -11,9 +11,9 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .btn{
+    /* .btn{
         font-size: 0.5rem;
-    }
+    } */
     .fa-solid{
         color: black;
     }
@@ -25,37 +25,57 @@
         display: flex;
         justify-content: flex-end;
         margin-bottom: 20px;
-        font-size: 80%;
+        font-size: 90%;
     }
     .add-student{
         margin-right: 2%;
-        font-size: 30%;
     }
-    /* .add-student button{
-        font-size: 250%;
-    } */
+    .btn{
+        font-size: 1rem;
+    }
     .filter-student{
-        margin-right: 8%;
+        margin-right: 5%;
+        height: 36px;
     }
-    /* .filter-student select{
-        font-size: 100%;
-    } */
+    .filter_stu {
+        font-size: 1rem ;
+        background-color: #89828A;
+        border: none;
+        color: white;
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        height: 36px;
+    }
     .search-student {
         display: flex;
+        flex-direction: column;
         justify-content: flex-end;
         align-items: center;
+        position: relative;
     }
     .search-student form {
-        display: inline-block;
+        display: flex;
     }
+    .search-stu_form input {
+        border: none;
+        width: 90%;
+    }
+    .search-stu_form i {
+        width: 10%;
+    }
+    .fa-magnifying-glass{
+        color: black;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(0, -50%);
+      }
     .search-student hr {
         width: 100%;
         margin: 0;
         border: 1.5px solid black
-    }
-    .search-student input {
-        border: none;
-        width: 85%;
     }
     #admin {
         border-collapse: collapse;
@@ -107,9 +127,7 @@
       #admin th:nth-child(6){
           width: 20%;
       }
-      .fa-magnifying-glass{
-        color: black;
-      }
+      
       .liststudents-display{
         position: relative;
       }
@@ -278,22 +296,45 @@
     .filter-student{
         margin-right: 10%;
     }
+    .filter_stu {
+        font-size: 1rem ;
+        background-color: #89828A;
+        border: none;
+        color: white;
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        height: 36px;
+    }
     .search-student {
         display: flex;
+        flex-direction: column;
         justify-content: flex-end;
         align-items: center;
+        position: relative;
     }
     .search-student form {
-        display: inline-block;
+        display: flex;
     }
-    .search-student hr {
+    .search-stu_form input {
+        border: none;
         width: 90%;
+    }
+    .search-stu_form i {
+        width: 10%;
+    }
+    .fa-magnifying-glass{
+        color: black;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(0, -50%);
+      }
+    .search-student hr {
+        width: 100%;
         margin: 0;
         border: 1.5px solid black
-    }
-    .search-student input {
-        border: none;
-        width: 80%;
     }
     #admin {
         border-collapse: collapse;
@@ -344,9 +385,6 @@
       }
       #admin th:nth-child(6){
           width: 20%;
-      }
-      .fa-magnifying-glass{
-        color: black;
       }
       .liststudents-display{
         position: relative;
@@ -483,7 +521,10 @@
         display: flex;
         justify-content: flex-end;
         margin-bottom: 30px;
-        font-size: 120%;
+        font-size: 150%;
+    }
+    .btn{
+        font-size: 2rem;
     }
     .add-student{
         margin-right: 1%;
@@ -491,21 +532,45 @@
     .filter-student{
         margin-right: 20%;
     }
+    .filter_stu {
+        font-size: 2rem ;
+        background-color: #89828A;
+        border: none;
+        color: white;
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        height: 60px;
+    }
     .search-student {
         display: flex;
+        flex-direction: column;
         justify-content: flex-end;
         align-items: center;
+        position: relative;
     }
     .search-student form {
-        display: inline-block;
+        display: flex;
     }
+    .search-stu_form input {
+        border: none;
+        width: 90%;
+    }
+    .search-stu_form i {
+        width: 10%;
+    }
+    .fa-magnifying-glass{
+        color: black;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(0, -50%);
+      }
     .search-student hr {
         width: 100%;
         margin: 0;
         border: 1.5px solid black
-    }
-    .search-student input {
-        border: none;
     }
     
     #admin {
@@ -558,9 +623,7 @@
       #admin th:nth-child(6){
           width: 15%;
       }
-      .fa-magnifying-glass{
-        color: black;
-      }
+      
       .liststudents-display{
         position: relative;
       }
