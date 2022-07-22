@@ -11,6 +11,12 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+    .btn{
+        font-size: 0.5rem;
+    }
+    .fa-solid{
+        color: black;
+    }
     .listusers-table{
         width: 100%;
     }

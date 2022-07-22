@@ -310,7 +310,7 @@ function ListView (){
 						</button>
 					</div>
 					<div className="filter-student" >
-						<select className="btn filter_stu"  defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
+						<select className="btn btn-primary filter_stu"  defaultValue="Select Grade" onChange={(e)=>updateFilterInput(e)} value={filter} >
 							<option value="" >Select Grade</option>
 							<option value="KHMT" >KHMT</option>
 							<option value="CNTT">CNTT</option>
