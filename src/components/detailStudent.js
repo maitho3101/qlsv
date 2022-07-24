@@ -28,7 +28,7 @@ function DetailStudent(props) {
     return (
         <div>
             <Header/>
-            <a href='#' onClick={backToPrevPage} className="back-btn">&lt;Back</a>
+            <button href='#' onClick={() => navigate(-1)} className="back-btn">&lt;Back</button>
             <div className='student-profile container-fluid'>
                 <div className='student-profile_title'>
                     <h1>Student Profile</h1>

@@ -82,6 +82,8 @@
         margin-left: 10px;
         text-decoration: none;
         font-size: 20px;
+        border: none;
+        background-color: inherit;
     }
 }
 @media only screen and (min-width: 600px) {
@@ -153,6 +155,8 @@
         margin-left: 10px;
         text-decoration: none;
         font-size: 20px;
+        border: none;
+        background-color: inherit;
     }
 }
 /* Large devices (laptops/desktops, 992px and up) */
@@ -231,5 +235,7 @@
         margin-left: 10px;
         text-decoration: none;
         font-size: 20px;
+        border: none;
+        background-color: inherit;
     }
 }
