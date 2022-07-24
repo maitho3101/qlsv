@@ -4,6 +4,7 @@ import Header from './header';
 import "../css/detail.css";
 import db from "../firebase";
 import { collection, getDoc, doc, docs, updateDoc } from "firebase/firestore";
+import ava from "../img/istockphoto-1223671392-170667a.jpg";
 function DetailStudent(props) {
     const [stuDetail, setStuDetail]= useState("");
     const { id } = useParams();
@@ -35,6 +36,7 @@ function DetailStudent(props) {
                 </div>
                 <div className='student-profile_body '>
                     <div className="stu-avatar_detail" >
+                        {/* <img className='ava-default' src={ava}/> */}
 						<img  src={stuDetail.pic}></img>
 					</div>
                     <div className='stu_detail'>

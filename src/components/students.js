@@ -36,7 +36,7 @@ function Students(props) {
     const [students, setStudents]=useState([]);
     const [studentsDisplay, setStudentsDisplay]=useState([]);
 
-	const pageLimit = 10;
+	const pageLimit = 9;
 
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +51,9 @@ function Students(props) {
 	const [bgopacity, setBackGroundOpacity] = useState("1");
 
 	const [image, setImage] = useState(null);
-  	const [url, setURL] = useState(null);
+	const [url, setURL] = useState(null);
+	const [newImage, setNewImage] = useState(null);
+  	const [newUrl, setNewURL] = useState(null);
 	  const [data,setData] = useState();
 
     const usersCollection = collection(db,"users");
@@ -113,9 +115,11 @@ function Students(props) {
 		// e.preventDefault();
 		var picValue = e.target.files[0];
 			setImage(picValue);
-		await uploadImage(picValue)
+				
+				await uploadImage(picValue)
+			
 	}
-	async function uploadImage(namePic,student){
+	async function uploadImage(namePic){
 		const imageRef = ref (storage, `images/${namePic.name+v4()}`);
 		
        await uploadBytes(imageRef, namePic)
@@ -130,6 +134,10 @@ function Students(props) {
 	async function handleEditAva(){
 		setEditAvaState("block");
 	}
+	// async function handleImageChange(e){
+	// 	setImage(e.target.files[0]);
+		
+	// }
 	async function handleImageChange(e){
 		setImage(e.target.files[0]);
 		
@@ -179,7 +187,7 @@ function Students(props) {
 		getStudents("");
 		setNotify("");
 		setEmail("");
-		setPic("");
+		// setPic("");
 		setStuName("");
 		setGender("");
 		setMsv("");

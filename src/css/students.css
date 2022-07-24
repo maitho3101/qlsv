@@ -12,6 +12,7 @@ p{
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px){
+   
     .liststudents-gridview{
         background-color: white;
         padding: 0 10px;
@@ -64,9 +65,10 @@ p{
     }
 }
 @media only screen and (min-width: 600px) {
+    
     .liststudents-gridview{
         background-color: white;
-        padding: 0 50px;
+        padding: 0 30px;
         height: auto;
         display: flex;
         flex-direction: row;
@@ -74,7 +76,7 @@ p{
         flex-wrap: wrap;
     }
     .profile-content{
-        margin: 10px 20px;
+        margin: 10px 10px;
         background-color: rgb(226, 215, 215);
         font-size: 85%;
         display:grid;
@@ -82,7 +84,7 @@ p{
         align-items: center;
         padding: 10px;
         border-radius: 5px;
-        width: 200px;
+        width: 180px;
         height: 250px;
     }
     .stu_avatar{
@@ -120,7 +122,7 @@ p{
 
     .liststudents-gridview{
         background-color: white;
-        padding: 0 70px;
+        padding: 0 50px;
         height: auto;
         display: flex;
         flex-direction: row;

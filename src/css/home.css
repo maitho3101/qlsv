@@ -14,6 +14,12 @@
     /* .btn{
         font-size: 0.5rem;
     } */
+    .page-item.active .page-link {
+        z-index: 0;
+        color: #fff;
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
     .fa-solid{
         color: black;
     }
@@ -281,6 +287,13 @@
         height: 100px;
         border: 2px double white;
     }
+    .editava-form{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+          
+    }
 }
 @media only screen and (min-width: 600px) {
     .action-student{
@@ -289,6 +302,19 @@
         justify-content: flex-end;
         margin-bottom: 30px;
         font-size: 110%;
+    }
+    .editava-form{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+          
+    }
+    .page-item.active .page-link {
+        z-index: 0;
+        color: #fff;
+        background-color: #0d6efd;
+        border-color: #0d6efd;
     }
     .add-student{
         margin-right: 2%;
@@ -628,7 +654,7 @@
         position: relative;
       }
       .add-form{
-        position: absolute;
+        position: fixed;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
@@ -779,11 +805,17 @@
         border: 2px double white;
     }
     .editava-form{
-        position: absolute;
+        position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
           
+    }
+    .page-item.active .page-link {
+        z-index: 0;
+        color: #fff;
+        background-color: #0d6efd;
+        border-color: #0d6efd;
     }
 }
   
