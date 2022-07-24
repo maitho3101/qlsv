@@ -70,6 +70,9 @@ const submit = async (e) => {
     if(email ===""){
         setNotify("Please fill in email!")
     }
+    else if(/([a-zA-Z0-9._%+-]{3})+@[a-z0-9-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g.test(email)=== false){
+        setNotify("Incorrect email")
+    }
     else if (password ==="" ){
         setNotify("Please fill in password!")
     }
@@ -84,7 +87,7 @@ const submit = async (e) => {
             // Cookies.set("displayUsern",users,{ path: '/' });
             
             localStorage.setItem("displayUsername",cur);
-           
+            localStorage.setItem("pageIndex", 2);
             localStorage.setItem("userNameBox", "flex");
             localStorage.setItem("loginBox", "none");
             const idLogin ="";
