@@ -116,7 +116,10 @@ function Students(props) {
 		var picValue = e.target.files[0];
 			setImage(picValue);
 				
-				await uploadImage(picValue)
+				await uploadImage(picValue);
+				getStudents();
+		setImage(null);
+		setURL(null);
 			
 	}
 	async function uploadImage(namePic){
@@ -129,57 +132,52 @@ function Students(props) {
 				
             });
         });
+		// getStudents();
+		// setImage(null);
+		// setURL(null);
 		
 	}
 	async function handleEditAva(){
 		setEditAvaState("block");
 	}
+	
 	// async function handleImageChange(e){
 	// 	setImage(e.target.files[0]);
 		
 	// }
-	async function handleImageChange(e){
-		setImage(e.target.files[0]);
+	// async function submitImage(){
+	// 	const imageRef = ref (storage, `images/${image.name+v4()}`);
 		
-	}
-	async function submitImage(){
-		const imageRef = ref (storage, `images/${image.name+v4()}`);
-		
-       await uploadBytes(imageRef, image)
+    //    await uploadBytes(imageRef, image)
+	//    .then(()=>{
+    //         getDownloadURL(imageRef).then((url)=>{
+    //             setURL(url);
+	// 			setNewPic(url);
+    //         });
+    //     });
+	// 	console.log(url)
+	// 	setEditAvaState("none");
+	// };
+	async function submitImage(e){
+		e.preventDefault();
+		const file = e.target[0]?.files[0]
+		console.log("ha");
+		console.log(file);
+		if(!file){
+			console.log("noooo");
+			return;
+		}
+		const imageRef = ref (storage, `images/${file.name+v4()}`); 
+		 uploadBytes(imageRef, file)
 	   .then(()=>{
             getDownloadURL(imageRef).then((url)=>{
-                setURL(url);
+                setNewURL(url);
 				setNewPic(url);
             });
         });
 		console.log(url)
 		setEditAvaState("none");
-	};
-	// async function handleChangeNewPic(e){
-	// 	// e.preventDefault();
-	// 	var newPicValue = e.target.files[0];
-	// 		setNewImage(newPicValue);
-	// 	await uploadNewImage(newPicValue)
-	// }
-	// async function uploadNewImage(newNamePic){
-	// 	const imageRef = ref (storage, `images/${newNamePic.name + v4()}`);
-		
-    //     await uploadBytes(imageRef, newNamePic).then((snapshot)=>{
-    //         getDownloadURL(snapshot.ref).then((url)=>{
-    //             setNewData((prev)=>({...prev,pic:url}));
-    //         });
-    //     });
-
-		
-	// }
-	// async function handleUploadPic(e){
-	// 	const path = `/images/${file.name}`;
-	// 	const ref = storage.ref(path);
-	// 	await ref.put(file);
-	// 	const url = await ref.getDownloadURL();
-	// 	setURL(url);
-	// 	setFile(null); 
-	// }
+	}
 	async function closeOnClick(){
 		setAddBoxState("none");
 		setEditBoxState("none");
@@ -188,6 +186,9 @@ function Students(props) {
 		setNotify("");
 		setEmail("");
 		// setPic("");
+		setImage(null);
+		setURL(null);
+		// setNewURL(null);
 		setStuName("");
 		setGender("");
 		setMsv("");
@@ -207,6 +208,7 @@ function Students(props) {
 		setNewKhoa(item.khoa);
 		setNewMsv(item.msv);
 		setNewPic(item.pic);
+		setNewURL(item.pic);
 		setNewStuName(item.name);
 		setNewBio(item.bio);
 	}
@@ -307,7 +309,7 @@ function Students(props) {
 				grade:newGrade,
 				khoa: newKhoa,
 				bio:newBio,
-				pic:url,
+				pic:newUrl,
 			}
 		await updateDoc(stuDoc,updateStu);
 		// setNewPic(data().pic)
@@ -337,7 +339,8 @@ function Students(props) {
                         <div className="profile-content">
                             <div className="stu_avatar " >
 								{/* <Avatar className="rounded-circle" src={student.pic}/> */}
-								{student.pic? <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>:<img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={avatar}></img>} 
+								{/* {student.pic? <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>:<img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={avatar}></img>}  */}
+								<img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic|| avatar}></img>
                                      {/* <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>
                                     <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={avatar}></img> */}
                             </div>
@@ -459,7 +462,7 @@ function Students(props) {
 									<div className="add__form ">
 										<div className="change-ava ">
 											{/* <img className="rounded-circle ava-edit"  src={newPic}/> */}
-											<Avatar className="rounded-circle ava-edit"  src={newPic}/>
+											<Avatar className="rounded-circle ava-edit" src={newPic}/>
 											<div className="btn_change" >
 												<i class="fa-solid fa-camera" onClick={handleEditAva}></i>
 												{/* <input type="file" onChange={(e)=>{handleChangePic(e)}} /> */}
@@ -505,8 +508,13 @@ function Students(props) {
 								<button type="button" class="btn-close" onClick={closeUploadImg}></button>
 							</div>
 							<div class="modal-body">
-								<input type="file" onChange={handleImageChange}/>
-								<button onClick={submitImage}>Update</button>
+								{/* <input type="file" onChange={handleImageChange}/>
+								<button onClick={submitImage}>Update</button> */}
+								<form onSubmit={submitImage}>
+
+									<input type="file" />
+									<button type="submit">Update</button>
+								</form>
 							</div>
 						</div>
 				</div>
