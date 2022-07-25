@@ -115,11 +115,10 @@ function Students(props) {
 		// e.preventDefault();
 		var picValue = e.target.files[0];
 			setImage(picValue);
-				
-				await uploadImage(picValue);
-				getStudents();
-		setImage(null);
-		setURL(null);
+			await uploadImage(picValue);
+			getStudents();
+			setImage(null);
+			setURL(null);
 			
 	}
 	async function uploadImage(namePic){

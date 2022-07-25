@@ -55,6 +55,7 @@ function ListView (){
 
 	const [image, setImage] = useState(null);
   	const [url, setURL] = useState(null);
+	const [newUrl, setNewURL] = useState(null);
 	const [data,setData] = useState();
 
     const usersCollection = collection(db,"users");
@@ -121,7 +122,10 @@ function ListView (){
 		// e.preventDefault();
 		var picValue = e.target.files[0];
 			setImage(picValue);
-		await uploadImage(picValue)
+			await uploadImage(picValue);
+			getStudents();
+			setImage(null);
+			setURL(null);
 	}
 	async function uploadImage(namePic){
 		const imageRef = ref (storage, `images/${namePic.name + v4()}`);
@@ -137,17 +141,24 @@ function ListView (){
 	async function handleEditAva(){
 		setEditAvaState("block");
 	}
-	async function handleImageChange(e){
-		setImage(e.target.files[0]);
+	// async function handleImageChange(e){
+	// 	setImage(e.target.files[0]);
 		
-	}
-	async function submitImage(){
-		const imageRef = ref (storage, `images/${image.name+v4()}`);
-		
-       await uploadBytes(imageRef, image)
+	// }
+	async function submitImage(e){
+		e.preventDefault();
+		const file = e.target[0]?.files[0]
+		console.log("ha");
+		console.log(file);
+		if(!file){
+			console.log("noooo");
+			return;
+		}
+		const imageRef = ref (storage, `images/${file.name+v4()}`); 
+		 uploadBytes(imageRef, file)
 	   .then(()=>{
             getDownloadURL(imageRef).then((url)=>{
-                setURL(url);
+                setNewURL(url);
 				setNewPic(url);
             });
         });
@@ -162,7 +173,9 @@ function ListView (){
 		getStudents("");
 		setNotify("");
 		setEmail("");
-		setPic("");
+		// setPic("");
+		setImage(null);
+		setURL(null);
 		setStuName("");
 		setGender("");
 		setMsv("");
@@ -182,6 +195,7 @@ function ListView (){
 		setNewKhoa(item.khoa);
 		setNewMsv(item.msv);
 		setNewPic(item.pic);
+		setNewURL(item.pic);
 		setNewStuName(item.name);
 		setNewBio(item.bio);
 	}
@@ -284,7 +298,7 @@ function ListView (){
 				grade:newGrade,
 				khoa: newKhoa,
 				bio:newBio,
-				pic:url,
+				pic:newUrl,
 				// ...data,
 			}
 		await updateDoc(stuDoc,updateStu);
@@ -477,8 +491,11 @@ function ListView (){
 								<button type="button" class="btn-close" onClick={closeUploadImg}></button>
 							</div>
 							<div class="modal-body">
-								<input type="file" onChange={handleImageChange}/>
-								<button onClick={submitImage}>Update</button>
+							<form onSubmit={submitImage}>
+
+								<input type="file" />
+								<button type="submit">Update</button>
+							</form>
 							</div>
 						</div>
 				</div>
