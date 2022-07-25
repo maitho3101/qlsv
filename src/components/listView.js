@@ -242,6 +242,12 @@ function ListView (){
 		else if(!email ){
 			setNotify("Please fill in email!")
 		}
+		else if(!msv ){
+			setNotify("Please fill in student id!")
+		}
+		else if (msv.length <8 ){
+            setNotify("Student id needs to be at least 8 characters")
+        }
 		else if(cur2){
 			setNotify("Student ID already exist ")
 		}

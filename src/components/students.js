@@ -234,6 +234,7 @@ function Students(props) {
 	}
 	async function checkIfMsvExist() {
 		await getStudents();
+		
 		for(var i=0; i< students.length; i++){
 			if (msv === students[i].msv ){
 				return 1; 
@@ -255,6 +256,12 @@ function Students(props) {
 		else if(!email ){
 			setNotify("Please fill in email!")
 		}
+		else if(!msv ){
+			setNotify("Please fill in student id!")
+		}
+		else if (msv.length <8 ){
+            setNotify("Student id needs to be at least 8 characters")
+        }
 		else if(cur2){
 			setNotify("Student ID already exist ")
 		}
@@ -337,11 +344,9 @@ function Students(props) {
                     <div className=" profile-display">
                         <div className="profile-content">
                             <div className="stu_avatar " >
-								{/* <Avatar className="rounded-circle" src={student.pic}/> */}
+								
 								{/* {student.pic? <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>:<img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={avatar}></img>}  */}
 								<img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic|| avatar}></img>
-                                     {/* <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={student.pic}></img>
-                                    <img className="rounded-circle" style={{"height":"80px", "width":"80px"}} src={avatar}></img> */}
                             </div>
                             <div className="stu-info ">
                                 <p className="stu-name">{student.name}</p>
